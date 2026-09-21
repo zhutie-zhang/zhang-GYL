@@ -1,0 +1,19 @@
+﻿Surcharge name,费用产生条件,Zone2, Zones3-4,Zones5-6,Zones7+,备注
+Fuel Surcharge（燃油费）,,12% off,,,按「基础费+其他附加费」×费率计算，以FedEx官网为准
+Residential（住宅地址附加费）,Resi-Home Delivery&Ground（住宅地址配送）,2.40,,,是否住宅地址由FedEx判断
+Additional Handling Surcharge（超尺寸附加费）,AHS – Dimension GD/HD：最长边>48inch或次长边>30inch或围长>105inch等,4.65,5.15,6.05,6.45,
+Additional Handling Surcharge（超重附加费）,AHS – Weight GD/HD：单件实重>50lbs,7.25,8.08,9.00,9.45,
+Additional Handling Surcharge（非标准包装附加费）,AHS – Packaging GD/HD 多种非标包装情况,4.30,4.98,5.35,5.41,
+Oversize Surcharge（超尺寸附加费）,OS – Home Delivery&Ground：围长130-165inch等,81.00,87.00,101.00,104.00,满足任意条件即收取；收取OS则不再收AHS
+Unauthorized Package Charge（超最大尺寸限制）,计费重>150lbs或最长边>108inch或围长>165inch,1875,,,,收取后不再收AHS和OS
+Delivery Area Surcharge（偏远地区费）,DAS – Home Delivery：邮编属于DAS且住宅地址,3.34,,,偏远地区邮编以官网为准
+Delivery Area Surcharge（偏远地区费-商业）,DAS – Ground：邮编属于DAS且商业地址,2.30,,,
+Delivery Area Surcharge Extended（超偏远地区费）,DASE – Home Delivery：住宅地址,4.48,,,
+Delivery Area Surcharge Extended（超偏远地区费-商业）,DASE – Ground：商业地址,2.86,,,
+Delivery Area Surcharge Remote（超超偏远地区费）,DASR – Home Delivery：住宅地址,8.38,,,
+Delivery Area Surcharge Remote（超超偏远地区费-商业）,DASR – Ground：商业地址,8.38,,,
+Signature（间接签名）,IndirectSignature：下单选择间接签名,7.60,,,
+Signature（直接签名）,Direct Signature：下单选择直接签名,7.60,,,
+Signature（成人签名）,Adult Signature：下单选择成人签名,10.00,,,
+Address Correction（改地址服务费）,收货/寄件地址修改,25.50,,,
+Declared Value（保险）,货值.01-300,5.10,,,货值≤；.80
