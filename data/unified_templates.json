@@ -1,0 +1,1733 @@
+[
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "下架出库费(仓配一体)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "按计费重分档，含拣货下架/打印运单/贴标/出库",
+    "tiers": [
+      {
+        "max": 4.4,
+        "min": 0,
+        "price": 0.8
+      },
+      {
+        "max": 10,
+        "min": 4.41,
+        "price": 0.8
+      },
+      {
+        "max": 22,
+        "min": 10.011,
+        "price": 1.2
+      },
+      {
+        "max": 50,
+        "min": 22.01,
+        "price": 1.6
+      },
+      {
+        "max": 70,
+        "min": 50.01,
+        "price": 2.5
+      },
+      {
+        "max": 100,
+        "min": 70.01,
+        "price": 2.7
+      },
+      {
+        "max": 150,
+        "min": 100.01,
+        "price": 5
+      },
+      {
+        "max": null,
+        "min": 150.01,
+        "price": 7.5
+      }
+    ]
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "下架出库费(自提)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "自提渠道适用，计费重=实重/体积重取大",
+    "tiers": [
+      {
+        "max": 4.4,
+        "min": 0,
+        "price": 1.6
+      },
+      {
+        "max": 10,
+        "min": 4.41,
+        "price": 1.6
+      },
+      {
+        "max": 22,
+        "min": 10.011,
+        "price": 2.2
+      },
+      {
+        "max": 50,
+        "min": 22.01,
+        "price": 2.6
+      },
+      {
+        "max": 70,
+        "min": 50.01,
+        "price": 3.5
+      },
+      {
+        "max": 100,
+        "min": 70.01,
+        "price": 4.7
+      },
+      {
+        "max": 150,
+        "min": 100.01,
+        "price": 7
+      },
+      {
+        "max": null,
+        "min": 150.01,
+        "price": 9.5
+      }
+    ]
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "订单优先处理附加费(VC订单)",
+    "unit": "每件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "加急出库：TOC下架出库费+1",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "订单优先处理附加费(SFP/DSV订单)",
+    "unit": "每件",
+    "price": 2,
+    "minCharge": 0,
+    "note": "加急出库：TOC下架出库费+2",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "订单多品处理费",
+    "unit": "每件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "一票多件，订单处理费基础上每件+1",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "打托费(标准托盘)",
+    "unit": "托盘",
+    "price": 20,
+    "minCharge": 0,
+    "note": "含人工/托盘物料/缠膜",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "打托费(非标准托盘)",
+    "unit": "托盘",
+    "price": 40,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "出库费(托盘自提)",
+    "unit": "托盘",
+    "price": 10,
+    "minCharge": 0,
+    "note": "非Smart卡车自提；>1000LBS 收20",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "滞托费",
+    "unit": "托盘/天",
+    "price": 5,
+    "minCharge": 0,
+    "note": "备货完成后第8个自然日起收",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "退货入库费",
+    "unit": "件",
+    "price": 4,
+    "minCharge": 0,
+    "note": "散货退货按最小收货单位(件)",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "贴标费(直接贴标)",
+    "unit": "张",
+    "price": 0.4,
+    "minCharge": 0,
+    "note": "含外箱标/运单标/托盘标/超重标",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "贴标费(覆盖贴标)",
+    "unit": "张",
+    "price": 0.8,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "理货费",
+    "unit": "小时",
+    "price": 35,
+    "minCharge": 0,
+    "note": "混托/一箱多件人工理货",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "清点费",
+    "unit": "件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "到库清点与预报差异需复核时",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "盘点费",
+    "unit": "小时",
+    "price": 35,
+    "minCharge": 0,
+    "note": "无异常情况下客户要求盘点",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "外箱检查费",
+    "unit": "件",
+    "price": 2,
+    "minCharge": 0,
+    "note": "检查外纸箱贴标/印刷/破损",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "开箱检查费",
+    "unit": "件",
+    "price": 4,
+    "minCharge": 0,
+    "note": "开箱检查内部产品后封箱",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "拍照服务",
+    "unit": "件",
+    "price": 2,
+    "minCharge": 0,
+    "note": "每件一张产品照片",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "重新包装",
+    "unit": "件",
+    "price": 7,
+    "minCharge": 0,
+    "note": "更换纸箱或包装，纸箱客供",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "测量费",
+    "unit": "件",
+    "price": 6,
+    "minCharge": 0,
+    "note": "测量SKU尺寸重量并拍照",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "销毁费",
+    "unit": "公斤",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "按销毁实重计费，含订单处理费",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "仓库人工费",
+    "unit": "小时",
+    "price": 35,
+    "minCharge": 0,
+    "note": "特殊操作按工时",
+    "tiers": null
+  },
+  {
+    "provider": "SMART",
+    "warehouse": "全仓",
+    "serviceType": "物流面单服务费",
+    "unit": "张",
+    "price": 2.5,
+    "minCharge": 0,
+    "note": "退货面单或其他用途面单",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "卸柜费(集装箱带托)",
+    "unit": "柜",
+    "price": 0,
+    "minCharge": 0,
+    "note": "20GP/40GP/40HQ/45HQ = 150/300/300/350，SKU超20加4/个、超40加8/个，件数超700加0.25/件",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 150
+      },
+      {
+        "max": 2,
+        "min": 1,
+        "price": 300
+      },
+      {
+        "max": 3,
+        "min": 2,
+        "price": 300
+      },
+      {
+        "max": 5,
+        "min": 3,
+        "price": 350
+      }
+    ]
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "卸柜费(集装箱不带托)",
+    "unit": "柜",
+    "price": 0,
+    "minCharge": 0,
+    "note": "250/400/400/500，同上SKU/件数规则",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 250
+      },
+      {
+        "max": 2,
+        "min": 1,
+        "price": 400
+      },
+      {
+        "max": 3,
+        "min": 2,
+        "price": 400
+      },
+      {
+        "max": 5,
+        "min": 3,
+        "price": 500
+      }
+    ]
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "出库订单处理费(A标准订单)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "含拣货下架/打印运单/贴标/出库；读计费重分档",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 0.4
+      },
+      {
+        "max": 3,
+        "min": 1,
+        "price": 0.5
+      },
+      {
+        "max": 7,
+        "min": 3,
+        "price": 0.6
+      },
+      {
+        "max": 10,
+        "min": 7,
+        "price": 0.8
+      },
+      {
+        "max": 24,
+        "min": 10,
+        "price": 1.2
+      },
+      {
+        "max": 44,
+        "min": 24,
+        "price": 2
+      },
+      {
+        "max": 66,
+        "min": 44,
+        "price": 2
+      },
+      {
+        "max": 88,
+        "min": 66,
+        "price": 2.5
+      },
+      {
+        "max": 110,
+        "min": 88,
+        "price": 2.8
+      },
+      {
+        "max": 150,
+        "min": 110,
+        "price": 5
+      },
+      {
+        "max": 300,
+        "min": 150,
+        "price": 10
+      },
+      {
+        "max": 500,
+        "min": 300,
+        "price": 15
+      },
+      {
+        "max": null,
+        "min": 500,
+        "price": 20
+      }
+    ]
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "出库订单处理费(B自提订单)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "SFP/VC/wayfair等平台自提",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 0.8
+      },
+      {
+        "max": 3,
+        "min": 1,
+        "price": 1
+      },
+      {
+        "max": 7,
+        "min": 3,
+        "price": 1.2
+      },
+      {
+        "max": 10,
+        "min": 7,
+        "price": 2
+      },
+      {
+        "max": 24,
+        "min": 10,
+        "price": 3.2
+      },
+      {
+        "max": 44,
+        "min": 24,
+        "price": 5
+      },
+      {
+        "max": 66,
+        "min": 44,
+        "price": 5
+      },
+      {
+        "max": 88,
+        "min": 66,
+        "price": 6
+      },
+      {
+        "max": 110,
+        "min": 88,
+        "price": 7
+      },
+      {
+        "max": 150,
+        "min": 110,
+        "price": 10
+      },
+      {
+        "max": 300,
+        "min": 150,
+        "price": 15
+      },
+      {
+        "max": 500,
+        "min": 300,
+        "price": 20
+      },
+      {
+        "max": null,
+        "min": 500,
+        "price": 25
+      }
+    ]
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "拒收或退货入库费",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "含清点/验收入库/上架/拍照",
+    "tiers": [
+      {
+        "max": 50,
+        "min": 0,
+        "price": 4
+      },
+      {
+        "max": null,
+        "min": 50.01,
+        "price": 8
+      }
+    ]
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "批量转运打托费",
+    "unit": "每托",
+    "price": 20,
+    "minCharge": 0,
+    "note": "含托盘/打托/缠膜；单订单SKU超10加5/个",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "滞托费",
+    "unit": "托/天",
+    "price": 10,
+    "minCharge": 0,
+    "note": "打托完成后车队5工作日未提走，第6工作日收",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "贴标签费",
+    "unit": "张",
+    "price": 0.4,
+    "minCharge": 0,
+    "note": "打印/贴标或覆盖原标签",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "销毁费",
+    "unit": "公斤",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "按订单实重，含订单处理费",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "已上架产品拍照",
+    "unit": "件",
+    "price": 10,
+    "minCharge": 0,
+    "note": "随机抽取指定数量库存拍照反馈",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "商品尺寸重量复核",
+    "unit": "SKU",
+    "price": 5,
+    "minCharge": 0,
+    "note": "随机抽一件复核并拍照",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "尾程订单拦截或改址",
+    "unit": "订单",
+    "price": 10,
+    "minCharge": 0,
+    "note": "纯人工费，渠道拦截费另算",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "整柜未预约送仓(异常)",
+    "unit": "海柜",
+    "price": 400,
+    "minCharge": 0,
+    "note": "成功卸柜才收费",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌",
+    "warehouse": "全仓",
+    "serviceType": "整柜送仓爽约(异常)",
+    "unit": "海柜",
+    "price": 200,
+    "minCharge": 0,
+    "note": "预约当天下班前未到视为爽约",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "整柜入库费(卸柜)",
+    "unit": "柜",
+    "price": 0,
+    "minCharge": 0,
+    "note": "20GP/40GP/HQ/45HQ = 275/375/450，超800箱加0.3/箱",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 275
+      },
+      {
+        "max": 2,
+        "min": 1,
+        "price": 375
+      },
+      {
+        "max": 3,
+        "min": 2,
+        "price": 450
+      }
+    ]
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "入库分拣费(SKU超10)",
+    "unit": "SKU种类",
+    "price": 20,
+    "minCharge": 0,
+    "note": "整柜内SKU>10，超出部分每SKU加20",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "散货入库卸货费(快递)",
+    "unit": "件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "0-150磅各段同价2.00",
+    "tiers": [
+      {
+        "max": 4.4,
+        "min": 0,
+        "price": 2
+      },
+      {
+        "max": 22,
+        "min": 4.4,
+        "price": 2
+      },
+      {
+        "max": 50,
+        "min": 22,
+        "price": 2
+      },
+      {
+        "max": 100,
+        "min": 50,
+        "price": 2
+      },
+      {
+        "max": 150,
+        "min": 100,
+        "price": 2
+      }
+    ]
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "散货入库卸货费(散卡托盘)",
+    "unit": "托盘",
+    "price": 12,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "托盘分拣费",
+    "unit": "SKU种类",
+    "price": 6,
+    "minCharge": 0,
+    "note": "入仓1个SKU免费，每增加一个SKU+6",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "SKU清点费",
+    "unit": "箱",
+    "price": 1,
+    "minCharge": 0,
+    "note": "混托混箱时收取",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "退货单制作费",
+    "unit": "件",
+    "price": 3,
+    "minCharge": 0,
+    "note": "使用乐舱尾程账号退货到仓",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "单件退货入库费",
+    "unit": "件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 4.4,
+        "min": 0,
+        "price": 1.8
+      },
+      {
+        "max": 22,
+        "min": 4.4,
+        "price": 2.3
+      },
+      {
+        "max": 50,
+        "min": 22,
+        "price": 3.4
+      },
+      {
+        "max": 100,
+        "min": 50,
+        "price": 4.2
+      },
+      {
+        "max": 150,
+        "min": 100,
+        "price": 6.3
+      }
+    ]
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "托盘退货入库费",
+    "unit": "托盘",
+    "price": 15,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "退货清点费",
+    "unit": "件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "单托/单箱内配件数量清点",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "退货SKU分拣费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "混托混箱按SKU数量",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "退货重新上架费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "单件退货出库费",
+    "unit": "件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 4.4,
+        "min": 0,
+        "price": 1.7
+      },
+      {
+        "max": 22,
+        "min": 4.4,
+        "price": 2.4
+      },
+      {
+        "max": 50,
+        "min": 22,
+        "price": 2.8
+      },
+      {
+        "max": 100,
+        "min": 50,
+        "price": 3.8
+      },
+      {
+        "max": 150,
+        "min": 100,
+        "price": 6.8
+      }
+    ]
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "托盘退货出库费",
+    "unit": "托盘",
+    "price": 15,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "标签费",
+    "unit": "张",
+    "price": 0.35,
+    "minCharge": 0,
+    "note": "贴标及换标",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "入库异常清点费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "首次免费，第二次起收",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "SKU异常作业费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "SKU多标/与系统不对应",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "自提快递异常作业费",
+    "unit": "件",
+    "price": 6,
+    "minCharge": 0,
+    "note": "物流标签与上传不符",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "拍照费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "单件退货到仓最少拍3张",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "视频费",
+    "unit": "件",
+    "price": 6,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "开箱费",
+    "unit": "件",
+    "price": 5,
+    "minCharge": 0,
+    "note": "打开一箱多件外箱或SKU外包装",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "封箱打包费",
+    "unit": "件",
+    "price": 5,
+    "minCharge": 0,
+    "note": "重新封箱打包",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "销毁费&弃货费",
+    "unit": "CBM",
+    "price": 30,
+    "minCharge": 0,
+    "note": "按体积，MIN 2/件",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "其他特殊作业费",
+    "unit": "半小时",
+    "price": 25,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐舱",
+    "warehouse": "全仓",
+    "serviceType": "快递附加业务操作费",
+    "unit": "件",
+    "price": 8,
+    "minCharge": 0,
+    "note": "电话召回/更址",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "卸柜入库费(20GP)",
+    "unit": "柜",
+    "price": 300,
+    "minCharge": 0,
+    "note": "超700箱每100箱+30",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "卸柜入库费(40GP/HQ)",
+    "unit": "柜",
+    "price": 350,
+    "minCharge": 0,
+    "note": "超1000箱每100箱+30",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "卸柜入库费(45HQ)",
+    "unit": "柜",
+    "price": 450,
+    "minCharge": 0,
+    "note": "超1200箱每100箱+30",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "超SKU分拣费",
+    "unit": "SKU",
+    "price": 5,
+    "minCharge": 0,
+    "note": "SKU超过20个，每增加一个+15",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "卸柜费减免",
+    "unit": "柜",
+    "price": 0,
+    "minCharge": 0,
+    "note": "整柜1-3个SKU减免30",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "卡车整托入库",
+    "unit": "托盘",
+    "price": 15,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "订单处理费(TOC)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "拣货下架/打印运单/贴标/出库；实重与体积重取大(体积重=长宽高/9000)",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 0.4
+      },
+      {
+        "max": 3,
+        "min": 1,
+        "price": 0.5
+      },
+      {
+        "max": 7,
+        "min": 3,
+        "price": 0.6
+      },
+      {
+        "max": 11,
+        "min": 7,
+        "price": 0.8
+      },
+      {
+        "max": 22,
+        "min": 11,
+        "price": 1.2
+      },
+      {
+        "max": 44,
+        "min": 22,
+        "price": 2
+      },
+      {
+        "max": 66,
+        "min": 44,
+        "price": 2
+      },
+      {
+        "max": 88,
+        "min": 66,
+        "price": 2.5
+      },
+      {
+        "max": 110,
+        "min": 88,
+        "price": 3.5
+      },
+      {
+        "max": 150,
+        "min": 110,
+        "price": 4
+      },
+      {
+        "max": null,
+        "min": 150,
+        "price": 8
+      }
+    ]
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "自提订单额外处理费",
+    "unit": "每件",
+    "price": 1.5,
+    "minCharge": 0,
+    "note": "AMAZON/WAYFAIR/HOMEDEPOT等平台自提，订单处理费正常另收",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "出库费(TOB拣货下架)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "同TOC标准订单处理费",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "打托费(客户自约卡车)",
+    "unit": "托",
+    "price": 28,
+    "minCharge": 0,
+    "note": "含人工/托盘/缠膜；标准托盘48*40",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "打托费(我司卡车配送)",
+    "unit": "托",
+    "price": 18,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "滞托费",
+    "unit": "托/天",
+    "price": 5,
+    "minCharge": 0,
+    "note": "备货完成后7个自然日未提，第7日收",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "贴标签费",
+    "unit": "张",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "箱标/产品标/托标",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "退货入库服务费",
+    "unit": "单件",
+    "price": 3,
+    "minCharge": 0,
+    "note": "仅收安仓发出订单退件",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "退货商品上架费",
+    "unit": "单件",
+    "price": 3,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "退货拍照费",
+    "unit": "单件",
+    "price": 2,
+    "minCharge": 0,
+    "note": "面单+外箱各一张",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "尾程订单拦截或改址",
+    "unit": "单件",
+    "price": 10,
+    "minCharge": 0,
+    "note": "不成功不收费；渠道拦截费另算",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "已上架产品拍照",
+    "unit": "单件",
+    "price": 5,
+    "minCharge": 0,
+    "note": "随机抽取指定数量",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "销毁费(<50LB)",
+    "unit": "单件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "销毁费(>50LB)",
+    "unit": "单件",
+    "price": 5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "拆托费",
+    "unit": "单托",
+    "price": 10,
+    "minCharge": 0,
+    "note": "拆托并重新上架",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "包装费(纸箱)",
+    "unit": "纸箱",
+    "price": 8,
+    "minCharge": 0,
+    "note": "含人工及包材",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "包装费(袋子)",
+    "unit": "袋",
+    "price": 3,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "额外清点费",
+    "unit": "单件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "客户要求盘点",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "分类理货费",
+    "unit": "单件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "一箱多件开箱清点",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "打托费(增值)",
+    "unit": "托盘",
+    "price": 18,
+    "minCharge": 0,
+    "note": "人工+托盘+缠膜",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "清点费",
+    "unit": "件",
+    "price": 0.1,
+    "minCharge": 0,
+    "note": "产品信息录入退货系统",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "贴标/换标费",
+    "unit": "件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "撕标费",
+    "unit": "件",
+    "price": 0.3,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "纸箱材料费",
+    "unit": "箱",
+    "price": 5,
+    "minCharge": 0,
+    "note": "含打包人工",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "打包人工费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "合并包装费",
+    "unit": "件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "托盘出库费",
+    "unit": "托盘",
+    "price": 10,
+    "minCharge": 0,
+    "note": "卡车提货",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "产品销毁费(弃货)",
+    "unit": "立方",
+    "price": 1,
+    "minCharge": 0,
+    "note": "按立方",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "打绷带费",
+    "unit": "托盘",
+    "price": 5,
+    "minCharge": 0,
+    "note": "货物超长不规则需打绷带",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "包装袋材料费",
+    "unit": "袋",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "安美",
+    "warehouse": "全仓",
+    "serviceType": "其他人工费",
+    "unit": "小时",
+    "price": 40,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "卸货上架费(单箱)",
+    "unit": "箱",
+    "price": 2,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "卸货上架费(单托盘≤100磅)",
+    "unit": "托",
+    "price": 15,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "卸货上架费(40HQ柜)",
+    "unit": "柜",
+    "price": 350,
+    "minCharge": 0,
+    "note": "入库前30条柜子卸柜费300美金",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "订单出库费",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "按计费重(实重/体积重取大)",
+    "tiers": [
+      {
+        "max": 5,
+        "min": 0,
+        "price": 0.8
+      },
+      {
+        "max": 11,
+        "min": 6,
+        "price": 1.2
+      },
+      {
+        "max": 22,
+        "min": 12,
+        "price": 1.5
+      },
+      {
+        "max": 44,
+        "min": 23,
+        "price": 2
+      },
+      {
+        "max": 66,
+        "min": 45,
+        "price": 2
+      },
+      {
+        "max": 88,
+        "min": 67,
+        "price": 3
+      },
+      {
+        "max": 110,
+        "min": 89,
+        "price": 3.5
+      },
+      {
+        "max": 150,
+        "min": 111,
+        "price": 4
+      }
+    ]
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "平台订单附加费(自提)",
+    "unit": "每件",
+    "price": 0,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 49,
+        "min": 0,
+        "price": 1.5
+      },
+      {
+        "max": 150,
+        "min": 49.01,
+        "price": 2
+      }
+    ]
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "退货收货费",
+    "unit": "箱/件",
+    "price": 4,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "退货上架费",
+    "unit": "箱/件",
+    "price": 6,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "检查费",
+    "unit": "件",
+    "price": 3,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "标签贴标费",
+    "unit": "件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "打托费(48in)",
+    "unit": "托",
+    "price": 25,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "打托费(61in)",
+    "unit": "托",
+    "price": 45,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "打托费(100in)",
+    "unit": "托",
+    "price": 60,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "SFP订单附加费",
+    "unit": "单/件",
+    "price": 1.5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "拍照服务",
+    "unit": "件",
+    "price": 2,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "实力派",
+    "warehouse": "全仓",
+    "serviceType": "弃货费",
+    "unit": "lbs",
+    "price": 0.2,
+    "minCharge": 0,
+    "note": "",
+    "tiers": null
+  },
+  {
+    "provider": "乐歌VIP",
+    "warehouse": "乐歌VIP美",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 0.4,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 0.4
+      }
+    ],
+    "providerAlias": "乐歌VIP美",
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "乐歌VIP",
+    "warehouse": "乐歌VIP加",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 1,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 1
+      }
+    ],
+    "providerAlias": "乐歌VIP加",
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "乐歌VIP",
+    "warehouse": "乐歌VIP德",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 1.2,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 5,
+        "min": 0,
+        "price": 1.2
+      }
+    ],
+    "providerAlias": "乐歌VIP德",
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "安美VIP",
+    "warehouse": "全仓",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 0.4,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 1,
+        "min": 0,
+        "price": 0.4
+      }
+    ],
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "YFJ&SMART",
+    "warehouse": "全仓",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 0.8,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 10,
+        "min": 4.41,
+        "price": 0.8
+      }
+    ],
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "M.KiTE枫筝",
+    "warehouse": "全仓",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 0.5,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 0.5,
+        "min": 0,
+        "price": 0.5
+      }
+    ],
+    "warehouseAlias": "ALL"
+  },
+  {
+    "provider": "盘古Teknihall",
+    "warehouse": "全仓",
+    "serviceType": "standard",
+    "unit": "USD/件",
+    "price": 68,
+    "minCharge": 0,
+    "note": "",
+    "tiers": [
+      {
+        "max": 68,
+        "min": 0,
+        "price": 68
+      }
+    ],
+    "warehouseAlias": "ALL"
+  }
+]
