@@ -1,0 +1,56 @@
+{
+  "name": "kaoban-desktop",
+  "version": "1.0.0",
+  "description": "海外仓管理看板 - 桌面版",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "author": "",
+  "license": "MIT",
+  "build": {
+    "appId": "com.kaoban.desktop",
+    "productName": "海外仓管理看板",
+    "files": [
+      "main.js",
+      "preload.js",
+      "build/**",
+      "!node_modules"
+    ],
+    "extraResources": [
+      {
+        "from": "../",
+        "to": "app",
+        "filter": [
+          "**/*",
+          "!desktop/**",
+          "!node_modules/**",
+          "!.git/**",
+          "!.cache/**",
+          "!server.log",
+          "!*.pyc"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.4.3",
+    "electron-builder": "^26.15.3"
+  }
+}
