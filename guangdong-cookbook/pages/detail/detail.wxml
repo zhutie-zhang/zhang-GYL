@@ -1,0 +1,51 @@
+<view wx:if="{{notFound}}" class="empty">没有找到这道菜</view>
+
+<block wx:if="{{r}}">
+  <view class="head">
+    <view class="row">
+      <text class="h-name s1">{{r.name}}</text>
+    </view>
+    <view class="row meta">
+      <text class="tag">{{r.kind}}</text>
+      <text class="tag">{{r.style}}</text>
+      <text class="tag">难度 {{r.difficulty}}</text>
+      <text class="tag">约{{r.time}}分钟</text>
+      <text class="tag warn" wx:if="{{r.occa}}">偶尔吃</text>
+    </view>
+    <view class="tags">
+      <text class="tag" wx:for="{{r.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">用料（1 人份）</view>
+    <view class="ing" wx:for="{{r.ingredients}}" wx:key="n">
+      <text class="s1">{{item.n}}</text>
+      <text class="muted">{{item.g ? item.g + '克' : '适量'}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">做法</view>
+    <view class="step" wx:for="{{r.steps}}" wx:key="*this">
+      <text class="step-no">{{index + 1}}</text>
+      <text class="step-txt">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">营养分析（每份）</view>
+    <view class="nut" wx:for="{{nutRows}}" wx:key="k">
+      <text class="s1">{{item.k}}</text>
+      <text>{{item.v}}{{item.unit}}</text>
+    </view>
+    <view class="muted" style="margin-top:12rpx;">占成人每日推荐：能量 {{nutRows[0].pct}}% · 蛋白质 {{nutRows[1].pct}}% · 钠 {{nutRows[4].pct}}%</view>
+  </view>
+
+  <view class="card" wx:if="{{r.tip}}">
+    <view class="card-title warn-title">膳食提示</view>
+    <text class="tip-txt">{{r.tip}}</text>
+  </view>
+</block>
+
+<view class="footer">数据按 1 人份估算，参照《中国居民膳食指南2022》</view>
