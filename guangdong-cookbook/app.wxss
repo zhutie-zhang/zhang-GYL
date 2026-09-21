@@ -1,0 +1,70 @@
+page {
+  background: #faf6f0;
+  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: #3a3a3a;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(80, 40, 0, 0.05);
+  padding: 26rpx;
+  margin: 18rpx 24rpx;
+}
+
+.sec-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin: 30rpx 28rpx 6rpx;
+  color: #2f2f2f;
+}
+
+.muted { color: #9a9a9a; font-size: 24rpx; }
+
+.chip {
+  display: inline-block;
+  padding: 8rpx 22rpx;
+  margin: 8rpx 14rpx 0 0;
+  border-radius: 32rpx;
+  background: #f0ece4;
+  color: #6b6b6b;
+  font-size: 24rpx;
+}
+.chip.on {
+  background: #5b8c5a;
+  color: #ffffff;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 22rpx;
+  color: #5b8c5a;
+  background: #eef5ec;
+  border-radius: 8rpx;
+  padding: 4rpx 14rpx;
+  margin-right: 12rpx;
+  margin-top: 6rpx;
+}
+.tag.warn { color: #c2612e; background: #fbeedd; }
+
+.btn {
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  margin: 20rpx 0 0;
+}
+.btn::after { border: none; }
+
+.btn-primary { background: #5b8c5a; color: #ffffff; }
+.btn-ghost { background: #ffffff; color: #5b8c5a; border: 2rpx solid #5b8c5a; }
+
+.row { display: flex; align-items: center; }
+.s1 { flex: 1; min-width: 0; }
+
+.nut-bar { height: 14rpx; border-radius: 8rpx; background: #f0ece4; overflow: hidden; margin-top: 6rpx; }
+.nut-bar > view { height: 100%; border-radius: 8rpx; }
+.nut-lv-low { background: #c9d6c6; }
+.nut-lv-ok { background: #5b8c5a; }
+.nut-lv-high { background: #f0a03a; }
+.nut-lv-very { background: #e0583c; }
