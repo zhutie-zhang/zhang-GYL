@@ -1,0 +1,30 @@
+.page { padding-bottom: 140rpx; }
+.date-pick { color: #5b8c5a; font-size: 28rpx; }
+.actions { margin-top: 16rpx; }
+.mini { padding: 8rpx 26rpx; font-size: 24rpx; margin-right: 16rpx; }
+
+.gro-title { font-size: 26rpx; font-weight: 600; color: #5b8c5a; margin-bottom: 6rpx; }
+.opt { padding: 14rpx 0; border-bottom: 1rpx solid #f3efe7; font-size: 27rpx; }
+.ck {
+  width: 40rpx; height: 40rpx; border-radius: 50%;
+  border: 2rpx solid #cfc9bd; color: #fff; font-size: 24rpx; text-align: center; line-height: 40rpx;
+}
+.ck.on { background: #5b8c5a; border-color: #5b8c5a; }
+
+.fixed { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 20rpx 24rpx; box-shadow: 0 -4rpx 20rpx rgba(0,0,0,.06); }
+.blank { height: 420rpx; }
+.s-score { font-size: 30rpx; font-weight: 700; color: #5b8c5a; }
+.s-count { font-size: 24rpx; color: #9a9a9a; }
+.s-right { text-align: center; }
+.s-grade { display: block; font-size: 22rpx; color: #b0aca2; }
+
+.mini-bars { margin-top: 12rpx; }
+.mbar { display: flex; align-items: center; margin-top: 8rpx; }
+.mb-label { width: 120rpx; font-size: 22rpx; color: #777; }
+.mb-val { width: 150rpx; text-align: right; font-size: 22rpx; color: #999; }
+.mbar .nut-bar { flex: 1; }
+
+.tips { background: #fbf7ef; border-radius: 12rpx; padding: 10rpx 14rpx; margin-top: 10rpx; }
+.tip-line { font-size: 22rpx; color: #7a6a4f; line-height: 1.7; }
+
+.bottom-save { margin: 20rpx 24rpx 0; }
