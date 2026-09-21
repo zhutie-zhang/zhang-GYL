@@ -1,0 +1,39 @@
+{
+  "classification": {
+    "hot_turnover_max": 15,
+    "hot_avg_daily_min": 2,
+    "normal_turnover_max": 30,
+    "normal_avg_daily_min": 0.5,
+    "slow_turnover_min": 60,
+    "warning_turnover_min": 45
+  },
+  "priority": {
+    "critical_sellable_days": 7,
+    "critical_score": 50,
+    "warning_sellable_days": 14,
+    "warning_score": 30,
+    "caution_sellable_days": 21,
+    "caution_score": 15,
+    "no_transit_caution_days": 21,
+    "no_transit_score": 20,
+    "high_volume_min": 5,
+    "high_volume_score": 10,
+    "med_volume_min": 2,
+    "med_volume_score": 5,
+    "fast_turnover_max": 15,
+    "fast_turnover_score": 5
+  },
+  "alerts": {
+    "critical_sellable_days": 7,
+    "low_sellable_days": 14,
+    "slow_turnover_min": 90,
+    "medium_slow_turnover_min": 60,
+    "excess_transit_multiplier": 3,
+    "slow_trend_turnover_min": 30,
+    "rising_trend_sellable_days": 21
+  },
+  "safety_stock": {
+    "service_level_z": 1.65,
+    "min_safety_days": 7
+  }
+}
