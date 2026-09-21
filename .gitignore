@@ -1,0 +1,17 @@
+# Node / Electron
+desktop/node_modules/
+desktop/dist/
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# 运行时 / 缓存 / 临时
+.cache/
+server.pid
+server_err.log
+desktop/build/*.tmp
+
+# 敏感凭证（绝不提交）
+data/github_token.json
