@@ -1,0 +1,61 @@
+.page { padding-bottom: 60rpx; }
+
+.hero {
+  margin: 20rpx 24rpx;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, #6a9a68, #4f7d4e);
+  color: #fff;
+}
+.date { font-size: 32rpx; font-weight: 600; }
+.sub { font-size: 24rpx; opacity: .9; margin-top: 6rpx; }
+.hero-score { display: flex; align-items: center; margin-top: 24rpx; }
+.score { font-size: 72rpx; font-weight: 700; margin-right: 20rpx; font-family: Georgia, serif; }
+.col { display: flex; flex-direction: column; }
+.grade { font-size: 32rpx; font-weight: 600; }
+.muted-dark { font-size: 22rpx; opacity: .85; }
+.hero-tag { display: block; margin-top: 16rpx; font-size: 24rpx; opacity: .95; }
+
+.profiles { margin: 8rpx 0 4rpx; }
+.wrap { flex-wrap: wrap; padding: 0 24rpx; }
+
+.meal-head { margin-bottom: 14rpx; }
+.meal-name { font-size: 30rpx; font-weight: 600; }
+.meal-tip { display: block; font-size: 22rpx; color: #9a9a9a; margin-top: 4rpx; }
+.meal-kcal { font-size: 26rpx; color: #5b8c5a; font-weight: 600; }
+
+.dish {
+  display: flex; align-items: center;
+  padding: 16rpx 0;
+  border-top: 1rpx solid #f3efe7;
+}
+.dish-left { flex: 1; min-width: 0; }
+.dish-name { font-size: 28rpx; }
+.role {
+  display: block; font-size: 22rpx; color: #8a8a8a; margin-top: 2rpx;
+}
+.dish-kcal { font-size: 26rpx; color: #b9b3a8; }
+
+.menu-actions .mini { margin: 10rpx 0 0; padding: 6rpx 24rpx; font-size: 24rpx; }
+
+.actions { padding: 0 24rpx; }
+.actions .btn { padding: 16rpx 0; text-align: center; }
+.actions .s1 { margin: 0 8rpx; }
+
+.card-title { font-size: 30rpx; font-weight: 600; }
+.gro-group { margin-top: 16rpx; }
+.gro-title { font-size: 24rpx; color: #5b8c5a; font-weight: 600; margin-bottom: 6rpx; }
+.gro-item { display: flex; padding: 8rpx 0; font-size: 26rpx; border-bottom: 1rpx solid #f6f2ea; }
+.gro-gram { color: #b9b3a8; }
+
+.bar-row { margin-top: 18rpx; }
+.bar-head { display: flex; justify-content: space-between; font-size: 24rpx; }
+.lv { font-size: 22rpx; }
+.lv-low { color: #9db39a; } .lv-ok { color: #5b8c5a; }
+.lv-high { color: #e08a2e; } .lv-very { color: #e0583c; }
+
+.tip-box { margin-top: 20rpx; background: #fbf7ef; border-radius: 14rpx; padding: 16rpx; }
+.tip-line { font-size: 24rpx; color: #7a6a4f; line-height: 1.8; }
+.warn-line { color: #c2612e; }
+
+.footer { text-align: center; font-size: 22rpx; color: #b0aca2; margin-top: 30rpx; }
