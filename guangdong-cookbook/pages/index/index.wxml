@@ -1,0 +1,89 @@
+<view class="page">
+  <view class="hero">
+    <view class="row">
+      <view class="s1">
+        <view class="date">{{menu.date}} {{menu.dateLabel}}</view>
+        <view class="sub">{{menu.profileLabel}} · {{menu.family}} 人份</view>
+      </view>
+    </view>
+    <view class="hero-score">
+      <text class="score">{{menu.score}}</text>
+      <view class="col">
+        <text class="grade">{{menu.grade}}</text>
+        <text class="muted-dark">一日营养评分</text>
+      </view>
+    </view>
+    <text class="hero-tag">约 {{menu.totals.kcal}} 千卡 · 食材 {{menu.varieties}} 种</text>
+  </view>
+
+  <view class="profiles">
+    <view class="sec-title">按人群调整</view>
+    <view class="row wrap">
+      <view wx:for="{{profiles}}" wx:for-item="p" wx:for-index="pk" wx:key="{{p.label}}"
+            class="chip {{profileKey === pk ? 'on' : ''}}" data-key="{{pk}}" bindtap="onProfileChange">{{p.label}}</view>
+    </view>
+    <view class="muted" style="margin:12rpx 8rpx 0;">点选人群后自动重新搭配；在「我的」还可设置禁忌与家庭人数</view>
+  </view>
+
+  <view class="sec-title">一日三餐</view>
+  <view class="card meal" wx:for="{{menu.meals}}" wx:key="key" wx:for-item="meal">
+    <view class="row meal-head">
+      <view class="s1">
+        <text class="meal-name">{{meal.name}}</text>
+        <text class="meal-tip">{{meal.tip}}</text>
+      </view>
+      <text class="meal-kcal">{{meal.kcal}}大卡</text>
+    </view>
+    <view class="dish" wx:for="{{meal.dishes}}" wx:for-item="d" wx:key="index"
+          bindtap="goDetail" data-id="{{d.id}}">
+      <view class="dish-left">
+        <text class="dish-name">{{d.name}}</text>
+        <text class="role">{{d.role}}</text>
+        <text wx:if="{{d.occa}}" class="tag warn">偶尔吃</text>
+      </view>
+      <text class="dish-kcal">{{d.kcal}}大卡</text>
+    </view>
+    <view class="menu-actions" wx:if="{{meal.showBtn}}">
+      <view class="btn btn-ghost mini" bindtap="changeMenu">换一顿</view>
+    </view>
+  </view>
+
+  <view class="row actions">
+    <view class="btn btn-primary s1" bindtap="changeMenu">换一套菜谱</view>
+  </view>
+  <view class="row actions">
+    <view class="btn btn-ghost s1" bindtap="toggleGrocery">{{showGrocery ? '收起' : '查看'}}今日采购清单</view>
+    <view class="btn btn-ghost s1" bindtap="goRecord">记录今天吃了啥</view>
+  </view>
+
+  <view class="card" wx:if="{{showGrocery}}">
+    <view class="row">
+      <text class="card-title">采购清单（{{menu.family}} 人份）</text>
+    </view>
+    <view wx:for="{{menu.grocery}}" wx:for-item="g" wx:key="group" class="gro-group">
+      <view class="gro-title">{{g.group}}</view>
+      <view class="gro-item" wx:for="{{g.items}}" wx:for-item="it" wx:for-index="idx" wx:key="name">
+        <text class="s1">{{it.name}}</text>
+        <text class="gro-gram">{{it.grams}}克</text>
+      </view>
+    </view>
+    <view wx:if="{{menu.conds.length}}" class="muted">调料依口味适量：{{menu.conds}}</view>
+  </view>
+
+  <view class="card" wx:if="{{showAnalysis}}">
+    <view class="row" bindtap="toggleAnalysis"><text class="card-title s1">今日营养分析</text><text class="muted">收起</text></view>
+    <view class="bar-row" wx:for="{{bars}}" wx:key="key" wx:for-item="b">
+      <view class="bar-head">
+        <text>{{b.key}} <text class="muted">{{b.cur}}{{b.unit}} / 目标 {{b.target}}{{b.unit}}</text></text>
+        <text class="lv {{'lv-' + b.lv}}">{{b.label}}</text>
+      </view>
+      <view class="nut-bar"><view class="nut-lv-{{b.lv}}" style="width:{{b.pct}}%;"></view></view>
+    </view>
+    <view class="tip-box">
+      <view wx:for="{{menu.tips}}" wx:for-item="tp" wx:key="*this" class="tip-line">· {{tp}}</view>
+      <view wx:for="{{menu.notes}}" wx:for-item="nt" wx:key="*this" class="tip-line warn-line">· {{nt}}</view>
+    </view>
+  </view>
+
+  <view class="footer">数据按 1 人份估算，家庭人数倍数在「我的」中设置 · 结合《中国居民膳食指南2022》</view>
+</view>
