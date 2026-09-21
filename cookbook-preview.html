@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>广东家常菜 · 网页预览（小程序同款）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #efe9df; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #3a3a3a; padding: 24px 12px 40px; }
+  .phone { max-width: 420px; margin: 0 auto; background: #faf6f0; border-radius: 18px; box-shadow: 0 10px 40px rgba(0,0,0,.18); overflow: hidden; }
+  .bar { background: #5b8c5a; color: #fff; padding: 12px 16px; font-size: 13px; }
+  .bar small { opacity: .85; }
+
+  .top-hero { margin: 14px; padding: 18px; border-radius: 16px; color: #fff;
+    background: linear-gradient(135deg, #6a9a68, #4f7d4e); }
+  .top-hero .date { font-weight: 700; font-size: 17px; }
+  .score-row { display: flex; align-items: center; margin-top: 12px; }
+  .score { font-size: 44px; font-weight: 800; margin-right: 14px; font-family: Georgia, serif; }
+  .hero-tag { display: block; margin-top: 8px; font-size: 12px; opacity: .95; }
+
+  .sec { font-weight: 700; margin: 18px 16px 6px; font-size: 15px; }
+  .card { background: #fff; border-radius: 14px; margin: 10px 14px; padding: 14px; box-shadow: 0 2px 10px rgba(80,40,0,.05); }
+  .meal-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .meal-name { font-weight: 700; }
+  .meal-tip { display: block; font-size: 11px; color: #9a9a9a; margin-top: 2px; }
+  .meal-kcal { color: #5b8c5a; font-weight: 700; font-size: 13px; }
+  .dish { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-top: 1px solid #f3efe7; }
+  .dish-name { font-size: 14px; }
+  .role { display: block; font-size: 11px; color: #9a9a9a; }
+  .dish-kcal { font-size: 12px; color: #b9b3a8; }
+  .occ { display: inline-block; font-size: 10px; color: #c2612e; background: #fbeedd; border-radius: 6px; padding: 1px 6px; margin-left: 6px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 6px; }
+  .chip { padding: 6px 14px; border-radius: 16px; background: #f0ece4; font-size: 12px; color: #6b6b6b; cursor: pointer; border: none; }
+  .chip.on { background: #5b8c5a; color: #fff; }
+
+  .actions { display: flex; gap: 10px; padding: 4px 14px 10px; }
+  .btn { flex: 1; padding: 10px 0; text-align: center; border-radius: 24px; font-size: 13px; cursor: pointer; }
+  .btn-primary { background: #5b8c5a; color: #fff; border: none; }
+  .btn-ghost { background: #fff; color: #5b8c5a; border: 1px solid #5b8c5a; }
+
+  .bar-row { margin-top: 12px; }
+  .bar-head { display: flex; justify-content: space-between; font-size: 12px; }
+  .pill { border-radius: 6px; padding: 0 6px; font-size: 11px; }
+  .b-track { height: 8px; border-radius: 5px; background: #f0ece4; margin-top: 4px; overflow: hidden; }
+  .b-fill { height: 100%; border-radius: 5px; }
+  .lv-ok { background: #5b8c5a; } .lv-low { background: #c9d6c6 } .lv-high { background: #f0a03a; } .lv-very { background: #e0583c; }
+
+  .gro { margin-top: 10px; }
+  .gro-t { font-weight: 700; color: #5b8c5a; font-size: 12px; }
+  .gro-i { display: flex; justify-content: space-between; padding: 5px 0; font-size: 12px; border-bottom: 1px solid #f6f2ea; }
+  .gro-i span.g { color: #b9b3a8; }
+
+  .tips { background: #fbf7ef; border-radius: 10px; padding: 10px 12px; margin-top: 12px; font-size: 12px; color: #7a6a4f; line-height: 1.8; }
+  .tips .warn { color: #c2612e; }
+
+  .library { padding-bottom: 16px; }
+  .lib-card { display: flex; justify-content: space-between; cursor: pointer; }
+  .lib-card:hover { background: #fbf7ef; }
+  .tags span { font-size: 10px; color: #5b8c5a; background: #eef5ec; border-radius: 5px; padding: 1px 7px; margin: 2px 4px 0 0; display: inline-block; }
+
+  /* 宝塔 */
+  .pagoda { padding: 6px 16px 16px; }
+  .layer { border-radius: 8px; padding: 9px 12px; margin: 5px 0; color: #fff; font-size: 12px; }
+  .layer b { display: block; font-size: 13px; }
+  .layer small { opacity: .92; }
+  .plat { display: flex; justify-content: space-between; padding: 7px 0; font-size: 12px; border-bottom: 1px solid #f3efe7; }
+  .acc { cursor: pointer; padding: 11px 0; border-bottom: 1px solid #f3efe7; }
+  .acc .q { font-size: 13px; font-weight: 600; }
+  .acc .a { font-size: 12px; color: #6b6b6b; margin-top: 6px; line-height: 1.7; display: none; }
+  .acc.open .a { display: block; }
+
+  .mine-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #f3efe7; }
+  .switch { width: 46px; height: 26px; border-radius: 14px; background: #e0ddd4; position: relative; cursor: pointer; }
+  .switch.on { background: #5b8c5a; }
+  .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: .2s; }
+  .switch.on::after { left: 23px; }
+  .stepper { display: inline-block; width: 30px; height: 30px; line-height: 30px; text-align: center; border-radius: 50%; background: #eef5ec; color: #5b8c5a; font-weight: 700; cursor: pointer; margin: 0 8px; }
+
+  .footer { text-align: center; font-size: 11px; color: #b0aca2; padding: 18px; }
+  .search { width: 100%; padding: 10px 18px; border: none; border-radius: 20px; background: #fff; font-size: 13px; outline: none; box-shadow: 0 2px 8px rgba(80,40,0,.05); }
+  .search-wrap { padding: 12px 14px 4px; }
+  .count { text-align: center; font-size: 11px; color: #b0aca2; padding: 6px; }
+  .empty { text-align: center; color: #b0aca2; padding: 40px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="bar">广东家常菜 · 网页预览 <small>（与小程序同数据同逻辑）</small></div>
+
+  <!-- 今日 -->
+  <section id="tab-recommend">
+    <div class="top-hero">
+      <div class="date" id="hero-date"></div>
+      <div class="score-row">
+        <span class="score" id="hero-score"></span>
+        <div><b id="hero-grade"></b><br><small style="opacity:.85">一日营养评分</small></div>
+      </div>
+      <span class="hero-tag" id="hero-tag"></span>
+    </div>
+
+    <div class="sec">按人群调整</div>
+    <div class="chips" id="profile-chips"></div>
+    <div class="sec">一日三餐</div>
+    <div id="meals"></div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="changeMenu()">换一套菜谱</button>
+      <button class="btn btn-ghost" onclick="toggleGro()" id="gro-btn">采购清单</button>
+    </div>
+    <div class="actions"><button class="btn btn-ghost" onclick="toggleBars()" id="bar-btn">营养分析</button></div>
+
+    <div class="card" id="grocery" style="display:none;"></div>
+    <div class="card" id="analysis" style="display:block;"></div>
+
+    <div class="sec">设置（影响推荐）</div>
+    <div class="card">
+      <div class="mine-row"><span>家庭人数</span><span><span class="stepper" onclick="fam(-1)">−</span><b id="fam-n">3</b> 人<span class="stepper" onclick="fam(1)">＋</span></span></div>
+      <div class="mine-row"><span>口味</span>
+        <span id="taste-wrap" class="chips" style="padding:0"></span></div>
+      <div class="mine-row" id="veto-row"></div>
+    </div>
+    <div class="footer">数据按 1 人份估算，家庭倍数自动放大采购量 · 结合《中国居民膳食指南2022》</div>
+  </section>
+
+  <!-- 菜谱库 -->
+  <section id="tab-library" style="display:none">
+    <div class="search-wrap"><input class="search" id="kw" placeholder="搜索：菜名 / 食材 / 标签" oninput="applyLib()"></div>
+    <div class="chips" id="kind-chips" style="padding-top:8px"></div>
+    <div class="library" id="lib-list"></div>
+    <div class="count" id="lib-count"></div>
+  </section>
+
+  <!-- 指南 -->
+  <section id="tab-guide" style="display:none">
+    <div class="sec">中国居民平衡膳食宝塔（2022）</div>
+    <div class="pagoda" id="pagoda"></div>
+    <div class="sec">量化小目标（成人）</div>
+    <div class="card" id="plat"></div>
+    <div class="sec">平衡膳食八准则</div>
+    <div class="card" id="principles"></div>
+    <div class="sec">广东饮食误区</div>
+    <div class="card" id="myths"></div>
+  </section>
+
+  <div class="actions" style="padding:10px 14px 16px">
+    <button class="btn btn-ghost" onclick="showTab('recommend')">今日</button>
+    <button class="btn btn-ghost" onclick="showTab('library')">菜谱</button>
+    <button class="btn btn-ghost" onclick="showTab('guide')">指南</button>
+  </div>
+</div>
+
+<script src="guangdong-cookbook/utils/guide.js"></script>
+<script src="guangdong-cookbook/utils/recipes.js"></script>
+<script src="guangdong-cookbook/utils/nutrition.js"></script>
+<script src="guangdong-cookbook/utils/store.js"></script>
+<script src="guangdong-cookbook/utils/recommend.js"></script>
+<script>
+var prefs = { profile: 'normal', family: 3, taste: 'light', veto: [], seedCount: 0 };
+var menu = null;
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtCur(n){ return Math.round(n); }
+
+// ---------- 今日推荐 ----------
+function renderRecommend() {
+  menu = RECOMMEND.recommend(prefs);
+  var d = new Date();
+  document.getElementById('hero-date').textContent = menu.date + '  ' + menu.dateLabel + '（' + menu.profileLabel + ' · ' + menu.family + '人份）';
+  document.getElementById('hero-score').textContent = menu.score;
+  document.getElementById('hero-grade').textContent = menu.grade;
+  document.getElementById('hero-tag').textContent = '约 ' + fmtCur(menu.totals.kcal) + ' 千卡 · 食材 ' + menu.varieties + ' 种 · 蔬菜 ' + fmtCur(menu.totals.vegGram) + 'g';
+
+  document.getElementById('profile-chips').innerHTML = Object.keys(GUIDE.profiles).map(function (k) {
+    return '<button class="chip' + (prefs.profile === k ? ' on' : '') + '" onclick="setProfile(\'' + k + '\')">' + esc(GUIDE.profiles[k].label) + '</button>';
+  }).join('');
+  document.getElementById('fam-n').textContent = prefs.family;
+  document.getElementById('taste-wrap').innerHTML = ['light','spicy'].map(function (t) {
+    return '<button class="chip' + (prefs.taste === t ? ' on' : '') + '" onclick="setTaste(\'' + t + '\')">' + (t === 'light' ? '清淡' : '微辣') + '</button>';
+  }).join('');
+  var vetoOp = [{k:'beef',l:'不吃牛肉'},{k:'seafood',l:'海鲜过敏'},{k:'organ',l:'不吃内脏'},{k:'preserved',l:'不吃腊味'},{k:'veg',l:'素食'}];
+  document.getElementById('veto-row').innerHTML = '<span>饮食禁忌</span><span>' + vetoOp.map(function (v) {
+    var on = prefs.veto.indexOf(v.k) >= 0;
+    return '<span style="display:inline-block;text-align:center;margin:0 5px"><span class="switch' + (on ? ' on' : '') + '" onclick="toggleVeto(\'' + v.k + '\')"></span><small style="display:block;font-size:10px;color:#999">' + v.l + '</small></span>';
+  }).join('') + '</span>';
+
+  var mealsHtml = menu.meals.map(function (m) {
+    var kcal = m.dishes.reduce(function (s, d) { return s + d.kcal; }, 0);
+    var dishes = m.dishes.map(function (d) {
+      return '<div class="dish"><div><span class="dish-name">' + esc(d.name) + (d.occa ? '<span class="occ">偶尔吃</span>' : '') + '</span>' +
+        '<span class="role">' + esc(d.role + (d.note ? ' · ' + d.note : '')) + '</span></div>' +
+        '<span class="dish-kcal">' + d.kcal + '大卡</span></div>';
+    }).join('');
+    return '<div class="card"><div class="meal-head"><div><span class="meal-name">' + m.name + '</span><span class="meal-tip">' + esc(m.tip) + '</span></div><span class="meal-kcal">' + kcal + '大卡</span></div>' + dishes + '</div>';
+  }).join('');
+  document.getElementById('meals').innerHTML = mealsHtml;
+
+  // 采购清单
+  var groHtml = menu.grocery.map(function (g) {
+    return '<div class="gro"><div class="gro-t">' + esc(g.group) + '</div>' + g.items.map(function (it) {
+      return '<div class="gro-i"><span>' + esc(it.name) + '</span><span class="g">' + it.grams + '克</span></div>';
+    }).join('') + '</div>';
+  }).join('') + (menu.conds.length ? '<div style="font-size:11px;color:#b9b3a8;margin-top:8px">调料依口味适量：' + esc(menu.conds.join('、')) + '</div>' : '');
+  document.getElementById('grocery').innerHTML = groHtml;
+
+  // 营养分析
+  var bars = [];
+  [{k:'能量',v:menu.totals.kcal,t:menu.targets.energy,u:'千卡'},{k:'蛋白质',v:menu.totals.protein,t:menu.targets.protein,u:'克'},
+   {k:'脂肪',v:menu.totals.fat,t:menu.targets.fat,u:'克'},{k:'碳水',v:menu.totals.carb,t:menu.targets.carb,u:'克'},
+   {k:'钠',v:menu.totals.sodium,t:menu.targets.sodium,u:'毫克'},{k:'蔬菜',v:menu.totals.vegGram,t:menu.targets.veg,u:'克'}].forEach(function (b) {
+    var p = NUTRITION.pct(b.v, b.t);
+    bars.push('<div class="bar-row"><div class="bar-head"><span>' + b.k + '　' + fmtCur(b.v) + b.u + ' / ' + b.t + b.u + '</span><span>' + p + '%</span></div>' +
+      '<div class="b-track"><div class="b-fill lv-' + NUTRITION.level(b.v, b.t, b.k === '钠') + '" style="width:' + Math.min(100, p) + '%"></div></div></div>');
+  }).join('');
+  var scoreTip = menu.tips.map(function (t) { return '<div>· ' + esc(t) + '</div>'; }).join('');
+  var noteTip = menu.notes.map(function (t) { return '<div class="warn">· ' + esc(t) + '</div>'; }).join('');
+  document.getElementById('analysis').innerHTML = bars + '<div class="tips">' + scoreTip + noteTip + '</div>';
+}
+function setProfile(k){ prefs.profile = k; renderRecommend(); }
+function setTaste(t){ prefs.taste = t; renderRecommend(); }
+function toggleVeto(k){ var i = prefs.veto.indexOf(k); if (i >= 0) prefs.veto.splice(i, 1); else prefs.veto.push(k); renderRecommend(); }
+function fam(d){ prefs.family = Math.max(1, Math.min(12, prefs.family + d)); renderRecommend(); }
+function changeMenu(){ prefs.seedCount++; renderRecommend(); }
+function toggleGro(){ var el = document.getElementById('grocery'); var on = el.style.display !== 'none'; el.style.display = on ? 'none' : 'block'; document.getElementById('gro-btn').textContent = on ? '采购清单' : '收起清单'; }
+function toggleBars(){ var el = document.getElementById('analysis'); var on = el.style.display !== 'none'; el.style.display = on ? 'none' : 'block'; document.getElementById('bar-btn').textContent = on ? '营养分析' : '营养分析'; }
+
+// ---------- 菜谱库 ----------
+var libKind = '全部';
+function applyLib() {
+  var kw = (document.getElementById('kw').value || '').trim().toLowerCase();
+  var list = RECIPES.list.filter(function (r) {
+    if (libKind !== '全部' && r.kind !== libKind) return false;
+    if (!kw) return true;
+    return (r.name + ' ' + r.style + ' ' + r.tags.join(' ') + ' ' + r.ingredients.map(function (ig) { return ig.n; }).join(' ')).toLowerCase().indexOf(kw) >= 0;
+  });
+  document.getElementById('lib-list').innerHTML = list.map(function (r) {
+    return '<div class="card lib-card"><div><b>' + esc(r.name) + '</b>' +
+      '<div class="tags"><span>' + esc(r.kind) + '</span><span>' + esc(r.style) + '</span><span>' + r.time + '分钟</span>' + r.tags.slice(0, 3).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + (r.occa ? '<span style="color:#c2612e;background:#fbeedd">偶尔吃</span>' : '') + '</div></div>' +
+      '<b style="color:#5b8c5a">' + r.nutrition.kcal + '大卡</b></div>';
+  }).join('') || '<div class="empty">没有找到符合的菜谱，换个关键词试试</div>';
+  document.getElementById('lib-count').textContent = '共 ' + list.length + ' 道';
+}
+function setLibKind(k){ libKind = k; var btns = document.querySelectorAll('#kind-chips .chip'); btns.forEach(function (b) { b.classList.toggle('on', b.textContent === (k === '全部' ? '全部' : k)); }); applyLib(); }
+
+// ---------- 指南 ----------
+function renderGuide() {
+  document.getElementById('pagoda').innerHTML = GUIDE.pagoda.map(function (p, i) {
+    return '<div class="layer" style="width:' + (96 - i * 10) + '%;background:' + p.color + '"><b>' + esc(p.name) + '</b>' +
+      '<span>' + esc(p.amount) + '</span><small> · ' + esc(p.note) + '</small></div>';
+  }).join('');
+  document.getElementById('plat').innerHTML = [
+    ['能量', '约 2000 千卡/天'], ['食盐 / 烹调油', '<5 克 / 25~30 克'], ['动物性食物', '120~200 克/天'],
+    ['奶类', '300~500 克/天'], ['饮水', '1500~1700 ml/天'], ['食物种类', '每天 ≥12 种，每周 ≥25 种']
+  ].map(function (x) { return '<div class="plat"><span>' + x[0] + '</span><span>' + x[1] + '</span></div>'; }).join('');
+  document.getElementById('principles').innerHTML = GUIDE.principles.map(function (p, i) {
+    return '<div class="acc" onclick="this.classList.toggle(\'open\')"><div class="q">' + (i + 1) + '. ' + esc(p.t) + ' <span style="color:#b9b3a8">▸</span></div><div class="a">' + esc(p.d) + '</div></div>';
+  }).join('');
+  document.getElementById('myths').innerHTML = GUIDE.myths.map(function (m) {
+    return '<div class="acc" onclick="this.classList.toggle(\'open\')"><div class="q">' + esc(m.q) + ' <span style="color:#b9b3a8">▸</span></div><div class="a">' + esc(m.a) + '</div></div>';
+  }).join('');
+}
+
+// ---------- tab 切换 ----------
+function showTab(name) {
+  ['recommend', 'library', 'guide'].forEach(function (t) {
+    document.getElementById('tab-' + t).style.display = t === name ? 'block' : 'none';
+  });
+  if (name === 'library' && !document.getElementById('kind-chips').children.length) {
+    document.getElementById('kind-chips').innerHTML = ['全部'].concat(RECIPES.list.map(function (r) { return r.kind; }).filter(function (k, i, a) { return a.indexOf(k) === i; })).map(function (k) {
+      return '<button class="chip' + (k === '全部' ? ' on' : '') + '" onclick="setLibKind(\'' + k + '\')">' + esc(k) + '</button>';
+    }).join('');
+  }
+  if (name === 'guide') renderGuide();
+}
+
+renderRecommend();
+showTab('recommend');
+</script>
+</body>
+</html>
