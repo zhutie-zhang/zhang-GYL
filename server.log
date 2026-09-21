@@ -1,0 +1,225 @@
+[GitHubͬ��] {'ok': True, 'downloaded': 2, 'skipped': 0, 'total': 2}
+����ֹ�������������: http://127.0.0.1:8000
+2026-09-01 14:09:16,346 WARNING GET /favicon.ico -> 404
+2026-09-01 15:14:37,222 WARNING GET /favicon.ico -> 404
+2026-09-01 15:14:56,854 WARNING GET /favicon.ico -> 404
+2026-09-01 15:15:53,947 WARNING GET /favicon.ico -> 404
+2026-09-01 15:16:34,345 WARNING GET /favicon.ico -> 404
+2026-09-02 09:28:51,694 WARNING GET /favicon.ico -> 404
+2026-09-02 09:29:32,247 WARNING GET /favicon.ico -> 404
+2026-09-02 09:30:21,931 WARNING GET /favicon.ico -> 404
+2026-09-02 09:32:22,173 WARNING GET /favicon.ico -> 404
+2026-09-02 09:32:47,393 WARNING GET /favicon.ico -> 404
+2026-09-02 09:33:13,182 WARNING GET /favicon.ico -> 404
+2026-09-02 09:34:08,694 WARNING GET /favicon.ico -> 404
+2026-09-02 09:49:55,788 WARNING GET /favicon.ico -> 404
+2026-09-02 11:07:34,385 WARNING GET /favicon.ico -> 404
+2026-09-04 13:43:27,467 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 13:43:27,487 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 13:43:29,864 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 13:43:34,501 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 13:43:34,514 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 13:43:36,868 WARNING GET /CLodopfuncs.js -> 404
+2026-09-04 17:17:54,459 WARNING GET /favicon.ico -> 404
+2026-09-05 15:33:35,408 WARNING GET /favicon.ico -> 404
+2026-09-07 10:42:43,086 WARNING GET /favicon.ico -> 404
+2026-09-08 11:45:10,943 WARNING GET /api/stats -> 400
+2026-09-08 12:07:12,750 WARNING GET /favicon.ico -> 404
+2026-09-08 12:07:37,827 WARNING GET /favicon.ico -> 404
+2026-09-08 17:46:59,731 ERROR Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\1\Documents\Default Project\app.py", line 92, in _safe_remove
+    os.remove(path)
+    ~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\1\\Documents\\Default Project\\_transit_tmp.xlsx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\1\Documents\Default Project\app.py", line 1588, in api_transit_import
+    _safe_remove(path)
+    ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\1\Documents\Default Project\app.py", line 96, in _safe_remove
+    time.sleep(delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+2026-09-08 17:46:59,804 WARNING POST /api/transit/import -> 500
+2026-09-08 18:03:48,589 WARNING GET /favicon.ico -> 404
+2026-09-08 18:05:14,033 WARNING GET /favicon.ico -> 404
+2026-09-08 18:09:15,868 WARNING GET /favicon.ico -> 404
+2026-09-08 22:14:02,656 ERROR Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\1\Documents\Default Project\app.py", line 1664, in api_transit_import
+    f.save(path)
+    ~~~~~~^^^^^^
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\werkzeug\datastructures\file_storage.py", line 129, in save
+    dst = open(dst, "wb")
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\1\\Documents\\Default Project\\_transit_tmp.xlsx'
+2026-09-08 22:14:02,752 WARNING POST /api/transit/import -> 500
+2026-09-09 04:06:29,129 WARNING GET /favicon.ico -> 404
+2026-09-09 09:21:48,502 ERROR Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\1\Documents\Default Project\app.py", line 92, in _safe_remove
+    os.remove(path)
+    ~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\1\\Documents\\Default Project\\_transit_tmp.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\1\Documents\Default Project\app.py", line 1717, in api_transit_import
+    _safe_remove(path)
+    ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\1\Documents\Default Project\app.py", line 96, in _safe_remove
+    time.sleep(delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+2026-09-09 09:21:48,533 WARNING POST /api/transit/import -> 500
+2026-09-09 09:35:57,045 WARNING GET /api/rank -> 400
+2026-09-09 09:53:14,434 WARNING GET /favicon.ico -> 404
+2026-09-10 18:23:32,784 ERROR Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\1\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users/1/Documents/Default Project\app.py", line 734, in api_fuel
+    if not re.match(r"^https?://", target):
+           ^^
+NameError: name 're' is not defined. Did you forget to import 're'?
+2026-09-10 18:23:32,800 WARNING GET /api/fuel -> 500
+2026-09-10 18:24:25,042 WARNING GET /xlsx.full.min.js -> 404
+2026-09-10 18:24:25,043 WARNING GET /pdf.min.js -> 404
+2026-09-11 08:57:05,487 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 08:57:05,488 WARNING GET /pdf.min.js -> 404
+2026-09-11 09:37:19,434 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 09:37:19,435 WARNING GET /pdf.min.js -> 404
+2026-09-11 09:39:12,920 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 09:39:12,921 WARNING GET /pdf.min.js -> 404
+2026-09-11 09:52:16,028 WARNING GET /outer -> 404
+2026-09-11 09:52:19,929 WARNING GET /outer -> 404
+2026-09-11 09:52:38,897 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 09:52:38,898 WARNING GET /pdf.min.js -> 404
+2026-09-11 09:52:53,192 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 09:52:53,193 WARNING GET /pdf.min.js -> 404
+2026-09-11 10:11:10,623 WARNING GET /xlsx.full.min.js -> 404
+2026-09-11 10:11:10,623 WARNING GET /pdf.min.js -> 404
+2026-09-11 13:47:12,728 WARNING GET /SMART-海外仓报价模板.json -> 404
+2026-09-11 13:47:12,729 WARNING GET /乐歌-海外仓报价模板.json -> 404
+2026-09-11 13:47:12,729 WARNING GET /实力派-海外仓报价模板.json -> 404
+2026-09-11 13:47:12,730 WARNING GET /安美-海外仓报价模板.json -> 404
+2026-09-11 13:47:12,730 WARNING GET /乐舱-海外仓报价模板.json -> 404
+2026-09-19 15:32:33,881 WARNING GET /api/overview -> 404
+2026-09-19 15:33:55,601 WARNING GET /favicon.ico -> 404
+2026-09-19 15:34:27,414 WARNING GET /favicon.ico -> 404
+2026-09-19 15:34:53,325 WARNING GET /favicon.ico -> 404
+2026-09-19 15:35:15,256 WARNING GET /favicon.ico -> 404
+2026-09-19 15:36:32,782 WARNING GET /favicon.ico -> 404
+2026-09-19 15:37:08,504 WARNING GET /favicon.ico -> 404
+2026-09-19 15:40:38,942 WARNING GET /favicon.ico -> 404
+2026-09-19 15:41:56,263 WARNING GET /favicon.ico -> 404
+2026-09-19 15:42:19,282 WARNING GET /favicon.ico -> 404
+2026-09-21 09:52:06,123 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:52:08,829 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:56:25,489 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:56:28,533 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:56:52,841 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:56:53,164 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 09:56:55,863 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:04:20,193 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:04:29,800 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:20:39,902 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:20:39,930 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:20:42,306 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:21:26,041 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:21:26,048 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:21:28,421 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:30:01,332 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:30:01,339 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:36:46,714 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:36:46,748 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:36:49,122 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:00,041 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:00,085 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:02,441 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:28,131 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:28,142 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:40:30,516 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:13,711 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:13,726 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:16,108 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:23,758 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:23,774 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:26,146 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:37,139 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:37,171 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:39,567 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:54,765 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:54,827 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:41:57,347 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:04,268 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:04,284 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:06,648 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:16,454 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:16,470 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:18,839 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:28,233 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:28,244 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:30,621 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:36,495 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:36,511 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:38,888 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:47,473 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:47,488 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:49,899 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:56,922 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:56,985 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:42:59,504 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:03,426 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:03,624 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:06,180 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:11,604 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:12,415 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:23,415 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:25,150 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:31,053 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:32,219 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:41,806 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:47,053 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:43:54,691 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:02,304 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:04,337 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:12,771 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:17,152 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:26,273 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:29,192 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:36,634 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:45,219 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:48,414 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:52,856 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:44:59,990 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:01,359 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:07,868 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:09,106 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:17,119 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:23,556 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:30,006 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:45:32,868 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:46:41,434 WARNING GET /CLodopfuncs.js -> 404
+2026-09-21 10:46:44,104 WARNING GET /CLodopfuncs.js -> 404
