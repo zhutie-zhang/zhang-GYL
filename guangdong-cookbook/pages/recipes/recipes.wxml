@@ -1,0 +1,32 @@
+<view class="page">
+  <view class="search">
+    <input placeholder="搜索：菜名 / 食材 / 标签" value="{{keyword}}" bindinput="onInput" confirm-type="search" />
+  </view>
+
+  <scroll-view scroll-x class="chips" enhanced show-scrollbar="{{false}}">
+    <view class="chip {{kind === k ? 'on' : ''}}" wx:for="{{kinds}}" wx:key="*this" data-k="{{k}}" bindtap="onKind">{{k}}</view>
+  </scroll-view>
+
+  <view class="list">
+    <view class="r-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+      <view class="r-top row">
+        <text class="r-name s1">{{item.name}}</text>
+        <text class="r-kcal">{{item.nutrition.kcal}}大卡</text>
+      </view>
+      <view class="r-meta">
+        <text class="tag">{{item.kind}}</text>
+        <text class="tag">{{item.style}}</text>
+        <text class="tag">{{item.time}}分钟</text>
+      </view>
+      <view class="tags">
+        <text class="tag" wx:for="{{item.tags}}" wx:for-item="tg" wx:key="*this">{{tg}}</text>
+        <text class="tag warn" wx:if="{{item.occa}}">偶尔推荐</text>
+      </view>
+    </view>
+
+    <view wx:if="{{!list.length}}" class="empty">
+      <text>没有找到符合的菜谱，换个关键词试试</text>
+    </view>
+  </view>
+  <view class="count muted">共 {{list.length}} 道</view>
+</view>
