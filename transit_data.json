@@ -1,0 +1,559 @@
+[
+  {
+    "container_no": "CSGU7690634",
+    "so": "COSU6463165820",
+    "vessel": "EVER MACRO 1372-009E ETD",
+    "voyage": "",
+    "pol": "YANTIAN",
+    "pod": "Savannah",
+    "etd": "2026-08-22",
+    "eta_so": "2026-09-21",
+    "shipping_line": "中远海运 COSCO",
+    "lines": [
+      {
+        "sku": "340THB-SJT-SQ-BK-R",
+        "name": "F08#340弹簧包三件套",
+        "qty": 104.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-BK-L",
+        "name": "",
+        "qty": 104.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-BK-M",
+        "name": "",
+        "qty": 104.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-R",
+        "name": "F08#340弹簧包三件套",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-L",
+        "name": "",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-M",
+        "name": "",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      }
+    ],
+    "created_at": "2026-09-08 17:47:19",
+    "loading_date": "2026-08-18",
+    "eta_est": "2026-09-21",
+    "eta_basis": "so",
+    "factory": "正达 + 城市之窗",
+    "manual_status": "",
+    "actual_sail_date": "",
+    "actual_arrival_date": "",
+    "id": "c161bab304ae"
+  },
+  {
+    "container_no": "MIEU3761630",
+    "so": "275399825",
+    "vessel": "MAERSK SANA",
+    "voyage": "632E",
+    "pol": "Yantian,Guangdong",
+    "pod": "Houston,Texas",
+    "etd": "2026-08-14",
+    "eta_so": "2026-09-16",
+    "shipping_line": "马士基 Maersk",
+    "lines": [
+      {
+        "sku": "270HMB-S-DDS-BK-A",
+        "name": "F16#270双层沙发",
+        "qty": 78.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-BK-B",
+        "name": "",
+        "qty": 78.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-A",
+        "name": "F16#270双层沙发",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-B",
+        "name": "",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-GN-A",
+        "name": "F16#270双层沙发",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GN"
+      },
+      {
+        "sku": "270HMB-S-DDS-GN-B",
+        "name": "",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GN"
+      },
+      {
+        "sku": "270HMB-S-DDS-KH-A",
+        "name": "F16#270双层沙发",
+        "qty": 32.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-KH"
+      },
+      {
+        "sku": "270HMB-S-DDS-KH-B",
+        "name": "",
+        "qty": 32.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-KH"
+      },
+      {
+        "sku": "270HMB-S-DDS-BR-A",
+        "name": "F16#270双层沙发",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BR"
+      },
+      {
+        "sku": "270HMB-S-DDS-BR-B",
+        "name": "",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BR"
+      },
+      {
+        "sku": "270HMB-S-DDS-WE-A",
+        "name": "F16#270双层沙发",
+        "qty": 10.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-WE"
+      },
+      {
+        "sku": "270HMB-S-DDS-WE-B",
+        "name": "",
+        "qty": 10.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-WE"
+      }
+    ],
+    "created_at": "2026-09-08 17:47:19",
+    "loading_date": "2026-08-08",
+    "eta_est": "2026-09-16",
+    "eta_basis": "so",
+    "factory": "冠域世家",
+    "manual_status": "",
+    "actual_sail_date": "",
+    "actual_arrival_date": "",
+    "id": "c51c36af8e3a"
+  },
+  {
+    "container_no": "OOLU6933947",
+    "so": "COSU6462573750",
+    "vessel": "OOCL GENOA",
+    "voyage": "083E",
+    "pol": "YANTIAN",
+    "pod": "Houston",
+    "etd": "2026-08-24",
+    "eta_so": "2026-09-18",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [
+      {
+        "sku": "340THB-SJT-SQ-BK-R",
+        "name": "F08#340弹簧包三件套",
+        "qty": 106.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-BK-L",
+        "name": "",
+        "qty": 106.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-BK-M",
+        "name": "",
+        "qty": 106.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-BK"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-R",
+        "name": "F08#340弹簧包三件套",
+        "qty": 50.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-L",
+        "name": "",
+        "qty": 50.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      },
+      {
+        "sku": "340THB-SJT-SQ-GY-M",
+        "name": "",
+        "qty": 50.0,
+        "type": "component",
+        "combo_sku": "340THB-SJT-SQ-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-BK-A",
+        "name": "F16#270双层沙发",
+        "qty": 13.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-BK-B",
+        "name": "",
+        "qty": 13.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-A",
+        "name": "F16#270双层沙发",
+        "qty": 2.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-B",
+        "name": "",
+        "qty": 2.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      }
+    ],
+    "created_at": "2026-09-08 17:47:19",
+    "loading_date": "2026-08-19",
+    "eta_est": "2026-09-18",
+    "eta_basis": "so",
+    "factory": "冠域世家",
+    "manual_status": "",
+    "actual_sail_date": "",
+    "actual_arrival_date": "",
+    "id": "e18bc471da27"
+  },
+  {
+    "container_no": "HLXU8410066",
+    "so": "29664191/1",
+    "vessel": "APM TERMINALS ANTWERPEN EXPRESS",
+    "voyage": "633E",
+    "pol": "YANTIAN",
+    "pod": "NEW YORK, NY",
+    "etd": "2026-08-16",
+    "eta_so": "2026-09-27",
+    "shipping_line": "赫伯罗特 Hapag-Lloyd",
+    "lines": [
+      {
+        "sku": "270HMB-S-DDS-BK-A",
+        "name": "F16#270双层沙发",
+        "qty": 73.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-BK-B",
+        "name": "",
+        "qty": 73.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BK"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-A",
+        "name": "F16#270双层沙发",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-GY-B",
+        "name": "",
+        "qty": 60.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GY"
+      },
+      {
+        "sku": "270HMB-S-DDS-GN-A",
+        "name": "F16#270双层沙发",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GN"
+      },
+      {
+        "sku": "270HMB-S-DDS-GN-B",
+        "name": "",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-GN"
+      },
+      {
+        "sku": "270HMB-S-DDS-KH-A",
+        "name": "F16#270双层沙发",
+        "qty": 32.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-KH"
+      },
+      {
+        "sku": "270HMB-S-DDS-KH-B",
+        "name": "",
+        "qty": 32.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-KH"
+      },
+      {
+        "sku": "270HMB-S-DDS-BR-A",
+        "name": "F16#270双层沙发",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BR"
+      },
+      {
+        "sku": "270HMB-S-DDS-BR-B",
+        "name": "",
+        "qty": 12.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-BR"
+      },
+      {
+        "sku": "270HMB-S-DDS-WE-A",
+        "name": "F16#270双层沙发",
+        "qty": 10.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-WE"
+      },
+      {
+        "sku": "270HMB-S-DDS-WE-B",
+        "name": "",
+        "qty": 10.0,
+        "type": "component",
+        "combo_sku": "270HMB-S-DDS-WE"
+      }
+    ],
+    "created_at": "2026-09-08 17:47:19",
+    "loading_date": "2026-08-11",
+    "eta_est": "2026-09-27",
+    "eta_basis": "so",
+    "factory": "冠域世家",
+    "manual_status": "",
+    "actual_sail_date": "",
+    "actual_arrival_date": "",
+    "id": "684eaa786543"
+  },
+  {
+    "container_no": "",
+    "so": "2331652871",
+    "vessel": "CMA CGM ARGENTINA",
+    "voyage": "0XRBHE1MA",
+    "pol": "Yantian",
+    "pod": "New York",
+    "etd": "2026-07-12",
+    "eta_so": "2026-08-19",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-19",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "4312eb0026d9"
+  },
+  {
+    "container_no": "",
+    "so": "2331652872",
+    "vessel": "CMA CGM ARGENTINA",
+    "voyage": "0XRBHE1MA",
+    "pol": "Yantian",
+    "pod": "New York",
+    "etd": "2026-07-12",
+    "eta_so": "2026-08-19",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-19",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "bcf24312882c"
+  },
+  {
+    "container_no": "",
+    "so": "2331906112",
+    "vessel": "CMA CGM ARGENTINA",
+    "voyage": "0XRBHE1MA",
+    "pol": "Yantian",
+    "pod": "Savannah",
+    "etd": "2026-07-11",
+    "eta_so": "2026-08-28",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-28",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "bb2d5cbe4928"
+  },
+  {
+    "container_no": "",
+    "so": "2332228157",
+    "vessel": "COSCO SHIPPING YANGPU",
+    "voyage": "008E",
+    "pol": "Yantian",
+    "pod": "Long Beach",
+    "etd": "2026-07-26",
+    "eta_so": "2026-08-10",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-10",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "8e5d9a0eeacd"
+  },
+  {
+    "container_no": "",
+    "so": "2332530750",
+    "vessel": "EVER MAGNA",
+    "voyage": "1368-005E",
+    "pol": "Yantian",
+    "pod": "New York",
+    "etd": "2026-07-25",
+    "eta_so": "2026-08-28",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-28",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "778de372ef76"
+  },
+  {
+    "container_no": "",
+    "so": "2332530751",
+    "vessel": "EVER MAGNA",
+    "voyage": "1368-005E",
+    "pol": "Yantian",
+    "pod": "New York",
+    "etd": "2026-07-25",
+    "eta_so": "2026-08-28",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-28",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "3105794d6971"
+  },
+  {
+    "container_no": "",
+    "so": "COSU6508603910",
+    "vessel": "OOCL SUNFLOWER",
+    "voyage": "010E",
+    "pol": "YANTIAN",
+    "pod": "Savannah",
+    "etd": "2026-08-03",
+    "eta_so": "2026-09-06",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-09-06",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "a61bc8caa162"
+  },
+  {
+    "container_no": "",
+    "so": "COSU6508671467",
+    "vessel": "OOCL UTAH 086E ETD",
+    "voyage": "",
+    "pol": "YANTIAN",
+    "pod": "Long Beach",
+    "etd": "2026-08-04",
+    "eta_so": "2026-08-18",
+    "shipping_line": "东方海外 OOCL",
+    "lines": [],
+    "created_at": "2026-09-09 09:21:40",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-18",
+    "eta_basis": "so",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "7b75fb07291a"
+  },
+  {
+    "container_no": "",
+    "so": "ZIMUSHH32214156",
+    "vessel": "MSC RIDA VIII",
+    "voyage": "5E",
+    "pol": "YANTIAN, GD",
+    "pod": "HOUSTON, TX",
+    "etd": "2026-07-10",
+    "eta_so": null,
+    "shipping_line": "以星 ZIM",
+    "lines": [],
+    "created_at": "2026-09-09 09:22:55",
+    "loading_date": null,
+    "actual_sail_date": null,
+    "eta_est": "2026-08-09",
+    "eta_basis": "est",
+    "factory": "",
+    "manual_status": "",
+    "actual_arrival_date": "",
+    "id": "cffef279f65d"
+  }
+]
