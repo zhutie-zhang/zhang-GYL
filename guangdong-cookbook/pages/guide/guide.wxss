@@ -1,0 +1,31 @@
+.page { padding-bottom: 60rpx; }
+
+.pagoda { padding: 30rpx 34rpx 18rpx; }
+.pagoda-tip { display: block; font-size: 22rpx; color: #9a9a9a; margin-bottom: 20rpx; text-align: center; }
+.layer {
+  border-radius: 12rpx;
+  padding: 14rpx 18rpx;
+  margin: 8rpx 0;
+  color: #fff;
+  box-sizing: border-box;
+}
+.layer-name { font-size: 28rpx; font-weight: 700; }
+.layer-amount { font-size: 22rpx; opacity: .95; margin-top: 2rpx; }
+.layer-note { font-size: 20rpx; opacity: .85; margin-top: 2rpx; }
+
+.card-title { font-size: 30rpx; font-weight: 600; margin-bottom: 10rpx; }
+.tline { display: flex; padding: 10rpx 0; font-size: 26rpx; border-bottom: 1rpx solid #f6f2ea; }
+
+.habits { display: flex; flex-wrap: wrap; padding: 12rpx 24rpx 0; }
+.habit { width: calc(50% - 24rpx); background: #fff; border-radius: 20rpx; padding: 20rpx; box-sizing: border-box; margin: 10rpx 12rpx; box-shadow: 0 4rpx 16rpx rgba(80,40,0,.05); }
+.h-t { font-weight: 600; font-size: 28rpx; color: #5b8c5a; }
+.h-d { font-size: 24rpx; color: #777; margin-top: 6rpx; line-height: 1.6; }
+
+.pl { padding: 14rpx 0; border-bottom: 1rpx solid #f3efe7; flex-wrap: wrap; }
+.pno {
+  flex: none; width: 40rpx; height: 40rpx; border-radius: 50%;
+  background: #5b8c5a; color: #fff; text-align: center; line-height: 40rpx; margin-right: 14rpx; font-size: 22rpx;
+}
+.pt { font-size: 28rpx; }
+.arrow { color: #b9b3a8; padding-left: 10rpx; }
+.pd { flex: 1 1 100%; font-size: 25rpx; color: #6b6b6b; line-height: 1.7; padding: 10rpx 0 2rpx 54rpx; }
