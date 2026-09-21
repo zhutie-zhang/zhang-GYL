@@ -1,0 +1,51 @@
+<view class="page">
+  <view class="sec-title">中国居民平衡膳食宝塔（2022）</view>
+  <view class="card pagoda">
+    <text class="pagoda-tip">自下而上：每天吃够基层，顶层"盐油"要控制</text>
+    <view class="layer" wx:for="{{pagoda}}" wx:key="name"
+          style="width:{{item.width}}%; background:{{item.color}};">
+      <view class="layer-name">{{item.name}}</view>
+      <view class="layer-amount">{{item.amount}}</view>
+      <view class="layer-note">· {{item.note}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">量化小目标（成人）</view>
+    <view class="tline"><text class="s1">能量</text><text>约 2000 千卡/天</text></view>
+    <view class="tline"><text class="s1">食盐 / 烹调油</text><text>&lt;5 克 / 25~30 克</text></view>
+    <view class="tline"><text class="s1">动物性食物</text><text>120~200 克/天</text></view>
+    <view class="tline"><text class="s1">奶类</text><text>300~500 克/天</text></view>
+    <view class="tline"><text class="s1">饮水</text><text>1500~1700 ml/天</text></view>
+    <view class="tline"><text class="s1">食物种类</text><text>每天 ≥12 种，每周 ≥25 种</text></view>
+  </view>
+
+  <view class="sec-title">日常落地四招</view>
+  <view class="habits">
+    <view class="habit" wx:for="{{habits}}" wx:key="t">
+      <view class="h-t">{{item.t}}</view>
+      <view class="h-d">{{item.d}}</view>
+    </view>
+  </view>
+
+  <view class="sec-title">平衡膳食八准则</view>
+  <view class="card plist">
+    <view class="pl row" wx:for="{{principles}}" wx:key="t" data-i="{{index}}" bindtap="togglePr">
+      <text class="pno">{{index + 1}}</text>
+      <text class="pt s1">{{item.t}}</text>
+      <text class="arrow">{{prOpen === index ? '▾' : '▸'}}</text>
+      <view wx:if="{{prOpen === index}}" class="pd">{{item.d}}</view>
+    </view>
+  </view>
+
+  <view class="sec-title">广东饮食误区</view>
+  <view class="card plist">
+    <view class="pl row" wx:for="{{myths}}" wx:key="q" data-i="{{index}}" bindtap="toggleMyth">
+      <view class="s1">
+        <text class="pt">{{item.q}}</text>
+        <view wx:if="{{mythOpen === index}}" class="pd">{{item.a}}</view>
+      </view>
+      <text class="arrow">{{mythOpen === index ? '▾' : '▸'}}</text>
+    </view>
+  </view>
+</view>
