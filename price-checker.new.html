@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海外仓价格中心</title>
+<style>
+:root{--bg:#eef2f7;--card:#fff;--line:#e2e8f0;--text:#1f2937;--muted:#64748b;
+ --primary:#2563eb;--primary2:#1d4ed8;--green:#16a34a;--red:#dc2626;--amber:#f59e0b;
+ --shadow:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06);--r:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+/* ── 顶栏导航 ── */
+.topnav{position:sticky;top:0;z-index:900;display:flex;align-items:center;gap:18px;padding:0 22px;height:58px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 1px 8px rgba(16,24,40,.05)}
+.brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;white-space:nowrap}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;display:grid;place-items:center;font-size:17px;box-shadow:0 3px 8px rgba(79,70,229,.35)}
+.nav-links{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+.nav-link{padding:8px 14px;border-radius:999px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;font-weight:500;transition:.15s}
+.nav-link:hover{color:var(--text);background:#f1f5f9}
+.nav-link.active{color:#fff;background:var(--primary);box-shadow:0 3px 8px rgba(37,99,235,.3)}
+.nav-stats{display:flex;gap:12px;font-size:11px;color:var(--muted);align-items:center;flex-wrap:wrap}
+.nav-stats b{color:var(--text);font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;vertical-align:1px}
+/* ── 布局 ── */
+main{max-width:1260px;margin:0 auto;padding:22px 20px 140px}
+.view{display:none}.view.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title .sub{font-size:12px;color:var(--muted);font-weight:400}
+.muted{color:var(--muted);font-size:12px}
+/* ── 画廊/概览 ── */
+.hero{background:linear-gradient(135deg,#2563eb,#4f46e5);border-radius:18px;color:#fff;padding:26px 28px;margin-bottom:20px;box-shadow:0 12px 30px rgba(79,70,229,.28)}
+.hero h2{margin:0 0 6px;font-size:20px}
+.hero p{margin:0;opacity:.9;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat-card .n{font-size:26px;font-weight:800;color:var(--primary)}
+.stat-card .t{font-size:12px;color:var(--muted);margin-top:2px}
+/* ── 表单 ── */
+label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px}
+select,input[type=text],input[type=number],input[type=date],textarea{padding:8px 11px;border:1px solid #d1d5db;border-radius:9px;font-size:13px;outline:none;background:#fff;width:100%;transition:border .15s,box-shadow .15s}
+select:focus,input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.form-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+/* ── 按钮 ── */
+.btn{padding:9px 16px;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;transition:.15s}
+.btn:hover{filter:brightness(.95)}.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--primary);color:#fff}.btn-success{background:var(--green);color:#fff}
+.btn-danger{background:var(--red);color:#fff}.btn-warning{background:var(--amber);color:#fff}
+.btn-outline{background:#fff;border:1px solid #d1d5db;color:#374151}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+/* ── 页签（兼容原引擎） ── */
+.tab-bar{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.tab{padding:9px 16px;cursor:pointer;font-size:13px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:500}
+.tab:hover{color:var(--primary)}.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.hidden{display:none!important}
+/* ── 表格 ── */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f8fafc;padding:9px 12px;text-align:left;font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap;color:#374151}
+td{padding:9px 12px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#f8fafc}
+.table-wrapper{max-height:400px;overflow:auto;border:1px solid var(--line);border-radius:9px}
+tr.match{background:#f0fdf4}tr.match td{background:#f0fdf4}
+tr.diff{background:#fef2f2}tr.diff td{background:#fef2f2}
+tr.warn{background:#fffbeb}tr.warn td{background:#fffbeb}
+/* ── 上传区 ── */
+.drop-zone{border:2px dashed #cbd5e1;border-radius:14px;padding:36px;text-align:center;cursor:pointer;background:#f8fafc;transition:.2s}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:#eff6ff}
+.drop-zone-icon{font-size:42px;margin-bottom:10px}
+.drop-zone-text{font-size:14px;color:#475569;margin-bottom:6px;font-weight:600}
+.drop-zone-hint{font-size:12px;color:#94a3b8}
+/* ── 徽标 ── */
+.tag{padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.tag-match{background:#dcfce7;color:#15803d}.tag-diff{background:#fee2e2;color:#b91c1c}
+.tag-warn{background:#fef3c7;color:#b45309}.tag-info{background:#dbeafe;color:#1d4ed8}
+/* ── 结果摘要 ── */
+.summary-box{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.summary-item{padding:16px;border-radius:13px;background:#f8fafc;border:1px solid var(--line);text-align:center}
+.summary-item .num{font-size:30px;font-weight:800}
+.summary-item .label{font-size:12px;color:var(--muted);margin-top:4px}
+.summary-item.total .num{color:var(--primary)}.summary-item.match .num{color:var(--green)}
+.summary-item.diff .num{color:var(--red)}.summary-item.warn .num{color:var(--amber)}
+/* ── 流程步 ── */
+.stepper{display:flex;gap:10px;align-items:center;margin:4px 0 20px;flex-wrap:wrap}
+.auto-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:8px 12px;margin-bottom:14px}
+.auto-switch{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--primary);cursor:pointer;font-size:13px}
+.auto-switch input{width:15px;height:15px;cursor:pointer}
+.auto-hint{font-size:12px;color:#475569}
+.step{display:flex;gap:8px;align-items:center;padding:8px 15px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--muted);font-size:13px;cursor:pointer;font-weight:500;transition:.15s}
+.step .idx{width:22px;height:22px;border-radius:50%;background:#e2e8f0;color:#475569;display:grid;place-items:center;font-size:12px;font-weight:700}
+.step.on{border-color:var(--primary);color:var(--primary);background:#eff6ff}
+.step.on .idx{background:var(--primary);color:#fff}
+.step.done{border-color:#86efac;color:#15803d}
+.step.done .idx{background:var(--green);color:#fff}
+.step-arrow{color:#cbd5e1;font-weight:700}
+.wstep .card-title{border-bottom:1px solid #f1f5f9;padding-bottom:12px}
+/* ── 弹窗（兼容原引擎） ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.52);z-index:1000;justify-content:center;align-items:flex-start;padding:44px 16px;overflow:auto}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;width:92%;max-width:660px;box-shadow:0 24px 64px rgba(0,0,0,.32)}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1}
+/* ── 步骤段落（运费卡兼容） ── */
+.step-pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;background:#eff6ff;color:var(--primary);margin-bottom:8px}
+.step-section{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;background:#fcfdfe}
+/* ── 其他兼容类 ── */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.filter-bar select{width:auto;min-width:150px}
+.template-list{max-height:320px;overflow-y:auto}
+.template-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.template-item-info{flex:1}
+.template-item-name{font-weight:600;font-size:14px}
+.template-item-meta{font-size:12px;color:var(--muted);margin-top:4px}
+.empty-state{text-align:center;padding:34px;color:#94a3b8}
+.empty-state-icon{font-size:44px;margin-bottom:10px}
+.quote-block{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:#fff}
+.quote-block input,.quote-block select{border:1px solid #e2e8f0;border-radius:7px;padding:6px 8px;font-size:12px}
+.quote-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block}
+.channel-list{max-height:320px;overflow-y:auto}
+.price-grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px}
+.price-grid-wrap table{min-width:max-content}
+.price-grid-wrap td,.price-grid-wrap th{padding:6px 8px;white-space:nowrap}
+.price-grid-wrap input{width:76px;padding:6px 8px;font-size:13px;border:1px solid #e2e8f0;border-radius:7px}
+.import-box,.api-box{width:100%;font-family:Consolas,Monaco,monospace;font-size:12px;padding:9px 10px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:#fbfcfe}
+.import-box{min-height:56px}
+.api-box{min-height:110px}
+.import-preview{font-family:Consolas,monospace;font-size:12px;border:1px solid var(--line);border-radius:9px;max-height:180px;overflow:auto;margin-top:6px}
+.import-preview .imp-ok{color:#15803d}.import-preview .imp-bad{color:#b91c1c;background:#fee2e2}
+.map-item{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+.map-item.mapped{border-color:var(--primary);background:#eff6ff}
+.map-item .req-mark{color:var(--red)}
+.freight-result-card{border:1px solid #bbf7d0;background:#f0fdf4;border-radius:12px;padding:14px 16px;margin-top:14px}
+.freight-result-card .total-line{font-size:18px;font-weight:700;color:var(--primary);margin-top:8px}
+.calc-error{border:1px solid #fecaca;background:#fef2f2;color:#b91c1c;border-radius:9px;padding:10px 12px;font-size:13px;margin-top:10px}
+.map-hint{font-size:11px;color:#94a3b8;margin-top:2px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}.form-row,.form-row-2{grid-template-columns:1fr}.summary-box{grid-template-columns:repeat(2,1fr)}.nav-links{width:100%;order:3}.topnav{flex-wrap:wrap;height:auto;padding:10px 16px}}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="brand"><span class="logo">📦</span>海外仓价格中心</div>
+  <div class="nav-links">
+    <button class="nav-link on" data-nav="overview">概览</button>
+    <button class="nav-link" data-nav="bill">账单核对</button>
+    <button class="nav-link" data-nav="data">报价数据</button>
+    <button class="nav-link" data-nav="freight">运费计算</button>
+    <button class="nav-link" data-nav="outer">外仓·仓储</button>
+  </div>
+  <div class="nav-stats" id="navStats"></div>
+</nav>
+<main>
+
+<!-- ========== 概览 ========== -->
+<section class="view on" id="view-overview">
+  <div class="hero">
+    <h2>跨仓报价 · 一键核对 · 100% 透明</h2>
+    <p>统一价卡（渠道 / 模板 / 燃油 / 仓储 8 家）· 本地与服务端双数据源 · 上传账单即可逐行核对定价差异</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">☁️ 服务端数据 <span class="sub">/api · 统一价卡</span></div>
+      <div class="cards3" id="ovServer"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">💾 本地价卡 <span class="sub">localStorage · 离线可核</span></div>
+      <div class="cards3" id="ovLocal"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🚀 快速操作</div>
+    <div class="btn-group">
+      <button class="btn btn-primary" data-nav="bill">📤 上传账单核对</button>
+      <button class="btn btn-outline" data-nav="data">📋 价格模板管理</button>
+      <button class="btn btn-outline" data-nav="data-channel">🚚 物流渠道 / 燃油费率</button>
+      <button class="btn btn-outline" data-nav="freight">💲 尾程运费计算</button>
+      <button class="btn btn-outline" data-nav="outer">🏬 外仓报价 / 仓储CBM / 服务端核对</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 主链路：账单核对 ========== -->
+<section class="view" id="view-bill">
+  <div class="stepper" id="stepper">
+    <div class="step on" data-step="1"><span class="idx">1</span>上传账单</div><span class="step-arrow">→</span>
+    <div class="step" data-step="2"><span class="idx">2</span>关联价卡</div><span class="step-arrow">→</span>
+    <div class="step" data-step="3"><span class="idx">3</span>核对结果</div><span class="step-arrow">→</span>
+    <div class="step" data-step="4"><span class="idx">4</span>导出</div>
+  </div>
+
+  <div class="card wstep" id="wstep-1">
+    <div class="card-title">📤 第 1 步 · 上传账单文件</div>
+    __UPLOAD__
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="setStep(2)">下一步 · 关联价卡</button>
+    </div>
+  </div>
+
+  <div class="card hidden wstep" id="wstep-2">
+    <div class="card-title">🔗 第 2 步 · 关联价卡</div>
+    <div class="auto-bar">
+      <label class="auto-switch">
+        <input type="checkbox" id="autoMatchChk" checked>
+        <span>⚡ 自动匹配</span>
+      </label>
+      <span class="auto-hint">按账单各行中的 <b>服务商/渠道</b>、<b>仓点</b>、<b>计费重</b>、<b>Zone</b> 自动匹配所有价表与收费项目；关闭后用手动选择。</span>
+    </div>
+    __CONFIG__
+    <div class="btn-group">
+      <button class="btn btn-success" onclick="runCheck()">🔍 开始核对</button>
+      <button class="btn btn-outline" onclick="setStep(1)">上一步</button>
+    </div>
+  </div>
+
+  <div class="card hidden wstep" id="wstep-3">
+    <div class="card-title" style="justify-content:space-between">
+      <span>📊 第 3 步 · 核对结果</span>
+      <button class="btn btn-sm btn-outline" onclick="exportResult()">导出 xlsx</button>
+    </div>
+    __RESULT__
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="setStep(2)">上一步</button>
+      <button class="btn btn-primary" onclick="setStep(4)">下一步 · 导出</button>
+    </div>
+  </div>
+
+  <div class="card hidden wstep" id="wstep-4">
+    <div class="card-title">📦 第 4 步 · 导出核对结果</div>
+    <p class="muted">差异行自动标色：<span class="tag tag-diff">红=多收</span><span class="tag tag-warn">黄=少收</span><span class="tag tag-match">绿=一致</span>，含行号/服务类型/应收/账单/差异与依据说明。</p>
+    <div class="btn-group">
+      <button class="btn btn-success" onclick="exportResult()">📊 导出 Excel (.xlsx)</button>
+      <button class="btn btn-outline" onclick="exportResultCSV()">导出 CSV</button>
+      <button class="btn btn-outline" onclick="setStep(3)">返回结果</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 二级：报价数据（模板 / 渠道 / 报价导入） ========== -->
+<section class="view" id="view-data">
+  __TPL_CARD__
+</section>
+
+<!-- ========== 二级：运费计算 ========== -->
+<section class="view" id="view-freight">
+  __FREIGHT_CARD__
+</section>
+
+<!-- ========== 二级：外仓 / 仓储 / 服务端核对 ========== -->
+<section class="view" id="view-outer">
+  <div class="card">
+    <div class="card-title">🏬 外层仓报价 · 仓储 CBM · 服务端账单核对 <span class="sub" id="outerSub"></span></div>
+    <div class="tab-bar" id="outerTabs">
+      <div class="tab active" data-otab="st">仓储阶梯</div>
+      <div class="tab" data-otab="cost">仓储速算</div>
+      <div class="tab" data-otab="bc">服务端核对</div>
+      <div class="tab" data-otab="ch">外层仓渠道</div>
+    </div>
+    <div id="outerHost"></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========== 原功能弹窗（引擎依赖，原样保留） ========== -->
+__MODALS__
+
+<script src="xlsx.full.min.js"></script>
+<script src="pdf.min.js"></script>
+__ENGINE__
+
+<script>
+"use strict";
+/* ===== 新壳：视图切换 / 向导 / 概览 / 外仓 ===== */
+
+/* 诊断：全局错误上报（上线后可移除） */
+window.addEventListener('error', function (ev) {
+    try {
+        var t = (ev.message || '') + ' @ ' + (ev.filename || '').split('/').pop() + ':' + (ev.lineno || '');
+        var d = document.getElementById('errToast');
+        if (!d) {
+            d = document.createElement('div');
+            d.id = 'errToast';
+            d.style.cssText = 'position:fixed;top:10px;right:10px;max-width:78%;background:#b91c1c;color:#fff;padding:10px 14px;border-radius:10px;font:12px/1.5 monospace;z-index:99999;white-space:pre-wrap;';
+            document.body.appendChild(d);
+        }
+        d.textContent = '⚠ ' + t;
+        console.error('pageerror', t);
+        fetch('/api/log', { method: 'POST', body: JSON.stringify({ kind: 'page', msg: t }), headers: { 'Content-Type': 'application/json' } }).catch(function () {});
+    } catch (e) {}
+});
+
+/* ── 视图导航 ── */
+var VIEWS = ['overview', 'bill', 'data', 'freight', 'outer'];
+var VIEW_LABEL = {overview:'概览', bill:'账单核对', data:'报价数据', freight:'运费计算', outer:'外仓·仓储'};
+function showView(name, sub) {
+    var nav = document.querySelectorAll('.nav-line,.nav-link');
+    VIEWS.forEach(function (v) {
+        document.getElementById('view-' + v).classList.toggle('on', v === name);
+    });
+    document.querySelectorAll('.nav-link').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-nav') === name);
+    });
+    if (name === 'data' && sub === 'channel') switchTab('channel');
+    else if (name === 'data' && sub === 'quote') switchTab('quote');
+    window.scrollTo({ top: 0 });
+}
+document.querySelectorAll('[data-nav]').forEach(function (b) {
+    b.addEventListener('click', function () {
+        var n = b.getAttribute('data-nav');
+        var sub = n.indexOf('-') >= 0 ? n.split('-')[1] : '';
+        showView(sub ? n.split('-')[0] : n, sub);
+    });
+});
+
+/* ── 主链路步骤条 ── */
+function setStep(step) {
+    for (var i = 1; i <= 4; i++) {
+        document.getElementById('wstep-' + i).classList.toggle('hidden', i !== step);
+    }
+    document.querySelectorAll('#stepper .step, #view-bill .stepper .step').forEach(function (s) {
+        var n = parseInt(s.getAttribute('data-step'), 10);
+        s.classList.toggle('on', n === step);
+        s.classList.toggle('done', n < step);
+    });
+}
+function runCheck() {
+    var before = checkResults.length;
+    var autoEl = document.getElementById('autoMatchChk');
+    try {
+        if (autoEl && autoEl.checked) autoRunCheck();
+        else startCheck();
+    }
+    catch (e) { alert(e.message); return; }
+    if (checkResults.length > before) setStep(3);
+    else if (billData.length === 0) setStep(1);
+    else setStep(2);
+}
+/* 自动字段：把账单的 服务商/渠道、仓点 列纳入标准字段，弹窗可映射、行内自动取值 */
+(function () {
+    var EX = ['provider', 'warehouse'];
+    var has = STANDARD_FIELDS.some(function (f) { return EX.indexOf(f.key) >= 0; });
+    if (!has) {
+        STANDARD_FIELDS.push(
+            { key: 'provider', label: '服务商/渠道', required: false, keywords: ['服务商', '供应商', '渠道', '物流渠道', '物流公司', '货运', '服务', 'carrier', 'channel', 'provider', 'company', 'brand'] },
+            { key: 'warehouse', label: '仓点', required: false, keywords: ['仓点', '仓库', '海外仓', '库点', '库', '中仓', 'warehouse', 'wh', 'location', '库房'] }
+        );
+    }
+})();
+function autoRowIn(row, keys) {
+    for (var i = 0; i < keys.length; i++) {
+        var v = row[keys[i]];
+        if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim();
+    }
+    return '';
+}
+function autoRunCheck() {
+    if (!billData.length) { alert('请先上传账单文件'); return; }
+    checkResults = [];
+    var matchCount = 0, diffCount = 0, warnCount = 0;
+
+    var fuelGroupSum = {};
+    billData.forEach(function (row) {
+        var ch = autoRowIn(row, ['provider', 'channel', '服务商', '渠道', '物流渠道']);
+        var service = String(row.serviceType !== undefined ? row.serviceType : row['服务类型'] || '').toLowerCase();
+        if (!ch || /(fuel|燃油)/.test(service)) return;
+        var amt = parseFloat(row.amount !== undefined ? row.amount : row['金额'] || row.amount || 0);
+        if (isNaN(amt)) amt = 0;
+        var trk = autoRowIn(row, ['tracking', '参考', 'ref', 'Ref']);
+        if (!trk) return;
+        var k = ch + '|' + trk;
+        fuelGroupSum[k] = (fuelGroupSum[k] || 0) + amt;
+    });
+
+    billData.forEach(function (row, idx) {
+        var fv = function (stdKey, legacyKeys) {
+            if (row[stdKey] !== undefined && row[stdKey] !== '') return row[stdKey];
+            for (var k of legacyKeys) if (row[k] !== undefined && row[k] !== '') return row[k];
+            return '';
+        };
+        var rowNo = idx + 2;
+        var autoCh = autoRowIn(row, ['provider', 'channel', '服务商', '渠道', '物流渠道']);
+        var autoWh = autoRowIn(row, ['warehouse', '仓点', '仓库', '海外仓']);
+        var billService = fv('serviceType', ['服务类型', 'service_type', 'ServiceType', '费用类型', '类型', 'Description', 'description']);
+        var billUnit = fv('unit', ['计费单位', 'unit', 'Unit', '数量单位']);
+        var billQty = parseFloat(fv('qty', ['数量', 'quantity', 'Qty', '数量/重量'])) || 0;
+        var billAmount = parseFloat(fv('amount', ['金额', 'amount', 'Amount', '费用', '总金额', 'Total'])) || 0;
+        var billUnitPrice = parseFloat(fv('unitPrice', ['单价', 'unit_price', 'UnitPrice', '单价(USD)'])) || 0;
+        var weight = parseFloat(fv('weight', ['计费重', '计费重量', '重量'])) || NaN;
+        if (!isFinite(weight)) weight = billQty;
+        var zone = fv('zone', ['分区', 'Zone', 'zone']);
+        var trk = fv('tracking', ['tracking', 'Tracking', '参考', 'ref', 'Ref']);
+
+        var pushWarn = function (note) {
+            checkResults.push({ row: rowNo, billService, billUnit, billQty, billAmount, billUnitPrice, tplPrice: null, expectedAmount: null, diff: null, status: 'warn', note });
+            warnCount++;
+        };
+        var pushCompared = function (tplPrice, expectedAmount, basisNote) {
+            var diff = Math.round((billAmount - expectedAmount) * 100) / 100;
+            var tolerance = Math.max(0.01, Math.abs(expectedAmount) * 0.01);
+            var status, note;
+            if (Math.abs(diff) < tolerance) { status = 'match'; matchCount++; note = '价格一致'; }
+            else { status = 'diff'; diffCount++; note = diff > 0 ? '多收 $' + diff.toFixed(2) : '少收 $' + Math.abs(diff).toFixed(2); }
+            if (basisNote) note += '｜' + basisNote;
+            checkResults.push({ row: rowNo, billService, billUnit, billQty, billAmount, billUnitPrice, tplPrice, expectedAmount, diff, status, note });
+        };
+
+        var ch = autoCh;
+        var isChannelRow = ch && channels.some(function (c) { return c.name === ch; }) && isFinite(weight) && zone;
+
+        if (!autoCh && !autoWh) {
+            pushWarn('账单行缺少「服务商/渠道」与「仓点」列：请在解析弹窗手动映射，或关闭自动匹配手动选择。');
+            return;
+        }
+
+        if (isChannelRow) {
+            var sf = lookupSurcharge(ch, billService, zone);
+            if (sf && sf.fuel) {
+                var pct = latestFuelPercent(ch);
+                var hit = lookupChannelPrice(ch, weight, zone);
+                var groupSum = fuelGroupSum[ch + '|' + trk] || 0;
+                var basePrice = hit && hit.price !== null ? hit.price : 0;
+                if (pct === null) pushWarn('「' + sf.name + '」未记录官网费率：请到 报价数据→物流渠道→燃油 录入本周费率');
+                else if (groupSum > 0) {
+                    var expected = Math.round(groupSum * pct / 100 * 100) / 100;
+                    pushCompared(null, expected, '燃油费 ' + pct + '%（' + (latestFuelRecord(ch) ? latestFuelRecord(ch).date : '') + '生效）×（基础 $' + basePrice.toFixed(2) + '）= 整单基础费×' + pct + '%');
+                } else if (hit && hit.price !== null) {
+                    var expectedF = Math.round(hit.price * pct / 100 * 100) / 100;
+                    pushCompared(null, expectedF, '燃油费 ' + pct + '% × 基础运费 $' + hit.price.toFixed(2) + '（' + hit.zone + '·' + hit.weight + '磅）');
+                } else pushWarn('「' + sf.name + '」' + pct + '% 需基础运费价（找不到 ' + zone + ' 分区报价）');
+                return;
+            }
+            if (sf && sf.price !== null) {
+                pushCompared(sf.price, sf.price, '附加费：「' + sf.name + '」@$' + sf.price.toFixed(2) + '（' + sf.groupLabel + '）');
+                return;
+            }
+            var hitP = lookupChannelPrice(ch, weight, zone);
+            if (!hitP) { pushWarn('渠道「' + ch + '」未找到 ' + zone + ' 分区报价'); return; }
+            if (hitP.price === null) { pushWarn('渠道「' + ch + '」' + hitP.zone + ' 档无报价（计费重 ' + hitP.weight + '磅）'); return; }
+            pushCompared(hitP.price, hitP.price, '渠道：「' + ch + '」' + hitP.zone + '·计费重' + hitP.weight + '磅' + (hitP.overRange ? '｜超出价格上限，按末档' : ''));
+            return;
+        }
+
+        /* 模板路径：渠道不可用或仅费用类行 */
+        var tpl = autoCh ? templates.filter(function (t) { return t.provider === autoCh && (!autoWh || t.warehouse === autoWh); })
+                          : (autoWh ? templates.filter(function (t) { return t.warehouse === autoWh; }) : []);
+        if (tpl.length === 0) {
+            pushWarn(autoCh ? '「' + autoCh + '」无价卡/模板（该行缺重量或 Zone，且服务商无模板）' : '「' + autoWh + '」无价格模板');
+            return;
+        }
+        var matchedTpl = null;
+        for (var t of tpl) {
+            if (matchServiceType(billService, t.serviceType) && matchUnit(billUnit, t.unit)) { matchedTpl = t; break; }
+        }
+        if (!matchedTpl) { pushWarn('未匹配到收费项目：' + (billService || '（空）') + '（渠道「' + (autoCh || autoWh) + '」已连接价卡 ' + tpl.length + ' 个收费项）'); return; }
+        var hasTiers = matchedTpl.tiers && matchedTpl.tiers.length > 0;
+        var tplPrice = matchedTpl.price, tierNote = '';
+        if (hasTiers) {
+            var tierW = isFinite(weight) ? weight : billQty;
+            var hitTier = templatePriceForWeight(tierW, matchedTpl);
+            tplPrice = hitTier.price;
+            tierNote = hitTier.tier ? '｜' + hitTier.tier + '（按 ' + tierW + '磅）' : '｜无匹配档（' + tierW + '磅），按最接近价';
+        }
+        var pieces = isFinite(weight) ? Math.max(billQty, 1) : 1;
+        var expectedAmount = Math.max(pieces * tplPrice, matchedTpl.minCharge);
+        pushCompared(tplPrice, expectedAmount, '价卡：' + matchedTpl.serviceType + '（' + (hasTiers ? '阶梯' : '@$' + tplPrice.toFixed(3)) + ' × ' + pieces + '件）' + tierNote + (matchedTpl.note ? '（' + matchedTpl.note + '）' : ''));
+    });
+
+    document.getElementById('resultSection').classList.remove('hidden');
+    document.getElementById('summaryBox').innerHTML =
+        '<div class="summary-item total"><div class="num">' + checkResults.length + '</div><div class="label">总条目</div></div>' +
+        '<div class="summary-item match"><div class="num">' + matchCount + '</div><div class="label">一致</div></div>' +
+        '<div class="summary-item diff"><div class="num">' + diffCount + '</div><div class="label">有差异</div></div>' +
+        '<div class="summary-item warn"><div class="num">' + warnCount + '</div><div class="label">未匹配</div></div>';
+    renderResult();
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+}
+function exportResultCSV() {
+    if (!checkResults.length) { alert('请先执行核对'); return; }
+    var cols = ['账单行', '服务类型', '计费单位', '数量', '模板单价', '模板应收', '账单金额', '差异金额', '状态', '说明'];
+    var lines = [cols.join(',')];
+    checkResults.forEach(function (r) {
+        var row = [r.row, r.billService, r.billUnit, r.billQty,
+            r.tplPrice !== null ? r.tplPrice : '', r.expectedAmount !== null ? r.expectedAmount : '',
+            r.billAmount, r.diff !== null ? r.diff : '',
+            r.status === 'match' ? '一致' : r.status === 'diff' ? '差异' : '未匹配',
+            (r.note || '').replace(/"/g, '""')];
+        lines.push(row.map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(','));
+    });
+    var blob = new Blob(["\ufeff" + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '价格核对结果_' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.click();
+}
+/* 上传解析成功 → 自动进第 2 步 */
+(function () {
+    var orig = window.confirmBillParse;
+    if (orig) window.confirmBillParse = function () {
+        var r = orig.apply(this, arguments);
+        if (billData.length) setStep(2);
+        return r;
+    };
+})();
+
+/* ── 概览数据 ── */
+function ovCard(n, t, color) {
+    return '<div class="stat-card"><div class="n" style="color:' + (color || '') + '">' + n + '</div><div class="t">' + t + '</div></div>';
+}
+function renderOverview() {
+    var local = {
+        templates: (function () { try { return JSON.parse(localStorage.getItem('warehouseTemplates') || '[]').length; } catch (e) { return 0; } })(),
+        channels: (function () { try { return JSON.parse(localStorage.getItem('logisticsChannels') || '[]').length; } catch (e) { return 0; } })(),
+        fuel: (function () { try { return Object.keys(JSON.parse(localStorage.getItem('fuelRates') || '{}')).length; } catch (e) { return 0; } })(),
+        freight: (function () { try { return JSON.parse(localStorage.getItem('freightTemplates') || '[]').length; } catch (e) { return 0; } })()
+    };
+    document.getElementById('ovLocal').innerHTML =
+        ovCard(local.channels, '物流渠道') + ovCard(local.templates, '服务模板') +
+        ovCard(local.fuel, '燃油费率渠道') + ovCard(local.freight, '运费模板', '#4f46e5');
+    fetch('/api/outer/status', { cache: 'no-store' })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (st) {
+            document.getElementById('ovServer').innerHTML =
+                ovCard(st.channels_total !== undefined ? st.channels_total : '-', '统一渠道') +
+                ovCard(st.templates_total !== undefined ? st.templates_total : '-', '统一模板') +
+                ovCard(st.storage_count !== undefined ? st.storage_count : '-', '仓储费表') +
+                ovCard(st.pricing_records !== undefined ? st.pricing_records : '-', '价卡记录', '#4f46e5');
+            document.getElementById('navStats').innerHTML =
+                '<span><span class="dot"></span>服务端<b>&nbsp;' + (st.channels_total !== undefined ? st.channels_total : '?') + ' 渠道</b> · <b>' +
+                (st.templates_total !== undefined ? st.templates_total : '?') + ' 模板</b> · <b>' +
+                (st.storage_count !== undefined ? st.storage_count : '?') + ' 仓储</b></span>';
+        })
+        .catch(function () {
+            document.getElementById('ovServer').innerHTML = ovCard('—', '离线（无服务端）');
+        });
+}
+
+/* ── 外仓 / 仓储 / 服务端核对 ── */
+var XSTORAGE = {}, XCH = [], XTPL = [];
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function apiQ(path, opts) {
+    return fetch(path, {
+        method: opts ? 'POST' : 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: opts ? JSON.stringify(opts) : undefined
+    }).then(function (r) { return r.json().catch(function () { return { error: '非JSON响应' }; }); });
+}
+function renderOuter(tab) {
+    var host = document.getElementById('outerHost');
+    var tabs = document.querySelectorAll('#outerTabs .tab');
+    tabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-otab') === tab); });
+    if (tab === 'st') outerSt(host);
+    else if (tab === 'cost') outerCost(host);
+    else if (tab === 'bc') outerBc(host);
+    else if (tab === 'ch') outerCh(host);
+}
+function outerLoadEnsure() {
+    var p;
+    if (Object.keys(XSTORAGE).length && XCH.length) return Promise.resolve();
+    p = Promise.all([apiQ('/api/storage'), apiQ('/api/pricedata/channels')]);
+    return p.then(function (r) { XSTORAGE = (r[0].storage || {}); XCH = (r[1].data || []); });
+}
+function outerSt(host) {
+    outerLoadEnsure().then(function () {
+        var provs = Object.keys(XSTORAGE).sort();
+        host.innerHTML = '<div class="form-row" style="grid-template-columns:auto 1fr"><div><label>服务商</label>' +
+            '<select id="xStP" style="min-width:220px">' + provs.map(function (p) { return '<option>' + esc(p) + '</option>'; }).join('') + '</select></div>' +
+            '<div style="align-self:end"><span class="muted" id="xStSrc"></span></div></div><div id="xStTable"></div>';
+        document.getElementById('xStP').addEventListener('change', drawStTable);
+        drawStTable();
+    });
+}
+function drawStTable() {
+    var p = document.getElementById('xStP').value, st = XSTORAGE[p];
+    if (!st) return;
+    document.getElementById('xStSrc').textContent = '来源：' + (st.source || '') + ' ｜ 单位 ' + (st.unit || '') + ' ｜ 币种 ' + (st.currency || '');
+    var tiers = st.tiers || [], whs = st.warehouses || [];
+    var h = '<div style="overflow:auto"><table><tr>' +
+        '<th style="text-align:left">库龄档</th>' +
+        whs.map(function (w) { return '<th>' + esc(w.label) + '<div class="muted">' + esc(w.code || '') + '</div></th>'; }).join('') + '</tr>';
+    tiers.forEach(function (t) {
+        h += '<tr><td style="text-align:left;font-weight:600">' + esc(t.label) + '</td>' +
+            (t.prices || []).map(function (v) { return '<td style="font-family:Consolas">' + (v == null ? '-' : Number(v).toFixed(2)) + '</td>'; }).join('') + '</tr>';
+    });
+    h += '</table></div>';
+    if (st.return_zone_prices && st.return_zone_prices.length) {
+        h += '<p class="muted" style="margin-top:8px">退货区费率：' + st.return_zone_prices.map(function (r) {
+            return esc(r.label) + ' ' + r.prices.map(function (x) { return Number(x).toFixed(2); }).join(' / ');
+        }).join('；') + '</p>';
+    }
+    document.getElementById('xStTable').innerHTML = h;
+}
+function outerCost(host) {
+    outerLoadEnsure().then(function () {
+        var provs = Object.keys(XSTORAGE).sort();
+        host.innerHTML =
+            '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px">' +
+            '<div><label>服务商</label><select id="xCp">' + provs.map(function (p) { return '<option>' + esc(p) + '</option>'; }).join('') + '</select></div>' +
+            '<div><label>仓库</label><select id="xCw"></select></div>' +
+            '<div><label>CBM</label><input id="xCbm" type="number" step="0.1" value="1" style="width:90px"></div>' +
+            '<div><label>库龄（天）</label><input id="xDays" type="number" step="1" value="100" style="width:90px"></div>' +
+            '<div><button class="btn btn-primary" id="xCalcBtn">计算</button></div></div><div id="xCostOut"></div>';
+        document.getElementById('xCp').addEventListener('change', syncXw);
+        document.getElementById('xCalcBtn').addEventListener('click', doXCost);
+        syncXw();
+    });
+}
+function syncXw() {
+    var p = document.getElementById('xCp').value, st = XSTORAGE[p], w = document.getElementById('xCw');
+    w.innerHTML = (st ? st.warehouses : []).map(function (x, i) { return '<option value="' + esc(x.code || i) + '">' + esc(x.label) + '</option>'; }).join('');
+}
+function doXCost() {
+    apiQ('/api/storage/cost', {
+        provider: document.getElementById('xCp').value,
+        warehouse: document.getElementById('xCw').value,
+        cbm: Number(document.getElementById('xCbm').value) || 0,
+        days: Number(document.getElementById('xDays').value) || 0
+    }).then(function (r) {
+        var el = document.getElementById('xCostOut');
+        if (r.error) el.innerHTML = '<div class="calc-error">' + esc(r.error) + '</div>';
+        else el.innerHTML = '<div class="freight-result-card">库龄档 <b>' + esc(r.tier) + '</b> ｜ 单价 ' + r.price_per_cbm_day + ' × ' + r.cbm + ' CBM<br>' +
+            '<span class="total-line">日租 ' + (r.currency || '') + ' ' + Number(r.total_per_day).toFixed(2) + '</span>' +
+            '<div class="muted">约 30 天 ' + (r.total_per_day * 30).toFixed(2) + ' ｜ 约 90 天 ' + (r.total_per_day * 90).toFixed(2) + '（' + esc(r.unit) + '）</div></div>';
+    });
+}
+function outerBc(host) {
+    Promise.all([apiQ('/api/pricedata/channels'), apiQ('/api/pricedata/templates')]).then(function (r) {
+        XCH = r[0].data || []; XTPL = r[1].data || [];
+        var provs = []; XTPL.forEach(function (t) { if (provs.indexOf(t.provider) < 0) provs.push(t.provider); });
+        provs.sort();
+        host.innerHTML =
+            '<div style="font-size:12px;color:var(--muted);margin-bottom:8px">服务端核对引擎（startCheck 逻辑 1:1 移植，1% 容差）。每行一条费用，列序任意，表头自动识别。</div>' +
+            '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">' +
+            '<select id="xMode"><option value="channel">按渠道（尾程）</option><option value="template">按服务商模板</option></select>' +
+            '<select id="xCh">' + XCH.map(function (c) { return '<option>' + esc(c.name) + '</option>'; }).join('') + '</select>' +
+            '<select id="xProv" style="display:none">' + provs.map(function (p) { return '<option>' + esc(p) + '</option>'; }).join('') + '</select>' +
+            '<select id="xW" style="display:none"></select>' +
+            '<button class="btn btn-outline" onclick="xLoadDemo()">载入演示账单</button>' +
+            '<button class="btn btn-primary" onclick="xRunBc()">开始核对</button></div>' +
+            '<textarea id="xInput" rows="7" style="font-family:Consolas;font-size:12px;white-space:pre">日期\t追踪号\t分区\t费用项目\t计费重量\t计费单位\t金额\n2026-08-30\t1Z999\tZone4\t尾程配送\t2\t磅\t9.50\n2026-08-30\t1Z999\tZone4\tFuel Surcharge（燃油费）\t2\t磅\t0.00\n2026-08-30\t2Z888\tZone4\t尾程配送\t3\t磅\t12.34</textarea>' +
+            '<div class="muted" id="xBcParse" style="margin:6px 0"></div><div id="xBcOut"></div>';
+        document.getElementById('xMode').addEventListener('change', syncXMode);
+        document.getElementById('xProv').addEventListener('change', syncXW);
+        syncXMode();
+    });
+}
+function syncXMode() {
+    var m = document.getElementById('xMode').value;
+    document.getElementById('xCh').style.display = m === 'channel' ? '' : 'none';
+    document.getElementById('xProv').style.display = m === 'template' ? '' : 'none';
+    document.getElementById('xW').style.display = m === 'template' ? '' : 'none';
+    if (m === 'template') syncXW();
+}
+function syncXW() {
+    var p = document.getElementById('xProv').value, sel = document.getElementById('xW');
+    var ws = [];
+    XTPL.forEach(function (t) { if (t.provider === p && ws.indexOf(t.warehouse) < 0) ws.push(t.warehouse); });
+    ws.sort();
+    sel.innerHTML = ws.map(function (w) { return '<option>' + esc(w) + '</option>'; }).join('');
+}
+function xLoadDemo() { document.getElementById('xMode').value = 'channel'; syncXMode(); xRunBc(); }
+function xParseTxt(txt) {
+    var rows = [];
+    txt.split(/\r?\n/).forEach(function (line) {
+        if (!line.trim()) return;
+        var c = line.split('\t').length > 1 ? line.split('\t') : line.split(/[,，]/).map(function (s) { return s.trim(); });
+        rows.push(c);
+    });
+    return rows;
+}
+function xRunBc() {
+    var mat = xParseTxt(document.getElementById('xInput').value);
+    var mode = document.getElementById('xMode').value;
+    apiQ('/api/bill/parse', { matrix: mat }).then(function (pr) {
+        document.getElementById('xBcParse').textContent = '表头行 L' + (pr.header_row + 1) + ' ｜ 数据 ' + pr.rows_total + ' 行 ｜ 字段映射 重量/分区/金额列=' +
+            [pr.mapping.weight, pr.mapping.zone, pr.mapping.amount].map(function (x) { return x >= 0 ? x : '-'; }).join('/') +
+            (pr.with_amount ? '（含金额）' : '');
+        return apiQ('/api/bill-check', {
+            matrix: mat,
+            channelName: mode === 'channel' ? document.getElementById('xCh').value : undefined,
+            provider: mode === 'template' ? document.getElementById('xProv').value : undefined,
+            warehouse: mode === 'template' ? document.getElementById('xW').value : undefined
+        });
+    }).then(function (out) {
+        var el = document.getElementById('xBcOut');
+        if (out.error) { el.innerHTML = '<div class="calc-error">' + esc(out.error) + '</div>'; return; }
+        var sm = out.summary;
+        var h = '<div style="margin:10px 0">共 ' + sm.total + ' 项｜'
+            + '<span class="tag tag-match">一致 ' + sm.match + '</span>'
+            + '<span class="tag tag-diff">差异 ' + sm.diff + '</span>'
+            + '<span class="tag tag-warn">需关注 ' + sm.warn + '</span></div>';
+        h += '<div style="overflow:auto"><table><tr><th>行</th><th>账单项目</th><th>计费重</th><th>账单金额</th><th>应收</th><th>差额</th><th>判定</th><th>依据</th></tr>';
+        out.results.forEach(function (r) {
+            h += '<tr class="' + r.status + '"><td>' + r.row + '</td><td style="text-align:left">' + esc(r.billService) + '</td>' +
+                '<td>' + (r.billQty || '') + '</td><td>' + (r.billAmount != null ? Number(r.billAmount).toFixed(2) : '-') + '</td>' +
+                '<td>' + (r.expectedAmount != null ? Number(r.expectedAmount).toFixed(2) : '-') + '</td>' +
+                '<td>' + (r.diff != null ? (r.diff > 0 ? '+' : '') + Number(r.diff).toFixed(2) : '-') + '</td>' +
+                '<td>' + (r.status === 'match' ? '一致' : r.status === 'diff' ? '差异' : '需关注') + '</td>' +
+                '<td style="text-align:left;color:var(--muted)">' + esc(r.note) + '</td></tr>';
+        });
+        h += '</table></div>';
+        el.innerHTML = h;
+    });
+}
+function outerCh(host) {
+    outerLoadEnsure().then(function () {
+        var outerIdx = ['乐歌VIP美', '乐歌VIP加', '乐歌VIP德', '安美VIP', 'YFJ&SMART', '无忧达', 'M.KiTE枫筝', '盘古Teknihall'];
+        var list = XCH.filter(function (c) { return outerIdx.indexOf(c.name.split('｜')[0]) >= 0 || /乐歌|盘古|无忧达|枫筝|安美|YFJ/i.test(c.name); });
+        host.innerHTML = '<div class="muted" style="margin-bottom:8px">外层仓尾程渠道：共 ' + list.length + ' 个。</div>' +
+            '<div style="overflow:auto"><table><tr><th>渠道</th><th>分区数</th><th>重量档</th><th>附加费</th></tr>' +
+            list.map(function (c) {
+                return '<tr><td style="text-align:left"><b>' + esc(c.name) + '</b></td><td>' + (c.zones || []).length + '</td>' +
+                    '<td>' + (c.rows || []).length + '</td><td>' + ((c.surcharges || []).length) + '</td></tr>';
+            }).join('') + '</table></div>';
+    });
+}
+document.querySelectorAll('#outerTabs .tab').forEach(function (t) {
+    t.addEventListener('click', function () { renderOuter(t.getAttribute('data-otab')); });
+});
+
+/* ── 初始化 ── */
+function initShell() {
+    renderOverview();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initShell);
+else initShell();
+</script>
+</body>
+</html>
