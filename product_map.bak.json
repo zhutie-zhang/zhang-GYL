@@ -1,0 +1,2070 @@
+{
+  "320-U-ST-BR-ZD": {
+    "name": "320U储物沙发棕",
+    "components": [
+      "320-U-ST-BR-ZD-A",
+      "320-U-ST-BR-ZD-B",
+      "320-U-ST-BR-ZD-C"
+    ]
+  },
+  "320-U-ST-GN-ZD": {
+    "name": "320U储物沙发绿",
+    "components": [
+      "320-U-ST-GN-ZD-A",
+      "320-U-ST-GN-ZD-B",
+      "320-U-ST-GN-ZD-C"
+    ]
+  },
+  "340THB-SJT-SQ-GN": {
+    "name": "340方头枕三件套弹簧沙发绿",
+    "components": [
+      "340THB-SJT-SQ-GN-L",
+      "340THB-SJT-SQ-GN-M",
+      "340THB-SJT-SQ-GN-R"
+    ]
+  },
+  "340THB-SJT-SQ-BR": {
+    "name": "340方头枕三件套弹簧沙发棕",
+    "components": [
+      "340THB-SJT-SQ-BR-L",
+      "340THB-SJT-SQ-BR-M",
+      "340THB-SJT-SQ-BR-R"
+    ]
+  },
+  "270-ST-GN-ZD": {
+    "name": "270储物沙发绿",
+    "components": [
+      "270-ST-GN-ZD-A",
+      "270-ST-GN-ZD-B"
+    ]
+  },
+  "270-ST-BR-ZD": {
+    "name": "270储物沙发棕",
+    "components": [
+      "270-ST-BR-ZD-A",
+      "270-ST-BR-ZD-B"
+    ]
+  },
+  "340THB-SJT-SQ-WE": {
+    "name": "340方头枕三件套弹簧沙发白",
+    "components": [
+      "340THB-SJT-SQ-WE-L",
+      "340THB-SJT-SQ-WE-M",
+      "340THB-SJT-SQ-WE-R"
+    ]
+  },
+  "340THB-SAN66-WE": {
+    "name": "340方头枕三件套白",
+    "components": [
+      "340THB-SAN66-WE-A",
+      "340THB-SAN66-WE-B",
+      "340THB-SAN66-WE-C"
+    ]
+  },
+  "340THB-SAN66-GN": {
+    "name": "340方头枕三件套绿",
+    "components": [
+      "340THB-SAN66-GN-A",
+      "340THB-SAN66-GN-B",
+      "340THB-SAN66-GN-C"
+    ]
+  },
+  "340THB-SAN66-BR": {
+    "name": "340方头枕三件套棕",
+    "components": [
+      "340THB-SAN66-BR-A",
+      "340THB-SAN66-BR-B",
+      "340THB-SAN66-BR-C"
+    ]
+  },
+  "340THB-SAN66-BL": {
+    "name": "340方头枕三件套蓝",
+    "components": [
+      "340THB-SAN66-BL-A",
+      "340THB-SAN66-BL-B",
+      "340THB-SAN66-BL-C"
+    ]
+  },
+  "THB-WJT-GY": {
+    "name": "五件套弹簧沙发灰",
+    "components": [
+      "THB-WJT-GY-A",
+      "THB-WJT-GY-B"
+    ]
+  },
+  "340HMB-WJT-GY": {
+    "name": "五件套海绵灰",
+    "components": [
+      "340HMB-WJT-GY-A",
+      "340HMB-WJT-GY-B"
+    ]
+  },
+  "240HMB-DCS-GN-R": {
+    "name": "240双贵妃海绵沙发左绿色",
+    "components": [
+      "240HMB-DCS-GN-RA",
+      "240HMB-DCS-GN-RB"
+    ]
+  },
+  "240HMB-DCS-GY-R": {
+    "name": "240双贵妃海绵沙发左灰色",
+    "components": [
+      "240HMB-DCS-GY-RA",
+      "240HMB-DCS-GY-RB"
+    ]
+  },
+  "240HMB-DCS-BL-R": {
+    "name": "240双贵妃海绵沙发左蓝色",
+    "components": [
+      "240HMB-DCS-BL-RA",
+      "240HMB-DCS-BL-RB"
+    ]
+  },
+  "240HMB-DCS-BK-R": {
+    "name": "240双贵妃海绵沙发左黑色",
+    "components": [
+      "240HMB-DCS-BK-RA",
+      "240HMB-DCS-BK-RB"
+    ]
+  },
+  "340HMB-WJT-BK": {
+    "name": "五件套海绵黑",
+    "components": [
+      "340HMB-WJT-BK-A",
+      "340HMB-WJT-BK-B"
+    ]
+  },
+  "THB-SAN-S-WE": {
+    "name": "三件套2.88弹簧沙发白",
+    "components": [
+      "THB-SAN-S-WE-LT",
+      "THB-SAN-S-WE-R"
+    ]
+  },
+  "320-U-ST-BK-ZD": {
+    "name": "320U储物沙发黑",
+    "components": [
+      "320-U-ST-BK-ZD-A",
+      "320-U-ST-BK-ZD-B",
+      "320-U-ST-BK-ZD-C"
+    ]
+  },
+  "320-U-ST-BL-ZD": {
+    "name": "320U储物沙发蓝",
+    "components": [
+      "320-U-ST-BL-ZD-A",
+      "320-U-ST-BL-ZD-B",
+      "320-U-ST-BL-ZD-C"
+    ]
+  },
+  "320-U-ST-GY-ZD": {
+    "name": "320U储物沙发灰",
+    "components": [
+      "320-U-ST-GY-ZD-A",
+      "320-U-ST-GY-ZD-B",
+      "320-U-ST-GY-ZD-C"
+    ]
+  },
+  "320-U-ST-KH-ZD": {
+    "name": "320U储物沙发卡其",
+    "components": [
+      "320-U-ST-KH-ZD-A",
+      "320-U-ST-KH-ZD-B",
+      "320-U-ST-KH-ZD-C"
+    ]
+  },
+  "320-U-ST-WE-ZD": {
+    "name": "320U储物沙发白",
+    "components": [
+      "320-U-ST-WE-ZD-A",
+      "320-U-ST-WE-ZD-B",
+      "320-U-ST-WE-ZD-C"
+    ]
+  },
+  "340THB-SJT-SQ-BK": {
+    "name": "340方头枕三件套弹簧沙发黑",
+    "components": [
+      "340THB-SJT-SQ-BK-L",
+      "340THB-SJT-SQ-BK-M",
+      "340THB-SJT-SQ-BK-R"
+    ]
+  },
+  "340THB-SJT-SQ-BL": {
+    "name": "340方头枕三件套弹簧沙发蓝",
+    "components": [
+      "340THB-SJT-SQ-BL-L",
+      "340THB-SJT-SQ-BL-M",
+      "340THB-SJT-SQ-BL-R"
+    ]
+  },
+  "340THB-SJT-SQ-GY": {
+    "name": "340方头枕三件套弹簧沙发灰",
+    "components": [
+      "340THB-SJT-SQ-GY-L",
+      "340THB-SJT-SQ-GY-M",
+      "340THB-SJT-SQ-GY-R"
+    ]
+  },
+  "340THB-SJT-SQ-KH": {
+    "name": "340方头枕三件套弹簧沙发卡其",
+    "components": [
+      "340THB-SJT-SQ-KH-L",
+      "340THB-SJT-SQ-KH-M",
+      "340THB-SJT-SQ-KH-R"
+    ]
+  },
+  "340THB-SAN66-BK": {
+    "name": "340方头枕三件套黑",
+    "components": [
+      "340THB-SAN66-BK-A",
+      "340THB-SAN66-BK-B",
+      "340THB-SAN66-BK-C"
+    ]
+  },
+  "340THB-SAN66-GY": {
+    "name": "340方头枕三件套灰",
+    "components": [
+      "340THB-SAN66-GY-A",
+      "340THB-SAN66-GY-B",
+      "340THB-SAN66-GY-C"
+    ]
+  },
+  "340THB-SAN66-KH": {
+    "name": "340方头枕三件套卡其",
+    "components": [
+      "340THB-SAN66-KH-A",
+      "340THB-SAN66-KH-B",
+      "340THB-SAN66-KH-C"
+    ]
+  },
+  "ST-SF-WE-FQ": {
+    "name": "U型储物压缩沙发白",
+    "components": [
+      "ST-SF-WE-FQ-A",
+      "ST-SF-WE-FQ-B"
+    ]
+  },
+  "ST-SF-KH-FQ": {
+    "name": "U型储物压缩沙发卡其",
+    "components": [
+      "ST-SF-KH-FQ-A",
+      "ST-SF-KH-FQ-B"
+    ]
+  },
+  "ST-SF-GY-FQ": {
+    "name": "U型储物压缩沙发灰",
+    "components": [
+      "ST-SF-GY-FQ-A",
+      "ST-SF-GY-FQ-B"
+    ]
+  },
+  "ST-SF-GN-FQ": {
+    "name": "U型储物压缩沙发绿",
+    "components": [
+      "ST-SF-GN-FQ-A",
+      "ST-SF-GN-FQ-B"
+    ]
+  },
+  "ST-SF-BR-FQ": {
+    "name": "U型储物压缩沙发棕",
+    "components": [
+      "ST-SF-BR-FQ-A",
+      "ST-SF-BR-FQ-B"
+    ]
+  },
+  "ST-SF-BL-FQ": {
+    "name": "U型储物压缩沙发蓝",
+    "components": [
+      "ST-SF-BL-FQ-A",
+      "ST-SF-BL-FQ-B"
+    ]
+  },
+  "ST-SF-BK-FQ": {
+    "name": "U型储物压缩沙发黑",
+    "components": [
+      "ST-SF-BK-FQ-A",
+      "ST-SF-BK-FQ-B"
+    ]
+  },
+  "TC-WE-FQ": {
+    "name": "拖床沙发白色",
+    "components": [
+      "TC-WE-FQ-A",
+      "TC-WE-FQ-B"
+    ]
+  },
+  "TC-KH-FQ": {
+    "name": "拖床沙发卡其色",
+    "components": [
+      "TC-KH-FQ-A",
+      "TC-KH-FQ-B"
+    ]
+  },
+  "TC-GY-FQ": {
+    "name": "拖床沙发灰色",
+    "components": [
+      "TC-GY-FQ-A",
+      "TC-GY-FQ-B"
+    ]
+  },
+  "TC-GN-FQ": {
+    "name": "拖床沙发绿色",
+    "components": [
+      "TC-GN-FQ-A",
+      "TC-GN-FQ-B"
+    ]
+  },
+  "TC-BR-FQ": {
+    "name": "拖床沙发棕色",
+    "components": [
+      "TC-BR-FQ-A",
+      "TC-BR-FQ-B"
+    ]
+  },
+  "TC-BL-FQ": {
+    "name": "拖床沙发蓝色",
+    "components": [
+      "TC-BL-FQ-A",
+      "TC-BL-FQ-B"
+    ]
+  },
+  "TC-BK-FQ": {
+    "name": "拖床沙发黑色",
+    "components": [
+      "TC-BK-FQ-A",
+      "TC-BK-FQ-B"
+    ]
+  },
+  "270-ST-BL-ZD": {
+    "name": "270储物沙发蓝",
+    "components": [
+      "270-ST-BL-ZD-A",
+      "270-ST-BL-ZD-B"
+    ]
+  },
+  "270-ST-GY-ZD": {
+    "name": "270储物沙发灰",
+    "components": [
+      "270-ST-GY-ZD-A",
+      "270-ST-GY-ZD-B"
+    ]
+  },
+  "270-ST-BK-ZD": {
+    "name": "270储物沙发黑",
+    "components": [
+      "270-ST-BK-ZD-A",
+      "270-ST-BK-ZD-B"
+    ]
+  },
+  "270-ST-KH-ZD": {
+    "name": "270储物沙发卡其",
+    "components": [
+      "270-ST-KH-ZD-A",
+      "270-ST-KH-ZD-B"
+    ]
+  },
+  "270-ST-WE-ZD": {
+    "name": "270储物沙发白",
+    "components": [
+      "270-ST-WE-ZD-A",
+      "270-ST-WE-ZD-B"
+    ]
+  },
+  "YJ806A-BE": {
+    "name": "五件套米",
+    "components": [
+      "YJ806A-BE-A",
+      "YJ806A-BE-B",
+      "YJ806A-BE-C"
+    ]
+  },
+  "THB-SAN-S-GY": {
+    "name": "三件套2.88弹簧沙发灰",
+    "components": [
+      "THB-SAN-S-GY-LT",
+      "THB-SAN-S-GY-R"
+    ]
+  },
+  "SAN66-WE": {
+    "name": "三件套白色",
+    "components": [
+      "SAN66-WE-L",
+      "SAN66-WE-M",
+      "SAN66-WE-R"
+    ]
+  },
+  "YJ806A-GY": {
+    "name": "五件套灰",
+    "components": [
+      "YJ806A-GY-A",
+      "YJ806A-GY-B",
+      "YJ806A-GY-C"
+    ]
+  },
+  "SAN66-GY": {
+    "name": "三件套灰色",
+    "components": [
+      "SAN66-GY-L",
+      "SAN66-GY-M",
+      "SAN66-GY-R"
+    ]
+  },
+  "SAN66-BK": {
+    "name": "三件套黑色",
+    "components": [
+      "SAN66-BK-L",
+      "SAN66-BK-M",
+      "SAN66-BK-R"
+    ]
+  },
+  "THB-SAN-S-BK": {
+    "name": "三件套2.88弹簧沙发黑",
+    "components": [
+      "THB-SAN-S-BK-LT",
+      "THB-SAN-S-BK-R"
+    ]
+  },
+  "THB-SAN-S-KH": {
+    "name": "三件套2.88弹簧沙发卡其",
+    "components": [
+      "THB-SAN-S-KH-LT",
+      "THB-SAN-S-KH-R"
+    ]
+  },
+  "THB-SAN-S-BN": {
+    "name": "三件套2.88弹簧沙发棕",
+    "components": [
+      "THB-SAN-S-BN-LT",
+      "THB-SAN-S-BN-R"
+    ]
+  },
+  "240HMB-DCS-WE-R": {
+    "name": "240双贵妃海绵沙发左白色",
+    "components": [
+      "240HMB-DCS-WE-RA",
+      "240HMB-DCS-WE-RB"
+    ]
+  },
+  "240HMB-DCS-KH-R": {
+    "name": "240双贵妃海绵沙发左卡其",
+    "components": [
+      "240HMB-DCS-KH-RA",
+      "240HMB-DCS-KH-RB"
+    ]
+  },
+  "240HMB-DCS-BR-R": {
+    "name": "240双贵妃海绵沙发左棕色",
+    "components": [
+      "240HMB-DCS-BR-RA",
+      "240HMB-DCS-BR-RB"
+    ]
+  },
+  "240HMB-DCS-WE-L": {
+    "name": "240双贵妃海绵沙发右白色",
+    "components": [
+      "240HMB-DCS-WE-LA",
+      "240HMB-DCS-WE-LB"
+    ]
+  },
+  "240HMB-DCS-KH-L": {
+    "name": "240双贵妃海绵沙发右卡其",
+    "components": [
+      "240HMB-DCS-KH-LA",
+      "240HMB-DCS-KH-LB"
+    ]
+  },
+  "240HMB-DCS-GY-L": {
+    "name": "240双贵妃海绵沙发右灰色",
+    "components": [
+      "240HMB-DCS-GY-LA",
+      "240HMB-DCS-GY-LB"
+    ]
+  },
+  "240HMB-DCS-GN-L": {
+    "name": "240双贵妃海绵沙发右绿色",
+    "components": [
+      "240HMB-DCS-GN-LA",
+      "240HMB-DCS-GN-LB"
+    ]
+  },
+  "240HMB-DCS-BR-L": {
+    "name": "240双贵妃海绵沙发右棕色",
+    "components": [
+      "240HMB-DCS-BR-LA",
+      "240HMB-DCS-BR-LB"
+    ]
+  },
+  "240HMB-DCS-BL-L": {
+    "name": "240双贵妃海绵沙发右蓝色",
+    "components": [
+      "240HMB-DCS-BL-LA",
+      "240HMB-DCS-BL-LB"
+    ]
+  },
+  "240HMB-DCS-BK-L": {
+    "name": "240双贵妃海绵沙发右黑色",
+    "components": [
+      "240HMB-DCS-BK-LA",
+      "240HMB-DCS-BK-LB"
+    ]
+  },
+  "YJ806A-WE": {
+    "name": "五件套白",
+    "components": [
+      "YJ806A-WE-A",
+      "YJ806A-WE-B",
+      "YJ806A-WE-C"
+    ]
+  },
+  "YJ806A-KH": {
+    "name": "五件套卡其",
+    "components": [
+      "YJ806A-KH-A",
+      "YJ806A-KH-B",
+      "YJ806A-KH-C"
+    ]
+  },
+  "YJ806A-GN": {
+    "name": "五件套卡绿",
+    "components": [
+      "YJ806A-GN-A",
+      "YJ806A-GN-B",
+      "YJ806A-GN-C"
+    ]
+  },
+  "YJ806A-BR": {
+    "name": "五件套卡棕",
+    "components": [
+      "YJ806A-BR-A",
+      "YJ806A-BR-B",
+      "YJ806A-BR-C"
+    ]
+  },
+  "YJ806A-BL": {
+    "name": "五件套蓝",
+    "components": [
+      "YJ806A-BL-A",
+      "YJ806A-BL-B",
+      "YJ806A-BL-C"
+    ]
+  },
+  "LLB08-KH": {
+    "name": "劳伦斯B款卡其色",
+    "components": [
+      "LLB08-KH-L",
+      "LLB08-KH-R"
+    ]
+  },
+  "LLB08-GN": {
+    "name": "劳伦斯B款绿色",
+    "components": [
+      "LLB08-GN-L",
+      "LLB08-GN-R"
+    ]
+  },
+  "LLB08-BR": {
+    "name": "劳伦斯B款棕色",
+    "components": [
+      "LLB08-BR-L",
+      "LLB08-BR-R"
+    ]
+  },
+  "LLB08-BL": {
+    "name": "劳伦斯B款蓝色",
+    "components": [
+      "LLB08-BL-L",
+      "LLB08-BL-R"
+    ]
+  },
+  "LLC99-KH": {
+    "name": "劳伦斯C款卡其色",
+    "components": [
+      "LLC99-KH-L",
+      "LLC99-KH-R"
+    ]
+  },
+  "LLC99-GN": {
+    "name": "劳伦斯C款绿色",
+    "components": [
+      "LLC99-GN-L",
+      "LLC99-GN-R"
+    ]
+  },
+  "LLC99-BR": {
+    "name": "劳伦斯C款棕色",
+    "components": [
+      "LLC99-BR-L",
+      "LLC99-BR-R"
+    ]
+  },
+  "LLC99-BL": {
+    "name": "劳伦斯C款蓝色",
+    "components": [
+      "LLC99-BL-L",
+      "LLC99-BL-R"
+    ]
+  },
+  "LLK01-KH": {
+    "name": "罗兰款卡其色",
+    "components": [
+      "LLK01-KH-L",
+      "LLK01-KH-R"
+    ]
+  },
+  "LLK01-GN": {
+    "name": "罗兰款卡绿色",
+    "components": [
+      "LLK01-GN-L",
+      "LLK01-GN-R"
+    ]
+  },
+  "LLK01-BR": {
+    "name": "罗兰款卡棕色",
+    "components": [
+      "LLK01-BR-L",
+      "LLK01-BR-R"
+    ]
+  },
+  "LLK01-BL": {
+    "name": "罗兰款蓝色",
+    "components": [
+      "LLK01-BL-L",
+      "LLK01-BL-R"
+    ]
+  },
+  "LLS-WE": {
+    "name": "劳伦斯白",
+    "components": [
+      "LLS-WE-L",
+      "LLS-WE-R"
+    ]
+  },
+  "LLS-KH": {
+    "name": "劳伦斯卡其",
+    "components": [
+      "LLS-KH-L",
+      "LLS-KH-R"
+    ]
+  },
+  "LLS-GY": {
+    "name": "劳伦斯灰",
+    "components": [
+      "LLS-GY-L",
+      "LLS-GY-R"
+    ]
+  },
+  "LLS-GN": {
+    "name": "劳伦斯绿",
+    "components": [
+      "LLS-GN-L",
+      "LLS-GN-R"
+    ]
+  },
+  "LLS-BR": {
+    "name": "劳伦斯棕",
+    "components": [
+      "LLS-BR-L",
+      "LLS-BR-R"
+    ]
+  },
+  "LLS-BL": {
+    "name": "劳伦斯蓝",
+    "components": [
+      "LLS-BL-L",
+      "LLS-BL-R"
+    ]
+  },
+  "LLS-BK": {
+    "name": "劳伦斯黑",
+    "components": [
+      "LLS-BK-L",
+      "LLS-BK-R"
+    ]
+  },
+  "GQ77-BL": {
+    "name": "钢琴键沙发蓝色",
+    "components": [
+      "GQ77-BL-L",
+      "GQ77-BL-M",
+      "GQ77-BL-R"
+    ]
+  },
+  "GQ77-BR": {
+    "name": "钢琴键沙发棕色",
+    "components": [
+      "GQ77-BR-L",
+      "GQ77-BR-M",
+      "GQ77-BR-R"
+    ]
+  },
+  "GQ77-GN": {
+    "name": "钢琴键沙发绿色",
+    "components": [
+      "GQ77-GN-L",
+      "GQ77-GN-M",
+      "GQ77-GN-R"
+    ]
+  },
+  "GQ77-KH": {
+    "name": "钢琴键沙发卡其色",
+    "components": [
+      "GQ77-KH-L",
+      "GQ77-KH-M",
+      "GQ77-KH-R"
+    ]
+  },
+  "THB-WJT-WE": {
+    "name": "五件套弹簧沙发白",
+    "components": [
+      "THB-WJT-WE-A",
+      "THB-WJT-WE-B"
+    ]
+  },
+  "THB-WJT-KH": {
+    "name": "五件套弹簧沙发卡其",
+    "components": [
+      "THB-WJT-KH-A",
+      "THB-WJT-KH-B"
+    ]
+  },
+  "THB-WJT-GN": {
+    "name": "五件套弹簧沙发绿",
+    "components": [
+      "THB-WJT-GN-A",
+      "THB-WJT-GN-B"
+    ]
+  },
+  "THB-WJT-BR": {
+    "name": "五件套弹簧沙发棕",
+    "components": [
+      "THB-WJT-BR-A",
+      "THB-WJT-BR-B"
+    ]
+  },
+  "THB-WJT-BL": {
+    "name": "五件套弹簧沙发蓝",
+    "components": [
+      "THB-WJT-BL-A",
+      "THB-WJT-BL-B"
+    ]
+  },
+  "THB-SAN-S-BL": {
+    "name": "三件套2.88米弹簧沙发蓝",
+    "components": [
+      "THB-SAN-S-BL-LT",
+      "THB-SAN-S-BL-R"
+    ]
+  },
+  "340HMB-WJT-BR": {
+    "name": "五件套海绵棕",
+    "components": [
+      "340HMB-WJT-BR-A",
+      "340HMB-WJT-BR-B"
+    ]
+  },
+  "340HMB-WJT-GN": {
+    "name": "五件套海绵绿",
+    "components": [
+      "340HMB-WJT-GN-A",
+      "340HMB-WJT-GN-B"
+    ]
+  },
+  "340HMB-WJT-KH": {
+    "name": "五件套海绵卡其",
+    "components": [
+      "340HMB-WJT-KH-A",
+      "340HMB-WJT-KH-B"
+    ]
+  },
+  "340HMB-WJT-BL": {
+    "name": "五件套海绵蓝",
+    "components": [
+      "340HMB-WJT-BL-A",
+      "340HMB-WJT-BL-B"
+    ]
+  },
+  "340HMB-WJT-WE": {
+    "name": "五件套海绵白",
+    "components": [
+      "340HMB-WJT-WE-A",
+      "340HMB-WJT-WE-B"
+    ]
+  },
+  "SAN66-BR": {
+    "name": "三件套棕",
+    "components": [
+      "SAN66-BR-L",
+      "SAN66-BR-M",
+      "SAN66-BR-R"
+    ]
+  },
+  "SAN66-GN": {
+    "name": "三件套绿",
+    "components": [
+      "SAN66-GN-L",
+      "SAN66-GN-M",
+      "SAN66-GN-R"
+    ]
+  },
+  "SAN66-KH": {
+    "name": "三件套卡其",
+    "components": [
+      "SAN66-KH-L",
+      "SAN66-KH-M",
+      "SAN66-KH-R"
+    ]
+  },
+  "SAN66-BL": {
+    "name": "三件套蓝",
+    "components": [
+      "SAN66-BL-L",
+      "SAN66-BL-M",
+      "SAN66-BL-R"
+    ]
+  },
+  "340THB-RSAN-BR": {
+    "name": "340圆头枕三件套棕",
+    "components": [
+      "340THB-RSAN-BR-A",
+      "340THB-RSAN-BR-B",
+      "340THB-RSAN-BR-C"
+    ]
+  },
+  "340THB-RSAN-GN": {
+    "name": "340圆头枕三件套绿",
+    "components": [
+      "340THB-RSAN-GN-A",
+      "340THB-RSAN-GN-B",
+      "340THB-RSAN-GN-C"
+    ]
+  },
+  "340THB-RSAN-KH": {
+    "name": "340圆头枕三件套卡其",
+    "components": [
+      "340THB-RSAN-KH-A",
+      "340THB-RSAN-KH-B",
+      "340THB-RSAN-KH-C"
+    ]
+  },
+  "340THB-RSAN-BL": {
+    "name": "340圆头枕三件套蓝",
+    "components": [
+      "340THB-RSAN-BL-A",
+      "340THB-RSAN-BL-B",
+      "340THB-RSAN-BL-C"
+    ]
+  },
+  "340THB-RSAN-WE": {
+    "name": "340圆头枕三件套白",
+    "components": [
+      "340THB-RSAN-WE-A",
+      "340THB-RSAN-WE-B",
+      "340THB-RSAN-WE-C"
+    ]
+  },
+  "270HMB-S-DDS-BL": {
+    "name": "270小双层海绵沙发蓝",
+    "components": [
+      "270HMB-S-DDS-BL-A",
+      "270HMB-S-DDS-BL-B"
+    ]
+  },
+  "THB-SAN-S-GN": {
+    "name": "三件套2.88弹簧沙发绿",
+    "components": [
+      "THB-SAN-S-GN-LT",
+      "THB-SAN-S-GN-R"
+    ]
+  },
+  "THB-WJT-BK": {
+    "name": "五件套弹簧沙发黑",
+    "components": [
+      "THB-WJT-BK-A",
+      "THB-WJT-BK-B"
+    ]
+  },
+  "270HMB-S-DDS-WE": {
+    "name": "270双层海绵沙发白",
+    "components": [
+      "270HMB-S-DDS-WE-A",
+      "270HMB-S-DDS-WE-B"
+    ]
+  },
+  "270HMB-S-DDS-KH": {
+    "name": "270双层海绵沙发卡其",
+    "components": [
+      "270HMB-S-DDS-KH-A",
+      "270HMB-S-DDS-KH-B"
+    ]
+  },
+  "270HMB-S-DDS-GY": {
+    "name": "270双层海绵沙发灰",
+    "components": [
+      "270HMB-S-DDS-GY-A",
+      "270HMB-S-DDS-GY-B"
+    ]
+  },
+  "270HMB-S-DDS-GN": {
+    "name": "270双层海绵沙发绿",
+    "components": [
+      "270HMB-S-DDS-GN-A",
+      "270HMB-S-DDS-GN-B"
+    ]
+  },
+  "270HMB-S-DDS-BR": {
+    "name": "270双层海绵沙发棕",
+    "components": [
+      "270HMB-S-DDS-BR-A",
+      "270HMB-S-DDS-BR-B"
+    ]
+  },
+  "270HMB-S-DDS-BK": {
+    "name": "270双层海绵沙发黑",
+    "components": [
+      "270HMB-S-DDS-BK-A",
+      "270HMB-S-DDS-BK-B"
+    ]
+  },
+  "340THB-RSAN-GY": {
+    "name": "340圆头枕三件套灰",
+    "components": [
+      "340THB-RSAN-GY-A",
+      "340THB-RSAN-GY-B",
+      "340THB-RSAN-GY-C"
+    ]
+  },
+  "340THB-RSAN-BK": {
+    "name": "340圆头枕三件套黑",
+    "components": [
+      "340THB-RSAN-BK-A",
+      "340THB-RSAN-BK-B",
+      "340THB-RSAN-BK-C"
+    ]
+  },
+  "YJ806A-BK": {
+    "name": "五件套黑",
+    "components": [
+      "YJ806A-BK-A",
+      "YJ806A-BK-B",
+      "YJ806A-BK-C"
+    ]
+  },
+  "YJ804-1": {
+    "name": "黑色劳伦斯",
+    "components": [
+      "YJ804-1A",
+      "YJ804-1B"
+    ]
+  },
+  "YJ806-1": {
+    "name": "五件套黑色",
+    "components": [
+      "YJ806-1A",
+      "YJ806-1B",
+      "YJ806-1C"
+    ]
+  },
+  "YJ806-2": {
+    "name": "五件套灰色",
+    "components": [
+      "YJ806-2A",
+      "YJ806-2B",
+      "YJ806-2C"
+    ]
+  },
+  "LLS-KR": {
+    "name": "劳伦斯卡其",
+    "components": [
+      "LLS-KR-L",
+      "LLS-KR-R"
+    ]
+  },
+  "LLB08-GY": {
+    "name": "劳伦斯B款灰色",
+    "components": [
+      "LLB08-GY-L",
+      "LLB08-GY-R"
+    ]
+  },
+  "LLB08-WE": {
+    "name": "劳伦斯B款白色",
+    "components": [
+      "LLB08-WE-L",
+      "LLB08-WE-R"
+    ]
+  },
+  "YJ804-2": {
+    "name": "灰色劳伦斯",
+    "components": [
+      "YJ804-2A",
+      "YJ804-2B"
+    ]
+  },
+  "LLB08-BK": {
+    "name": "劳伦斯B款黑色",
+    "components": [
+      "LLB08-BK-L",
+      "LLB08-BK-R"
+    ]
+  },
+  "LLA07-PK": {
+    "name": "劳伦斯A款粉色",
+    "components": [
+      "LLA07-PK-L",
+      "LLA07-PK-R"
+    ]
+  },
+  "YJ806-3": {
+    "name": "白色五件套",
+    "components": [
+      "YJ806-3A",
+      "YJ806-3B",
+      "YJ806-3C"
+    ]
+  },
+  "YJ806A-KR": {
+    "name": "五件套卡其",
+    "components": [
+      "YJ806A-KR-A",
+      "YJ806A-KR-B",
+      "YJ806A-KR-C"
+    ]
+  },
+  "LLC99-BK": {
+    "name": "劳伦斯C款黑色",
+    "components": [
+      "LLC99-BK-L",
+      "LLC99-BK-R"
+    ]
+  },
+  "LLC99-GY": {
+    "name": "劳伦斯C款灰色",
+    "components": [
+      "LLC99-GY-L",
+      "LLC99-GY-R"
+    ]
+  },
+  "LLC99-WE": {
+    "name": "劳伦斯C款白色",
+    "components": [
+      "LLC99-WE-L",
+      "LLC99-WE-R"
+    ]
+  },
+  "GQ77-GY": {
+    "name": "钢琴键沙发灰色",
+    "components": [
+      "GQ77-GY-L",
+      "GQ77-GY-M",
+      "GQ77-GY-R"
+    ]
+  },
+  "YJ804-3": {
+    "name": "白色劳伦斯",
+    "components": [
+      "YJ804-3A",
+      "YJ804-3B"
+    ]
+  },
+  "LLK01-BK": {
+    "name": "罗兰款黑色",
+    "components": [
+      "LLK01-BK-L",
+      "LLK01-BK-R"
+    ]
+  },
+  "LLK01-GY": {
+    "name": "罗兰款灰色",
+    "components": [
+      "LLK01-GY-L",
+      "LLK01-GY-R"
+    ]
+  },
+  "LLK01-WE": {
+    "name": "罗兰款白色",
+    "components": [
+      "LLK01-WE-L",
+      "LLK01-WE-R"
+    ]
+  },
+  "GQ77-WE": {
+    "name": "钢琴键沙发白色",
+    "components": [
+      "GQ77-WE-L",
+      "GQ77-WE-M",
+      "GQ77-WE-R"
+    ]
+  },
+  "GQ77-BK": {
+    "name": "钢琴键沙发黑色",
+    "components": [
+      "GQ77-BK-L",
+      "GQ77-BK-M",
+      "GQ77-BK-R"
+    ]
+  },
+  "YJ801-3": {
+    "name": "贵妃 转角270",
+    "components": [
+      "YJ801-3A",
+      "YJ801-3B"
+    ]
+  },
+  "YJ807-1": {
+    "name": "黑色75劳伦斯",
+    "components": [
+      "YJ807-1A",
+      "YJ807-1B"
+    ]
+  },
+  "YJ801-1": {
+    "name": "黑色贵妃 转角270",
+    "components": [
+      "YJ801-1A",
+      "YJ801-1B"
+    ]
+  },
+  "YJ805-1": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-1A",
+      "YJ805-1B"
+    ]
+  },
+  "YJ801-2": {
+    "name": "白色贵妃 转角270",
+    "components": [
+      "YJ801-2A",
+      "YJ801-2B"
+    ]
+  },
+  "YJ803-3": {
+    "name": "白色豆腐块",
+    "components": [
+      "YJ803-3A",
+      "YJ803-3B",
+      "YJ803-3C"
+    ]
+  },
+  "YJ805-3": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-3A",
+      "YJ805-3B"
+    ]
+  },
+  "YJ805-2": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-2A",
+      "YJ805-2B"
+    ]
+  },
+  "YJ808-1": {
+    "name": "贵妃六件套",
+    "components": [
+      "YJ808-1A-L",
+      "YJ808-1B-R",
+      "YJ808-1C-M"
+    ]
+  },
+  "YJ808-2": {
+    "name": "贵妃六件套",
+    "components": [
+      "YJ808-2A-L",
+      "YJ808-2B-R",
+      "YJ808-2C-M"
+    ]
+  },
+  "YJ808-3": {
+    "name": "贵妃六件套",
+    "components": [
+      "YJ808-3A-L",
+      "YJ808-3B-R",
+      "YJ808-3C-M"
+    ]
+  },
+  "YJ807-3": {
+    "name": "白色75劳伦斯",
+    "components": [
+      "YJ807-3A",
+      "YJ807-3B"
+    ]
+  },
+  "YJ807-2": {
+    "name": "灰色75劳伦斯",
+    "components": [
+      "YJ807-2A",
+      "YJ807-2B"
+    ]
+  },
+  "YJ805-4": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-4A",
+      "YJ805-4B"
+    ]
+  },
+  "YJ805-5": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-5A",
+      "YJ805-5B"
+    ]
+  },
+  "YJ805-6": {
+    "name": "贵妃坐垫",
+    "components": [
+      "YJ805-6A",
+      "YJ805-6B"
+    ]
+  },
+  "YJ803-1": {
+    "name": "黑色豆腐块",
+    "components": [
+      "YJ803-1A",
+      "YJ803-1B",
+      "YJ803-1C"
+    ]
+  },
+  "YJ803-2": {
+    "name": "灰色豆腐块",
+    "components": [
+      "YJ803-2A",
+      "YJ803-2B",
+      "YJ803-2C"
+    ]
+  },
+  "T-LLB08-GY-L": {
+    "name": "劳伦斯B款灰色右边",
+    "components": []
+  },
+  "T-ST-SF-BR-FQ-B": {
+    "name": "U型储物压缩沙发棕",
+    "components": []
+  },
+  "T-LLB08-GY-R": {
+    "name": "劳伦斯B款灰色方形贵妃",
+    "components": []
+  },
+  "T-ST-SF-GN-FQ-A": {
+    "name": "U型储物压缩沙发绿",
+    "components": []
+  },
+  "T-LLB08-WE-L": {
+    "name": "劳伦斯B款白色右边",
+    "components": []
+  },
+  "T-ST-SF-GN-FQ-B": {
+    "name": "U型储物压缩沙发绿",
+    "components": []
+  },
+  "T-LLB08-WE-R": {
+    "name": "劳伦斯B款白色方形贵妃",
+    "components": []
+  },
+  "T-ST-SF-KH-FQ-A": {
+    "name": "U型储物压缩沙发卡其",
+    "components": []
+  },
+  "T-LLC99-BK-L": {
+    "name": "LLC99-BK-L",
+    "components": []
+  },
+  "T-LLC99-BK-R": {
+    "name": "LLC99-BK-R",
+    "components": []
+  },
+  "T-ST-SF-KH-FQ-B": {
+    "name": "U型储物压缩沙发卡其",
+    "components": []
+  },
+  "T-LLC99-GY-L": {
+    "name": "LLC99-GY-L",
+    "components": []
+  },
+  "T-ST-SF-WE-FQ-A": {
+    "name": "U型储物压缩沙发白",
+    "components": []
+  },
+  "T-ST-SF-WE-FQ-B": {
+    "name": "U型储物压缩沙发白",
+    "components": []
+  },
+  "T-LLC99-GY-R": {
+    "name": "LLC99-GY-R",
+    "components": []
+  },
+  "T-ST-SF-BL-FQ-A": {
+    "name": "U型储物压缩沙发蓝",
+    "components": []
+  },
+  "T-LLC99-WE-L": {
+    "name": "LLC99-WE-L",
+    "components": []
+  },
+  "T-LLC99-WE-R": {
+    "name": "LLC99-WE-R",
+    "components": []
+  },
+  "T-ST-SF-BL-FQ-B": {
+    "name": "U型储物压缩沙发蓝",
+    "components": []
+  },
+  "T-LLK01-BK-L": {
+    "name": "罗兰款黑色右边",
+    "components": []
+  },
+  "T-ST-SF-BK-FQ-A": {
+    "name": "U型储物压缩沙发黑",
+    "components": []
+  },
+  "T-LLK01-BK-R": {
+    "name": "罗兰款黑色左边",
+    "components": []
+  },
+  "T-ST-SF-BK-FQ-B": {
+    "name": "U型储物压缩沙发黑",
+    "components": []
+  },
+  "T-ST-SF-GY-FQ-A": {
+    "name": "U型储物压缩沙发灰",
+    "components": []
+  },
+  "T-LLK01-GY-L": {
+    "name": "罗兰款灰色右边",
+    "components": []
+  },
+  "T-ST-SF-GY-FQ-B": {
+    "name": "U型储物压缩沙发灰",
+    "components": []
+  },
+  "T-LLK01-GY-R": {
+    "name": "罗兰款灰色左边",
+    "components": []
+  },
+  "T-LLK01-WE-L": {
+    "name": "罗兰款白色右边",
+    "components": []
+  },
+  "T-10-GY-CD49-FULL": {
+    "name": "10-GY-CD49-FULL",
+    "components": []
+  },
+  "T-LLK01-WE-R": {
+    "name": "罗兰款白色左边",
+    "components": []
+  },
+  "T-10-GY-CD49-QUEEN": {
+    "name": "10-GY-CD49-QUEEN",
+    "components": []
+  },
+  "T-LLS-KR-L": {
+    "name": "劳伦斯卡其左",
+    "components": []
+  },
+  "T-12-GY-CD49-TW": {
+    "name": "12-GY-CD49-TW",
+    "components": []
+  },
+  "T-LLS-KR-R": {
+    "name": "劳伦斯卡其右",
+    "components": []
+  },
+  "T-12-GY-CD49-FULL": {
+    "name": "12-GY-CD49-FULL",
+    "components": []
+  },
+  "T-12-GY-CD49-QUEEN": {
+    "name": "12-GY-CD49-QUEEN",
+    "components": []
+  },
+  "T-QQ0001": {
+    "name": "秋千",
+    "components": []
+  },
+  "T-10-GY-CD49-KING": {
+    "name": "10-GY-CD49-KING",
+    "components": []
+  },
+  "T-SAN66-BK-L": {
+    "name": "三件套黑色右贵妃",
+    "components": []
+  },
+  "T-12-GY-CD49-KING": {
+    "name": "12-GY-CD49-KING",
+    "components": []
+  },
+  "T-SAN66-BK-M": {
+    "name": "三件套黑色中间双人位",
+    "components": []
+  },
+  "T-8-GY-CD49-TW": {
+    "name": "8-GY-CD49-TW",
+    "components": []
+  },
+  "T-SAN66-BK-R": {
+    "name": "三件套黑色左贵妃",
+    "components": []
+  },
+  "T-10-GY-CD49-TW": {
+    "name": "10-GY-CD49-TW",
+    "components": []
+  },
+  "T-SAN66-GY-L": {
+    "name": "三件套灰色右贵妃",
+    "components": []
+  },
+  "T-TC-BR-FQ-A": {
+    "name": "拖床沙发棕色",
+    "components": []
+  },
+  "T-SAN66-GY-M": {
+    "name": "三件套灰色中间双人位",
+    "components": []
+  },
+  "T-TC-BR-FQ-B": {
+    "name": "拖床沙发棕色",
+    "components": []
+  },
+  "T-SAN66-GY-R": {
+    "name": "三件套灰色左贵妃",
+    "components": []
+  },
+  "T-TC-GN-FQ-A": {
+    "name": "拖床沙发绿色",
+    "components": []
+  },
+  "T-SAN66-WE-L": {
+    "name": "三件套白色右贵妃",
+    "components": []
+  },
+  "T-TC-GN-FQ-B": {
+    "name": "拖床沙发绿色",
+    "components": []
+  },
+  "T-SAN66-WE-M": {
+    "name": "三件套白色中间双人位",
+    "components": []
+  },
+  "T-TC-KH-FQ-A": {
+    "name": "拖床沙发卡其色",
+    "components": []
+  },
+  "T-SAN66-WE-R": {
+    "name": "三件套白色左贵妃",
+    "components": []
+  },
+  "T-TC-KH-FQ-B": {
+    "name": "拖床沙发卡其色",
+    "components": []
+  },
+  "T-YJ801-1A": {
+    "name": "黑色坐垫 转角270",
+    "components": []
+  },
+  "T-TC-WE-FQ-A": {
+    "name": "拖床沙发白色",
+    "components": []
+  },
+  "T-YJ801-1B": {
+    "name": "黑色贵妃 转角270",
+    "components": []
+  },
+  "T-TC-WE-FQ-B": {
+    "name": "拖床沙发白色",
+    "components": []
+  },
+  "T-YJ801-2A": {
+    "name": "白色坐垫 转角270",
+    "components": []
+  },
+  "T-TC-BL-FQ-A": {
+    "name": "拖床沙发蓝色",
+    "components": []
+  },
+  "T-YJ801-2B": {
+    "name": "白色贵妃 转角270",
+    "components": []
+  },
+  "T-TC-BL-FQ-B": {
+    "name": "拖床沙发蓝色",
+    "components": []
+  },
+  "T-YJ801-3A": {
+    "name": "灰色坐垫 转角270",
+    "components": []
+  },
+  "T-TC-GY-FQ-A": {
+    "name": "拖床沙发灰色",
+    "components": []
+  },
+  "T-YJ801-3B": {
+    "name": "灰色贵妃 转角270",
+    "components": []
+  },
+  "T-TC-GY-FQ-B": {
+    "name": "拖床沙发灰色",
+    "components": []
+  },
+  "T-YJ802-1": {
+    "name": "黑色单人位",
+    "components": []
+  },
+  "T-TC-BK-FQ-B": {
+    "name": "拖床沙发黑色",
+    "components": []
+  },
+  "T-YJ802-2": {
+    "name": "灰色单人位",
+    "components": []
+  },
+  "T-TC-BK-FQ-A": {
+    "name": "拖床沙发黑色",
+    "components": []
+  },
+  "T-YJ802-1MLIAO": {
+    "name": "单人位面料",
+    "components": []
+  },
+  "T-14-GY-CD49-KING": {
+    "name": "14-GY-CD49-KING",
+    "components": []
+  },
+  "T-YJ803-1A": {
+    "name": "黑色豆腐块（左+脚踏）",
+    "components": []
+  },
+  "T-14-GY-CD49-QUEEN": {
+    "name": "14-GY-CD49-QUEEN",
+    "components": []
+  },
+  "T-YJ803-1B": {
+    "name": "黑色豆腐块（右+脚踏）",
+    "components": []
+  },
+  "T-14-GY-CD49-FULL": {
+    "name": "14-GY-CD49-FULL",
+    "components": []
+  },
+  "T-YJ803-1C": {
+    "name": "黑色豆腐块（中间单人）",
+    "components": []
+  },
+  "T-14-GY-CD49-TW": {
+    "name": "14-GY-CD49-TW",
+    "components": []
+  },
+  "T-YJ803-2A": {
+    "name": "灰色豆腐块（左+脚踏）",
+    "components": []
+  },
+  "T-320-U-ST-KH-ZD-C": {
+    "name": "320U储物沙发卡其",
+    "components": []
+  },
+  "T-YJ803-2B": {
+    "name": "灰色豆腐块（右+脚踏）",
+    "components": []
+  },
+  "T-320-U-ST-KH-ZD-B": {
+    "name": "320U储物沙发卡其",
+    "components": []
+  },
+  "T-YJ803-2C": {
+    "name": "灰色豆腐块（中间单人）",
+    "components": []
+  },
+  "T-320-U-ST-KH-ZD-A": {
+    "name": "320U储物沙发卡其",
+    "components": []
+  },
+  "T-YJ803-3A": {
+    "name": "白色豆腐块（左+脚踏）",
+    "components": []
+  },
+  "T-320-U-ST-BL-ZD-C": {
+    "name": "320U储物沙发蓝",
+    "components": []
+  },
+  "T-YJ803-3C": {
+    "name": "白色豆腐块（中间单人）",
+    "components": []
+  },
+  "T-320-U-ST-BL-ZD-B": {
+    "name": "320U储物沙发蓝",
+    "components": []
+  },
+  "T-YJ803-3B": {
+    "name": "白色豆腐块（右+脚踏）",
+    "components": []
+  },
+  "T-320-U-ST-BL-ZD-A": {
+    "name": "320U储物沙发蓝",
+    "components": []
+  },
+  "T-YJ804-1A": {
+    "name": "黑色劳伦斯改款左",
+    "components": []
+  },
+  "T-320-U-ST-WE-ZD-C": {
+    "name": "320U储物沙发白",
+    "components": []
+  },
+  "T-YJ804-1B": {
+    "name": "黑色劳伦斯改款右",
+    "components": []
+  },
+  "T-320-U-ST-WE-ZD-B": {
+    "name": "320U储物沙发白",
+    "components": []
+  },
+  "T-YJ804-3A": {
+    "name": "白色劳伦斯改款左",
+    "components": []
+  },
+  "T-320-U-ST-WE-ZD-A": {
+    "name": "320U储物沙发白",
+    "components": []
+  },
+  "T-YJ804-2A": {
+    "name": "灰色劳伦斯改款左",
+    "components": []
+  },
+  "T-320-U-ST-GY-ZD-C": {
+    "name": "320U储物沙发灰",
+    "components": []
+  },
+  "T-YJ804-2B": {
+    "name": "灰色劳伦斯改款右",
+    "components": []
+  },
+  "T-320-U-ST-GY-ZD-B": {
+    "name": "320U储物沙发灰",
+    "components": []
+  },
+  "T-YJ805-1A": {
+    "name": "坐垫右",
+    "components": []
+  },
+  "T-320-U-ST-GY-ZD-A": {
+    "name": "320U储物沙发灰",
+    "components": []
+  },
+  "T-YJ805-1B": {
+    "name": "贵妃右",
+    "components": []
+  },
+  "T-320-U-ST-BK-ZD-C": {
+    "name": "320U储物沙发黑",
+    "components": []
+  },
+  "T-YJ804-3B": {
+    "name": "白色劳伦斯改款右",
+    "components": []
+  },
+  "T-320-U-ST-BK-ZD-B": {
+    "name": "320U储物沙发黑",
+    "components": []
+  },
+  "T-YJ805-2A": {
+    "name": "坐垫右",
+    "components": []
+  },
+  "T-320-U-ST-BK-ZD-A": {
+    "name": "320U储物沙发黑",
+    "components": []
+  },
+  "T-YJ805-2B": {
+    "name": "贵妃右",
+    "components": []
+  },
+  "T-320-U-ST-GN-ZD-A": {
+    "name": "320U储物沙发绿",
+    "components": []
+  },
+  "T-YJ805-3A": {
+    "name": "坐垫右",
+    "components": []
+  },
+  "T-320-U-ST-GN-ZD-B": {
+    "name": "320U储物沙发绿",
+    "components": []
+  },
+  "T-YJ805-3B": {
+    "name": "贵妃右",
+    "components": []
+  },
+  "T-320-U-ST-BR-ZD-A": {
+    "name": "320U储物沙发棕",
+    "components": []
+  },
+  "T-YJ805-4A": {
+    "name": "坐垫左",
+    "components": []
+  },
+  "T-320-U-ST-BR-ZD-C": {
+    "name": "320U储物沙发棕",
+    "components": []
+  },
+  "T-YJ805-4B": {
+    "name": "贵妃左",
+    "components": []
+  },
+  "T-320-U-ST-GN-ZD-C": {
+    "name": "320U储物沙发绿",
+    "components": []
+  },
+  "T-YJ805-5A": {
+    "name": "坐垫左",
+    "components": []
+  },
+  "T-320-U-ST-BR-ZD-B": {
+    "name": "320U储物沙发棕",
+    "components": []
+  },
+  "T-YJ805-5B": {
+    "name": "贵妃左",
+    "components": []
+  },
+  "T-240THB-L-BK-L-ZD": {
+    "name": "240L型弹簧沙发右黑",
+    "components": []
+  },
+  "T-YJ805-6A": {
+    "name": "坐垫左",
+    "components": []
+  },
+  "T-240THB-L-BK-R-ZD": {
+    "name": "240L型弹簧沙发左黑",
+    "components": []
+  },
+  "T-YJ805-6B": {
+    "name": "贵妃左",
+    "components": []
+  },
+  "T-240THB-L-BL-L-ZD": {
+    "name": "240L型弹簧沙发右蓝",
+    "components": []
+  },
+  "T-YJ806-1A": {
+    "name": "五件套黑色",
+    "components": []
+  },
+  "T-240THB-L-BL-R-ZD": {
+    "name": "240L型弹簧沙发左蓝",
+    "components": []
+  },
+  "T-YJ806-1B": {
+    "name": "五件套黑色",
+    "components": []
+  },
+  "T-240THB-L-GN-L-ZD": {
+    "name": "240L型弹簧沙发右绿",
+    "components": []
+  },
+  "T-YJ806-1C": {
+    "name": "五件套黑色",
+    "components": []
+  },
+  "T-240THB-L-GN-R-ZD": {
+    "name": "240L型弹簧沙发左绿",
+    "components": []
+  },
+  "T-YJ806-2A": {
+    "name": "五件套灰色",
+    "components": []
+  },
+  "T-240THB-L-GY-L-ZD": {
+    "name": "240L型弹簧沙发右灰",
+    "components": []
+  },
+  "T-YJ806-2B": {
+    "name": "五件套灰色",
+    "components": []
+  },
+  "T-240THB-L-GY-R-ZD": {
+    "name": "240L型弹簧沙发左灰",
+    "components": []
+  },
+  "T-YJ806-3A": {
+    "name": "五件套白色",
+    "components": []
+  },
+  "T-240THB-L-KH-L-ZD": {
+    "name": "240L型弹簧沙发右卡其",
+    "components": []
+  },
+  "T-YJ806-3B": {
+    "name": "白色贵妃单人",
+    "components": []
+  },
+  "T-240THB-L-KH-R-ZD": {
+    "name": "240L型弹簧沙发左卡其",
+    "components": []
+  },
+  "T-YJ806-3C": {
+    "name": "白色脚踏",
+    "components": []
+  },
+  "T-240THB-L-WE-L-ZD": {
+    "name": "240L型弹簧沙发右白",
+    "components": []
+  },
+  "T-YJ806A-BE-A": {
+    "name": "五件套米",
+    "components": []
+  },
+  "T-240THB-L-WE-R-ZD": {
+    "name": "240L型弹簧沙发左白",
+    "components": []
+  },
+  "T-SAN66-BL-L": {
+    "name": "三件套蓝色右贵妃",
+    "components": []
+  },
+  "T-270-ST-BK-ZD-A": {
+    "name": "270储物沙发黑",
+    "components": []
+  },
+  "T-SAN66-BL-M": {
+    "name": "三件套蓝色中间双人位",
+    "components": []
+  },
+  "T-270-ST-BK-ZD-B": {
+    "name": "270储物沙发黑",
+    "components": []
+  },
+  "T-SAN66-BL-R": {
+    "name": "三件套蓝色左贵妃",
+    "components": []
+  },
+  "T-270-ST-BL-ZD-A": {
+    "name": "270储物沙发蓝",
+    "components": []
+  },
+  "T-SAN66-KH-L": {
+    "name": "三件套卡其色右贵妃",
+    "components": []
+  },
+  "T-270-ST-BL-ZD-B": {
+    "name": "270储物沙发蓝",
+    "components": []
+  },
+  "T-SAN66-KH-M": {
+    "name": "三件套卡其色中间双人位",
+    "components": []
+  },
+  "T-270-ST-BR-ZD-A": {
+    "name": "270储物沙发棕",
+    "components": []
+  },
+  "T-SAN66-KH-R": {
+    "name": "三件套卡其色左贵妃",
+    "components": []
+  },
+  "T-270-ST-BR-ZD-B": {
+    "name": "270储物沙发棕",
+    "components": []
+  },
+  "T-SAN66-GN-L": {
+    "name": "三件套绿色右贵妃",
+    "components": []
+  },
+  "T-270-ST-GN-ZD-A": {
+    "name": "270储物沙发绿",
+    "components": []
+  },
+  "T-SAN66-GN-M": {
+    "name": "三件套绿色中间双人位",
+    "components": []
+  },
+  "T-270-ST-GN-ZD-B": {
+    "name": "270储物沙发绿",
+    "components": []
+  },
+  "T-SAN66-GN-R": {
+    "name": "三件套绿色左贵妃",
+    "components": []
+  },
+  "T-270-ST-GY-ZD-A": {
+    "name": "270储物沙发灰",
+    "components": []
+  },
+  "T-SAN66-BR-L": {
+    "name": "三件套棕色右贵妃",
+    "components": []
+  },
+  "T-270-ST-GY-ZD-B": {
+    "name": "270储物沙发灰",
+    "components": []
+  },
+  "T-SAN66-BR-M": {
+    "name": "三件套棕色中间双人位",
+    "components": []
+  },
+  "T-270-ST-KH-ZD-A": {
+    "name": "270储物沙发卡其",
+    "components": []
+  },
+  "T-SAN66-BR-R": {
+    "name": "三件套棕色左贵妃",
+    "components": []
+  },
+  "T-270-ST-KH-ZD-B": {
+    "name": "270储物沙发卡其",
+    "components": []
+  },
+  "T-GQ77-BL-L": {
+    "name": "钢琴键沙发蓝色（直排）",
+    "components": []
+  },
+  "T-270-ST-WE-ZD-A": {
+    "name": "270储物沙发白",
+    "components": []
+  },
+  "T-GQ77-BL-M": {
+    "name": "钢琴键沙发蓝色（中间+扶手单人）",
+    "components": []
+  },
+  "T-270-ST-WE-ZD-B": {
+    "name": "270储物沙发白",
+    "components": []
+  },
+  "T-GQ77-BL-R": {
+    "name": "钢琴键沙发蓝色",
+    "components": []
+  },
+  "T-340THB-SAN66-BK-A": {
+    "name": "340方头枕三件套黑",
+    "components": []
+  },
+  "T-YJ806A-BE-B": {
+    "name": "五件套米",
+    "components": []
+  },
+  "T-GQ77-KH-L": {
+    "name": "钢琴键沙发卡其色（直排）",
+    "components": []
+  },
+  "T-340THB-SAN66-BK-B": {
+    "name": "340方头枕三件套黑",
+    "components": []
+  },
+  "T-240HMB-DCS-BK-LA": {
+    "name": "240双贵妃海绵沙发右黑色",
+    "components": []
+  },
+  "T-GQ77-KH-M": {
+    "name": "钢琴键沙发卡其色（中间+扶手单人）",
+    "components": []
+  },
+  "T-340THB-SAN66-BK-C": {
+    "name": "340方头枕三件套黑",
+    "components": []
+  },
+  "T-GQ77-KH-R": {
+    "name": "钢琴键沙发卡其色",
+    "components": []
+  },
+  "T-YJ806A-BE-C": {
+    "name": "五件套米",
+    "components": []
+  },
+  "T-340THB-SAN66-BL-A": {
+    "name": "340方头枕三件套蓝",
+    "components": []
+  },
+  "T-GQ77-GN-L": {
+    "name": "钢琴键沙发绿色（直排）",
+    "components": []
+  },
+  "T-240HMB-DCS-BK-LB": {
+    "name": "240双贵妃海绵沙发右黑色",
+    "components": []
+  },
+  "T-340THB-SAN66-BL-B": {
+    "name": "340方头枕三件套蓝",
+    "components": []
+  },
+  "T-YJ806A-BK-A": {
+    "name": "五件套黑",
+    "components": []
+  },
+  "T-GQ77-GN-M": {
+    "name": "钢琴键沙绿色（中间+扶手单人）",
+    "components": []
+  },
+  "T-340THB-SAN66-BL-C": {
+    "name": "340方头枕三件套蓝",
+    "components": []
+  },
+  "B0001-A2": {
+    "name": "自粘地毯-20深灰6",
+    "components": []
+  },
+  "B0000-A2": {
+    "name": "自粘地毯-20黑6",
+    "components": []
+  },
+  "CD49-FULL": {
+    "name": "CD49-FULL",
+    "components": []
+  },
+  "CD99-FULL": {
+    "name": "CD99-FULL",
+    "components": []
+  },
+  "CD99-QUEEN": {
+    "name": "CD99-QUEEN",
+    "components": []
+  },
+  "CD22-FULL": {
+    "name": "CD22-FULL",
+    "components": []
+  },
+  "CD22-KING": {
+    "name": "CD22-KING",
+    "components": []
+  },
+  "CD49-QUEEN": {
+    "name": "CD49-QUEEN",
+    "components": []
+  },
+  "CD49-KING": {
+    "name": "CD49-KING",
+    "components": []
+  },
+  "CD99-KING": {
+    "name": "CD99-KING",
+    "components": []
+  },
+  "CD22-QUEEN": {
+    "name": "CD22-QUEEN",
+    "components": []
+  },
+  "B0001-A1": {
+    "name": "自粘地毯-10深灰6",
+    "components": []
+  },
+  "T-GQ77-GY-R": {
+    "name": "钢琴键沙发灰色（中间+扶手单人）",
+    "components": []
+  },
+  "T-GQ77-GY-M": {
+    "name": "钢琴键沙发灰色",
+    "components": []
+  },
+  "T-GQ77-GY-L": {
+    "name": "钢琴键沙发灰色（直排）",
+    "components": []
+  },
+  "T-YJ806A-BK-C": {
+    "name": "五件套黑",
+    "components": []
+  },
+  "T-YJ806A-BK-B": {
+    "name": "五件套黑",
+    "components": []
+  }
+}
