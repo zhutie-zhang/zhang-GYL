@@ -1,0 +1,21 @@
+.head { margin: 20rpx 24rpx; padding: 26rpx; background: linear-gradient(135deg, #fff, #f4efe4); border-radius: 24rpx; }
+.h-name { font-size: 38rpx; font-weight: 700; }
+.meta { margin-top: 12rpx; flex-wrap: wrap; }
+.tags { margin-top: 8rpx; }
+
+.card-title { font-size: 30rpx; font-weight: 600; margin-bottom: 12rpx; }
+.warn-title { color: #c2612e; }
+.tip-txt { font-size: 26rpx; color: #7a6a4f; line-height: 1.7; }
+
+.ing, .nut { display: flex; align-items: center; padding: 12rpx 0; font-size: 27rpx; border-bottom: 1rpx solid #f6f2ea; }
+.nut {}
+
+.step { display: flex; margin-top: 14rpx; }
+.step-no {
+  flex: none; width: 40rpx; height: 40rpx; border-radius: 50%;
+  background: #5b8c5a; color: #fff; font-size: 22rpx; text-align: center; line-height: 40rpx; margin-right: 16rpx;
+}
+.step-txt { font-size: 27rpx; line-height: 1.7; padding-top: 4rpx; }
+
+.empty { text-align: center; padding: 120rpx 0; color: #b0aca2; }
+.footer { text-align: center; font-size: 22rpx; color: #b0aca2; margin: 30rpx 0; }
