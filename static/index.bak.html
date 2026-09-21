@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>海外仓管理看板</title>
+  <link rel="stylesheet" href="/static/style.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">仓</span>
+      <div>
+        <h1>海外仓管理看板</h1>
+        <p class="sub">多仓可用库存 · 前日出库汇总（中国时间）</p>
+      </div>
+    </div>
+    <div class="actions">
+      <label class="auto"><input type="checkbox" id="autoRefresh" checked> 自动刷新</label>
+      <span class="updated" id="updatedAt">—</span>
+      <button id="refreshBtn" class="btn primary">刷新数据</button>
+    </div>
+  </header>
+
+  <div id="errorBar" class="error-bar hidden"></div>
+
+  <main>
+    <nav id="whTabs" class="tabs" aria-label="仓库切换"></nav>
+
+    <section class="panel" id="overviewPanel">
+      <div class="panel-head">
+        <h2>统计总览</h2>
+        <span class="hint">库存（实时）+ 出库（所选日期区间）· 成套套数 / 不成套箱数 / 非组合箱数 / 总箱数 分开展示 · 点击卡片查看详情</span>
+        <button id="exportOverview" class="btn ghost">导出CSV</button>
+      </div>
+      <section class="cards" id="overviewCards"></section>
+      <div class="panel-head sub">
+        <h3>组合统计</h3>
+        <span class="hint">成套组合 / 不成套组合件 / 无组合 SKU · 各海外仓独立统计各自仓点 · 点击卡片跳转查看分类明细</span>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">数据源
+          <select id="dashStatsSource" class="filter-select">
+            <option value="inv" selected>库存</option>
+            <option value="out">出库</option>
+          </select>
+        </label>
+        <button id="dashStatsExport" class="btn ghost">导出CSV</button>
+        <span class="hint" id="dashStatsMsg"></span>
+      </div>
+      <section class="cards stats-cards" id="dashStatsCards"></section>
+      <details class="stats-detail">
+        <summary>查看分类明细</summary>
+        <div id="dashStatsTables"></div>
+      </details>
+    </section>
+
+    <section class="panel" id="warehousePanel">
+      <div class="panel-head">
+        <h2>各仓库库存</h2>
+        <span class="hint">按仓库展示库存汇总 · 成套套数 / 不成套箱数 / 非组合箱数 / 总箱数 分开展示 · 点击卡片查看详情</span>
+      </div>
+      <div class="toolbar">
+        <button id="exportWarehouse" class="btn ghost">导出CSV</button>
+      </div>
+      <section class="cards" id="warehouseCards"></section>
+    </section>
+
+    <section class="panel" id="outPanel">
+      <div class="panel-head">
+        <h2>前日 / 指定区间出库</h2>
+        <span class="hint" id="dateHint"></span>
+      </div>
+      <section class="cards" id="outCards"></section>
+      <div class="query-bar">
+        <label class="q-label">日期区间
+          <input type="date" id="outStart" class="date">
+          <span class="sep">至</span>
+          <input type="date" id="outEnd" class="date">
+        </label>
+        <button id="outDateBtn" class="btn ghost">查询区间</button>
+        <select id="outPoint" class="filter-select"></select>
+        <input type="search" id="outFilter" placeholder="搜索 SKU 或产品名…" class="search">
+        <button id="outSearchBtn" class="btn ghost">查询</button>
+      </div>
+      <div class="toolbar">
+        <button id="exportOut" class="btn ghost">导出CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table id="outTable">
+          <thead id="outHead"><tr></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="outRange">共 0 条</span>
+        <div class="pager">
+          <button id="outPrev">上一页</button>
+          <span id="outInfo">1 / 1 页</span>
+          <button id="outNext">下一页</button>
+        </div>
+        <label>每页
+          <select id="outPageSize">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          条
+        </label>
+      </div>
+    </section>
+
+    <section class="panel" id="invPanel">
+      <div class="panel-head">
+        <h2>实时库存</h2>
+        <span class="hint">按仓库展示可用库存，点击表头排序</span>
+      </div>
+      <div class="query-bar">
+        <input type="search" id="invFilter" placeholder="搜索 SKU 或产品名…" class="search">
+        <button id="invSearchBtn" class="btn ghost">查询</button>
+      </div>
+      <div class="toolbar">
+        <button id="exportInv" class="btn ghost">导出CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table id="invTable">
+          <thead id="invHead"><tr></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="invRange">共 0 条</span>
+        <div class="pager">
+          <button id="invPrev">上一页</button>
+          <span id="invInfo">1 / 1 页</span>
+          <button id="invNext">下一页</button>
+        </div>
+        <label>每页
+          <select id="invPageSize">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          条
+        </label>
+      </div>
+    </section>
+    <section class="panel" id="overseasPanel" style="display:none">
+
+      <div class="panel-head">
+
+        <h2>海外仓看板</h2>
+
+        <span class="hint">所有海外仓统一查看，可选择单个仓库筛选 · 库存（实时）+ 出库（前日）· 成套套数 / 不成套箱数 / 非组合箱数 / 总箱数分开展示</span>
+
+        <div style="margin-left:auto">
+
+          <button class="btn ghost" onclick="showAnalytics()">量化分析</button>
+
+          <button class="btn ghost" onclick="showSupplyChain()">供应链</button>
+
+        </div>
+
+      </div>
+
+      <div class="query-bar overseas-selector" id="overseasSelector"></div>
+
+      <section class="cards" id="overseasCards"></section>
+
+      <section class="panel-head sub">
+
+        <h3>组合统计</h3>
+
+        <span class="hint">成套组合 / 不成套组合件 / 无组合 SKU · 点击卡片跳转查看分类明细</span>
+
+      </section>
+
+      <div class="query-bar">
+
+        <label class="q-label">数据源
+          <select id="ovStatsSource" class="filter-select">
+
+            <option value="inv" selected>库存</option>
+
+            <option value="out">出库</option>
+
+          </select>
+
+        </label>
+
+        <button id="ovStatsExport" class="btn ghost">导出CSV</button>
+
+        <span class="hint" id="ovStatsMsg"></span>
+
+      </div>
+
+      <section class="cards stats-cards" id="ovStatsCards"></section>
+
+      <details class="stats-detail">
+
+        <summary>查看分类明细</summary>
+
+        <div id="ovStatsTables"></div>
+
+      </details>
+
+      <section class="panel-head sub">
+
+        <h3>出库明细</h3>
+
+        <span class="hint" id="ovDateHint"></span>
+
+      </section>
+
+      <section class="cards" id="ovOutCards"></section>
+
+      <div class="query-bar">
+
+        <label class="q-label">日期区间
+
+          <input type="date" id="ovOutStart" class="date">
+
+          <span class="sep">至</span>
+
+          <input type="date" id="ovOutEnd" class="date">
+
+        </label>
+
+        <button id="ovOutDateBtn" class="btn ghost">查询区间</button>
+
+        <select id="ovOutPoint" class="filter-select"></select>
+
+        <input type="search" id="ovOutFilter" placeholder="搜索 SKU 或产品名…" class="search">
+
+        <button id="ovOutSearchBtn" class="btn ghost">查询</button>
+
+      </div>
+
+      <div class="toolbar">
+
+        <button id="ovExportOut" class="btn ghost">导出CSV</button>
+
+        <button id="ovOutColSettings" class="btn ghost">字段设置</button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table id="ovOutTable">
+
+          <thead id="ovOutHead"><tr></tr></thead>
+
+          <tbody></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="pagination">
+
+        <span id="ovOutRange">共 0 条</span>
+
+        <div class="pager">
+
+          <button id="ovOutPrev">上一页</button>
+
+          <span id="ovOutInfo">1 / 1 页</span>
+
+          <button id="ovOutNext">下一页</button>
+
+        </div>
+
+        <label>每页
+
+          <select id="ovOutPageSize">
+
+            <option value="10">10</option>
+
+            <option value="20" selected>20</option>
+
+            <option value="50">50</option>
+
+            <option value="100">100</option>
+
+          </select>
+
+          条
+        </label>
+
+      </div>
+
+      <section class="panel-head sub">
+
+        <h3>库存明细</h3>
+
+        <span class="hint">实时库存，按仓库展示可用库存</span>
+
+      </section>
+
+      <div class="query-bar">
+
+        <input type="search" id="ovInvFilter" placeholder="搜索 SKU 或产品名…" class="search">
+
+        <button id="ovInvSearchBtn" class="btn ghost">查询</button>
+
+      </div>
+
+      <div class="toolbar">
+
+        <button id="ovExportInv" class="btn ghost">导出CSV</button>
+
+        <button id="ovInvColSettings" class="btn ghost">字段设置</button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table id="ovInvTable">
+
+          <thead id="ovInvHead"><tr></tr></thead>
+
+          <tbody></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="pagination">
+
+        <span id="ovInvRange">共 0 条</span>
+
+        <div class="pager">
+
+          <button id="ovInvPrev">上一页</button>
+
+          <span id="ovInvInfo">1 / 1 页</span>
+
+          <button id="ovInvNext">下一页</button>
+
+        </div>
+
+        <label>每页
+
+          <select id="ovInvPageSize">
+
+            <option value="10">10</option>
+
+            <option value="20" selected>20</option>
+
+            <option value="50">50</option>
+
+            <option value="100">100</option>
+
+          </select>
+
+          条
+        </label>
+
+      </div>
+
+      <details class="stats-detail" style="margin-top:16px">
+
+        <summary>API 数据源管理</summary>
+
+        <div style="padding:10px 0">
+
+          <div class="toolbar" style="margin-bottom:8px">
+
+            <button id="csAddBtn" class="btn ghost">+ 新增数据源</button>
+
+          </div>
+
+          <div class="table-wrap">
+
+            <table id="csListTable">
+
+              <thead><tr><th>状态</th><th>名称</th><th>类型</th><th>分组</th><th>库存 URL</th><th>操作</th></tr></thead>
+
+              <tbody></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </details>
+
+      <div id="csModal" class="modal-overlay hidden">
+
+        <div class="modal-card" style="max-width:720px;max-height:85vh;overflow-y:auto">
+
+          <div class="modal-head">
+
+            <span class="modal-title" id="csModalTitle"></span>
+
+            <button type="button" class="btn ghost btn-xs" id="csModalClose">关闭</button>
+
+          </div>
+
+          <div class="modal-body" id="csModalBody"></div>
+
+          <div style="padding:0 16px 12px;text-align:right">
+
+            <button id="csModalSave" class="btn primary">保存</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="ovRestockAlerts" class="ov-restock-alerts" style="display:none">
+        <div class="ov-restock-head">
+          <h3>备货预警监控</h3>
+          <span class="hint" id="ovRestockTs"></span>
+          <button class="btn ghost btn-xs" onclick="refreshRestockOverview()" style="margin-left:auto">刷新</button>
+        </div>
+        <div class="ov-restock-cards" id="ovRestockCards"></div>
+        <div class="ov-restock-lists">
+          <div class="ov-restock-col">
+            <div class="ov-restock-subhead sc-red">紧急补货 <span id="ovUrgentCount"></span></div>
+            <div id="ovUrgentList" class="ov-restock-scroll"></div>
+          </div>
+          <div class="ov-restock-col">
+            <div class="ov-restock-subhead sc-amber">需补货 <span id="ovNeedCount"></span></div>
+            <div id="ovNeedList" class="ov-restock-scroll"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="ovRestockAlerts" class="ov-restock-alerts" style="display:none">
+        <div class="ov-restock-head">
+          <h3>备货预警监控</h3>
+          <span class="hint" id="ovRestockTs"></span>
+          <button class="btn ghost btn-xs" onclick="refreshRestockOverview()" style="margin-left:auto">刷新</button>
+        </div>
+        <div class="ov-restock-cards" id="ovRestockCards"></div>
+        <div class="ov-restock-lists">
+          <div class="ov-restock-col">
+            <div class="ov-restock-subhead sc-red">紧急补货 <span id="ovUrgentCount"></span></div>
+            <div id="ovUrgentList" class="ov-restock-scroll"></div>
+          </div>
+          <div class="ov-restock-col">
+            <div class="ov-restock-subhead sc-amber">需补货 <span id="ovNeedCount"></span></div>
+            <div id="ovNeedList" class="ov-restock-scroll"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="panel" id="agePanel" style="display:none">
+
+      <div class="panel-head">
+
+        <h2>库龄统计</h2>
+
+        <span class="hint">多个海外仓库存库龄 · 按批次(上架日期)统计 · 15/30/45/60/120天逐档预警 · 120天以上全字段标红严重预警</span>
+
+      </div>
+
+      <div class="query-bar">
+
+        <label class="q-label">仓库
+          <select id="agWh" class="filter-select"></select>
+        </label>
+
+        <label class="q-label">分组
+          <select id="agGroup" class="filter-select"><option value="">全部分组</option></select>
+        </label>
+
+        <label class="q-label">库龄预警档
+          <select id="agBand" class="filter-select">
+            <option value="">全部</option>
+            <option value="15">15天以上（绿）</option>
+            <option value="30">30天以上（黄）</option>
+            <option value="45">45天以上（橙）</option>
+            <option value="60">60天以上（红）</option>
+            <option value="120">120天以上（严重·标红）</option>
+          </select>
+        </label>
+
+        <label class="q-label">组合分类
+          <select id="agCat" class="filter-select">
+            <option value="">全部</option>
+            <option value="kit">组合产品</option>
+            <option value="standalone">非组合产品</option>
+            <option value="part">组合产品不成套</option>
+          </select>
+        </label>
+
+        <input type="search" id="agFilter" placeholder="搜索 SKU 或产品名…" class="search" style="flex:1;min-width:200px">
+
+        <button id="agLoadBtn" class="btn primary">加载库龄</button>
+
+        <button id="agExport" class="btn ghost">导出CSV</button>
+
+      </div>
+
+      <div class="toolbar">
+
+        <span class="hint" id="agMsg"></span>
+
+        <span style="margin-left:auto" class="legend" id="agLegend">
+          <span class="age-legend ag-gray">≤15天</span>
+          <span class="age-legend ag-green">16-30天</span>
+          <span class="age-legend ag-yellow">31-45天</span>
+          <span class="age-legend ag-orange">46-60天</span>
+          <span class="age-legend ag-red">61-120天</span>
+          <span class="age-legend ag-sev">120天以上·严重</span>
+        </span>
+
+      </div>
+
+      <section class="cards stats-cards" id="agCards"></section>
+
+      <div class="table-wrap">
+
+        <table id="agTable">
+
+          <thead id="agHead"><tr></tr></thead>
+
+          <tbody></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="pagination">
+
+        <span id="agRange">共 0 条</span>
+
+        <div class="pager">
+
+          <button id="agPrev">上一页</button>
+
+          <span id="agInfo">1 / 1 页</span>
+
+          <button id="agNext">下一页</button>
+
+        </div>
+
+        <label>每页
+
+          <select id="agPageSize">
+
+            <option value="25" selected>25</option>
+
+            <option value="50">50</option>
+
+            <option value="100">100</option>
+
+            <option value="200">200</option>
+
+          </select>
+
+          条
+        </label>
+
+      </div>
+
+    </section>
+
+    <section class="panel" id="analyticsPanel" style="display:none">
+
+      <div class="panel-head">
+
+        <h2>量化分析看板</h2>
+
+        <span class="hint">出库时序分析 · 信号指标 · 策略回测 · 动画播放</span>
+
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
+
+          <button id="axPlayBtn" class="btn ghost">▶ 播放</button>
+
+          <button class="btn primary" onclick="showOverseas()">返回看板</button>
+
+        </div>
+
+      </div>
+
+      <div class="ax-layout">
+
+        <div class="ax-main">
+
+          <div class="ax-toolbar">
+
+            <div class="ax-period-group">
+
+              <button id="axPeriod7" class="btn ghost ax-period-btn">7天</button>
+
+              <button id="axPeriod30" class="btn ghost ax-period-btn active">30天</button>
+
+              <button id="axPeriod60" class="btn ghost ax-period-btn">60天</button>
+
+            </div>
+
+            <select id="axSkuSel" class="filter-select" style="min-width:160px"></select>
+
+          </div>
+
+          <div class="ax-chart-wrap">
+
+            <canvas id="axChart"></canvas>
+
+          </div>
+
+          <div class="ax-section-head"><h3>策略回测引擎</h3></div>
+
+          <div id="axStratPanel"></div>
+
+        </div>
+
+        <div class="ax-right">
+
+          <div class="ax-section-head"><h3>量化信号</h3></div>
+
+          <div id="axSignals"></div>
+
+          <div class="ax-section-head"><h3>出库排名</h3></div>
+
+          <div id="axRankBody" class="ax-rank-scroll"></div>
+
+          <div class="ax-section-head"><h3>日志流</h3></div>
+
+          <div id="axLogBody" class="ax-log-scroll"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="panel" id="supplyChainPanel" style="display:none">
+
+      <div class="panel-head">
+
+        <h2>供应链分析看板</h2>
+
+        <span class="hint">KPI 预警 · 库存趋势 · 供应商评分 · 物流时效</span>
+
+        <div style="margin-left:auto"><button class="btn primary" onclick="showOverseas()">返回看板</button></div>
+
+      </div>
+
+      <div class="sc-section-head"><h3>核心指标</h3></div>
+
+      <section class="sc-kpi-grid" id="scKpiCards"></section>
+
+      <div class="sc-row"><div class="sc-col">
+
+        <div class="sc-section-head"><h3>库存趋势 & 安全库存</h3></div>
+
+        <div class="sc-chart-wrap"><canvas id="scInvChart"></canvas></div>
+
+      </div><div class="sc-col">
+
+        <div class="sc-section-head"><h3>供应商质量分布</h3></div>
+
+        <div class="sc-chart-wrap"><canvas id="scPieChart"></canvas></div>
+
+      </div></div>
+
+      <div class="sc-section-head"><h3>高风险 SKU 预警</h3><span class="hint"> 可售天数 ≤21天 警告，≤7天 高危</span></div>
+
+      <div class="sc-table-wrap" id="scRiskBody"></div>
+
+      <div class="sc-row"><div class="sc-col">
+
+        <div class="sc-section-head"><h3>供应商量化评分</h3></div>
+
+        <div class="sc-table-wrap" id="scSupplierBody"></div>
+
+      </div><div class="sc-col">
+
+        <div class="sc-section-head"><h3>跨境物流线路时效</h3></div>
+
+        <div class="sc-table-wrap" id="scLogisticsBody"></div>
+
+      </div></div>
+
+      <div class="sc-section-head"><h3>智能备货建议</h3><span class="hint" id="scRestockSummary"></span></div>
+
+      <div class="sc-restock-cards" id="scRestockCards"></div>
+
+      <div class="query-bar">
+        <select id="scRestockFilter" class="filter-select">
+          <option value="all">全部</option>
+          <option value="urgent">需补货</option>
+          <option value="hot">爆款</option>
+          <option value="normal">普通款</option>
+          <option value="slow">滞销款</option>
+          <option value="out_of_stock">缺货</option>
+          <option value="warning">预警</option>
+        </select>
+        <input type="search" id="scRestockSearch" placeholder="搜索 SKU 或产品名…" class="search">
+        <button id="scRestockSearchBtn" class="btn ghost">查询</button>
+        <button id="scRestockExport" class="btn ghost" style="margin-left:auto">导出CSV</button>
+      </div>
+
+      <div class="sc-table-wrap" id="scRestockBody"></div>
+
+      <div class="sc-section-head" style="margin-top:16px"><h3>规则配置</h3><span class="hint">调整分级/预警/补货阈值，修改后实时生效</span></div>
+
+      <details class="stats-detail">
+        <summary>备货规则设置</summary>
+        <div class="sc-rules-editor" id="scRulesEditor">
+          <div class="sc-rules-grid">
+            <div class="sc-rules-group">
+              <h4>产品分级</h4>
+              <label>爆款周转 ≤ <input type="number" class="ax-input" id="rule_hot_turnover" min="1" max="60"> 天 &amp; 日均 ≥ <input type="number" class="ax-input" id="rule_hot_daily" min="0.1" step="0.1"> </label>
+              <label>普通款周转 ≤ <input type="number" class="ax-input" id="rule_normal_turnover" min="1" max="90"> 天 &amp; 日均 ≥ <input type="number" class="ax-input" id="rule_normal_daily" min="0.1" step="0.1"></label>
+              <label>预警款周转 > <input type="number" class="ax-input" id="rule_warning_turnover" min="1" max="120"> 天</label>
+              <label>滞销款周转 > <input type="number" class="ax-input" id="rule_slow_turnover" min="1" max="180"> 天</label>
+            </div>
+            <div class="sc-rules-group">
+              <h4>补货优先级</h4>
+              <label>紧急: 可售 ≤ <input type="number" class="ax-input" id="rule_prio_critical" min="1" max="30"> 天 (+<input type="number" class="ax-input" id="rule_prio_critical_s" min="1" max="100">分)</label>
+              <label>警告: 可售 ≤ <input type="number" class="ax-input" id="rule_prio_warning" min="1" max="30"> 天 (+<input type="number" class="ax-input" id="rule_prio_warning_s" min="1" max="100">分)</label>
+              <label>注意: 可售 ≤ <input type="number" class="ax-input" id="rule_prio_caution" min="1" max="60"> 天 (+<input type="number" class="ax-input" id="rule_prio_caution_s" min="1" max="100">分)</label>
+              <label>无在途且可售 ≤ <input type="number" class="ax-input" id="rule_prio_notransit" min="1" max="30"> 天 (+<input type="number" class="ax-input" id="rule_prio_notransit_s" min="1" max="100">分)</label>
+            </div>
+            <div class="sc-rules-group">
+              <h4>预警规则</h4>
+              <label>即将断货: 可售 ≤ <input type="number" class="ax-input" id="rule_alert_critical" min="1" max="30"> 天</label>
+              <label>库存偏低: 可售 ≤ <input type="number" class="ax-input" id="rule_alert_low" min="1" max="60"> 天</label>
+              <label>周转极慢: > <input type="number" class="ax-input" id="rule_alert_slow" min="1" max="180"> 天</label>
+              <label>在途过多: > 库存 × <input type="number" class="ax-input" id="rule_alert_transit" min="1" max="10"> 倍</label>
+            </div>
+            <div class="sc-rules-group">
+              <h4>安全库存</h4>
+              <label>服务水平 Z = <input type="number" class="ax-input" id="rule_safety_z" min="0.5" max="3" step="0.05"></label>
+              <label>最少安全天数 = <input type="number" class="ax-input" id="rule_safety_min" min="1" max="30"> 天</label>
+            </div>
+          </div>
+          <div style="margin-top:12px;text-align:right">
+            <button class="btn primary" id="scRulesSave">保存规则</button>
+            <button class="btn ghost" id="scRulesReset" style="margin-left:6px">恢复默认</button>
+          </div>
+        </div>
+      </details>
+
+    </section>
+
+    <section class="panel" id="pricingPanel" style="display:none">
+      <div class="panel-head">
+        <h2>报价比价</h2>
+        <span class="hint">手动创建供应商，逐项录入费用，支持粘贴批量导入</span>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
+          <button class="btn ghost" onclick="showOverseas()">返回看板</button>
+        </div>
+      </div>
+
+      <div class="query-bar">
+        <button class="btn primary" onclick="createSupplier()">+ 新建供应商</button>
+        <button class="btn ghost" onclick="openBulkEdit()">批量编辑</button>
+        <span class="hint" id="supplierMsg"></span>
+      </div>
+
+      <div id="supplierList" class="supplier-list"></div>
+
+      <!-- Bulk Edit Modal -->
+      <div id="bulkModal" class="modal" style="display:none" onclick="if(event.target===this)closeBulkEdit()">
+        <div class="modal-content">
+          <div class="modal-head">
+            <h3>批量编辑选中供应商</h3>
+            <button class="btn sm" onclick="closeBulkEdit()">&#10005;</button>
+          </div>
+          <div class="modal-body">
+            <div class="paste-hint" id="bulkStatus"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+              <div>
+                <label class="lab">应用字段</label>
+                <select id="bulkTarget" class="cell-input" style="width:100%;padding:6px" onchange="bulkTargetChange()">
+                  <option value="fuel">燃油附加费（%）</option>
+                  <option value="residential">住宅费 · 按Zone</option>
+                  <option value="ahs">AHS超重费 · 按Zone</option>
+                  <option value="shipping">基础运费 · 按Zone</option>
+                  <option value="outbound">出库费 · 按重量段</option>
+                </select>
+              </div>
+              <div>
+                <label class="lab">操作</label>
+                <select id="bulkOp" class="cell-input" style="width:100%;padding:6px">
+                  <option value="set">设为</option>
+                  <option value="add">加上</option>
+                  <option value="mul">乘以系数</option>
+                </select>
+              </div>
+            </div>
+            <div id="bulkMatchRow" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+              <div>
+                <label class="lab" id="bulkMatchLabel">Zone</label>
+                <select id="bulkZone" class="cell-input" style="width:100%;padding:6px"></select>
+              </div>
+              <div id="bulkMinWrap">
+                <label class="lab">重量段最小磅(lbs)</label>
+                <input id="bulkMin" class="cell-input" type="number" step="0.01" value="" style="width:100%">
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <label class="lab" id="bulkValueLabel">新值</label>
+              <input id="bulkValue" class="cell-input" type="number" step="any" style="width:100%;padding:6px">
+            </div>
+            <div class="paste-hint">匹配规则：<span id="bulkRuleText">对该 Zone 的所有重量段价格应用修改（未勾选的供应商不受影响）。</span></div>
+          </div>
+          <div class="modal-foot">
+            <button class="btn ghost" onclick="closeBulkEdit()">取消</button>
+            <button class="btn primary" onclick="applyBulkEdit()">应用更改</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paste Import Modal -->
+      <div id="pasteModal" class="modal" style="display:none" onclick="if(event.target===this)closePasteModal()">
+        <div class="modal-content">
+          <div class="modal-head">
+            <h3 id="pasteTitle"></h3>
+            <button class="btn sm" onclick="closePasteModal()">&#10005;</button>
+          </div>
+          <div class="modal-body">
+            <div id="pasteHint" class="paste-hint"></div>
+            <textarea id="pasteInput" class="paste-textarea" rows="14" placeholder="在此粘贴数据…"></textarea>
+            <div id="pastePreview" class="paste-preview"></div>
+          </div>
+          <div class="modal-foot">
+            <button class="btn ghost" onclick="closePasteModal()">取消</button>
+            <button class="btn primary" onclick="applyPaste()">应用</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch Compare -->
+      <div id="pricingBatchArea" style="display:none">
+        <div class="sc-section-title">批量比价</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+          <div>
+            <table class="batch-tbl" id="batchTable">
+              <thead><tr><th>重量(lbs)</th><th>数量(件)</th><th style="width:40px"></th></tr></thead>
+              <tbody id="batchBody"></tbody>
+            </table>
+            <button class="btn sm" onclick="addBatchRow()" style="margin-top:4px">+ 添加一行</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding-top:2px">
+            <label class="q-label">区域
+              <select id="pricingZone" class="filter-select"></select>
+            </label>
+            <label class="q-label">统一燃油(%)
+              <input type="number" id="pricingFuel" class="ax-input" placeholder="留空=各自费率" min="0" max="100" step="0.1" style="width:100px">
+            </label>
+            <button class="btn primary" onclick="runBatchCompare()">生成比价表</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap">
+          <label class="q-label" title="按供应商总成本排序">排序
+            <select id="priceSortMode" class="filter-select" style="width:90px" onchange="reorderByCost()">
+              <option value="asc">总价 ↑</option>
+              <option value="desc">总价 ↓</option>
+              <option value="orig">原序</option>
+            </select>
+          </label>
+          <button class="btn sm" onclick="reorderByCost()">按总价重排列</button>
+          <button class="btn sm ghost" onclick="exportCompareCSV()">导出 CSV</button>
+          <button class="btn sm ghost" onclick="exportCompareExcel()">导出 Excel</button>
+          <span class="hint" id="priceHint"></span>
+        </div>
+      </div>
+
+      <div id="pricingOverview"></div>
+      <div id="pricingDetailMatrix"></div>
+    </section>
+
+    <section class="panel" id="productPanel" style="display:none">
+      <div class="panel-head">
+        <h2>产品管理</h2>
+        <span class="hint">组合产品 = 若干子SKU，按成套数统计，不成套子SKU单独列出；非组合产品 = 独立SKU登记</span>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">类型
+          <select id="productType" class="filter-select">
+            <option value="combo" selected>组合产品</option>
+            <option value="standalone">非组合产品</option>
+          </select>
+        </label>
+        <label class="q-label">产品SKU
+          <input type="text" id="productSku" class="date" placeholder="如 KIT-A">
+        </label>
+        <label class="q-label">名称
+          <input type="text" id="productName" class="date" placeholder="如 宠物套装">
+        </label>
+        <label class="q-label" id="productCompsLabel">子SKU
+          <input type="text" id="productComps" class="search" placeholder="逗号分隔，如 A、B、C">
+        </label>
+        <button id="productAddBtn" class="btn primary">添加 / 更新</button>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">导入组合产品 Excel / CSV（长表：每行一个子SKU，组合SKU相同）
+          <input type="file" id="productFile" accept=".xlsx,.xls,.csv">
+        </label>
+        <button id="productImportBtn" class="btn ghost">导入</button>
+        <label class="q-label" style="margin-left:10px">导入非组合产品 Excel / CSV（表头：SKU / 名称）
+          <input type="file" id="productStandaloneFile" accept=".xlsx,.xls,.csv">
+        </label>
+        <button id="productImportStandaloneBtn" class="btn ghost">导入</button>
+        <span class="hint" id="productMsg"></span>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">搜索范围
+          <select id="productSearchField" class="filter-select">
+            <option value="all" selected>全部</option>
+            <option value="sku">产品SKU</option>
+            <option value="name">名称</option>
+            <option value="comp">子SKU</option>
+          </select>
+        </label>
+        <label class="q-label">匹配方式
+          <select id="productSearchMode" class="filter-select">
+            <option value="fuzzy" selected>模糊</option>
+            <option value="exact">精确</option>
+          </select>
+        </label>
+        <label class="q-label">类型
+          <select id="productSearchType" class="filter-select">
+            <option value="all" selected>全部</option>
+            <option value="combo">组合</option>
+            <option value="standalone">非组合</option>
+          </select>
+        </label>
+        <input type="text" id="productSearch" class="search" placeholder="输入 SKU / 名称 / 子SKU 搜索…">
+        <button id="productSearchBtn" class="btn primary">搜索</button>
+        <button id="productSearchClear" class="btn ghost">清空</button>
+      </div>
+      <div class="toolbar">
+        <span class="hint" id="productCount">共 0 个产品</span>
+        <button id="productExport" class="btn ghost">导出CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table id="productTable" class="prod-table">
+          <thead><tr><th>类型</th><th>产品SKU</th><th>名称</th><th>子SKU</th><th>操作</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="statsPanel" style="display:none">
+      <div class="panel-head">
+        <h2>组合统计</h2>
+        <span class="hint">成套组合 / 不成套组合件 / 无组合 SKU 三类分别统计数量与箱数 · 点击卡片查看对应分类明细</span>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">数据源
+          <select id="statsSource" class="filter-select">
+            <option value="inv" selected>库存</option>
+            <option value="out">出库</option>
+          </select>
+        </label>
+        <label class="q-label">统计范围
+          <select id="statsScopeType" class="filter-select">
+            <option value="all" selected>全部仓库</option>
+            <option value="group">分组</option>
+            <option value="warehouse">仓库</option>
+            <option value="point">仓点</option>
+          </select>
+          <select id="statsScopeVal" class="filter-select" style="display:none"></select>
+        </label>
+        <label class="q-label">分类
+          <select id="statsCategory" class="filter-select">
+            <option value="">全部</option>
+            <option value="kit">成套组合</option>
+            <option value="kit_std">成套+非组合（合并）</option>
+            <option value="part">不成套组合件</option>
+            <option value="standalone">无组合 SKU</option>
+          </select>
+        </label>
+        <input type="search" id="statsFilter" placeholder="搜索 SKU / 产品名 / 仓库 / 仓点 / 所属组合…" class="search">
+        <button id="statsExport" class="btn ghost">导出CSV</button>
+        <span class="hint" id="statsMsg"></span>
+      </div>
+      <section class="cards stats-cards" id="statsCards"></section>
+      <div id="statsTables"></div>
+    </section>
+
+    <section class="panel" id="boxPanel" style="display:none">
+      <div class="panel-head">
+        <h2>箱数统计</h2>
+        <span class="hint">按子SKU拆分统计箱数：成套 = 套数 × 子SKU数，不成套子件按SKU件数计箱，非组合产品一件一箱 · 点击卡片查看对应分类明细</span>
+      </div>
+      <div class="query-bar">
+        <label class="q-label">数据源
+          <select id="boxSource" class="filter-select">
+            <option value="inv" selected>库存</option>
+            <option value="out">出库</option>
+          </select>
+        </label>
+        <label class="q-label">统计范围
+          <select id="boxScopeType" class="filter-select">
+            <option value="all" selected>全部仓库</option>
+            <option value="group">分组</option>
+            <option value="warehouse">仓库</option>
+            <option value="point">仓点</option>
+          </select>
+          <select id="boxScopeVal" class="filter-select" style="display:none"></select>
+        </label>
+        <label class="q-label">分类
+          <select id="boxCategory" class="filter-select">
+            <option value="">全部</option>
+            <option value="kit">成套组合</option>
+            <option value="kit_std">成套+非组合（合并）</option>
+            <option value="part">不成套组合件</option>
+            <option value="standalone">非组合产品</option>
+          </select>
+        </label>
+        <input type="search" id="boxFilter" placeholder="搜索 SKU / 产品名 / 仓库 / 仓点 / 所属组合…" class="search">
+        <button id="boxExport" class="btn ghost">导出CSV</button>
+        <span class="hint" id="boxMsg"></span>
+      </div>
+      <section class="cards stats-cards" id="boxCards"></section>
+      <div id="boxTables"></div>
+    </section>
+  </main>
+
+  <footer>海外仓管理看板 · 数据来源：领星 OMS · Aidelivery</footer>
+
+  <script src="/static/js/core.js?v=24"></script>
+  <script src="/static/js/table.js?v=24"></script>
+  <script src="/static/js/overview.js?v=24"></script>
+  <script src="/static/js/inventory.js?v=24"></script>
+  <script src="/static/js/outbound.js?v=24"></script>
+  <script src="/static/js/products.js?v=24"></script>
+  <script src="/static/js/kitstats.js?v=24"></script>
+  <script src="/static/js/main.js?v=24"></script>
+</body>
+</html>
