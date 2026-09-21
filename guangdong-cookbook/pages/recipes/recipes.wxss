@@ -1,0 +1,18 @@
+.page { padding-bottom: 60rpx; }
+
+.search { margin: 20rpx 24rpx 8rpx; }
+.search input {
+  background: #fff; border-radius: 40rpx; padding: 16rpx 28rpx; font-size: 26rpx;
+  box-shadow: 0 2rpx 10rpx rgba(80,40,0,.05);
+}
+
+.chips { white-space: nowrap; padding: 12rpx 24rpx; width: 100%; box-sizing: border-box; }
+.chips .chip { display: inline-block; }
+
+.r-card { margin: 18rpx 24rpx; background: #fff; border-radius: 20rpx; padding: 24rpx; box-shadow: 0 4rpx 16rpx rgba(80,40,0,.05); }
+.r-name { font-size: 30rpx; font-weight: 600; }
+.r-kcal { font-size: 26rpx; color: #5b8c5a; font-weight: 600; }
+.r-meta { margin-top: 8rpx; }
+
+.empty { text-align: center; color: #b0aca2; padding: 80rpx 0; }
+.count { text-align: center; margin-top: 10rpx; }
