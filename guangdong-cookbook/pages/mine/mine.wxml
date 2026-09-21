@@ -1,0 +1,52 @@
+<view class="page">
+  <view class="sec-title">人群与口味</view>
+  <view class="card">
+    <view class="card-title">人群</view>
+    <view class="row wrap">
+      <view class="chip {{profileKey === pk ? 'on' : ''}}" wx:for="{{profiles}}" wx:for-item="p" wx:for-index="pk" wx:key="{{p.label}}" data-k="{{pk}}" bindtap="onProfile">{{p.label}}</view>
+    </view>
+    <view class="card-title" style="margin-top:26rpx;">家庭人数（采购时按倍数放大）</view>
+    <view class="row center">
+      <view class="stepper" bindtap="familySub">－</view>
+      <text class="fam-num">{{family}}</text>
+      <view class="stepper" bindtap="familyAdd">＋</view>
+      <text class="muted" style="margin-left:16rpx;">人</text>
+    </view>
+    <view class="card-title" style="margin-top:26rpx;">口味</view>
+    <view class="row wrap">
+      <view class="chip {{taste === 'light' ? 'on' : ''}}" data-k="light" bindtap="onTaste">清淡（粤式默认）</view>
+      <view class="chip {{taste === 'spicy' ? 'on' : ''}}" data-k="spicy" bindtap="onTaste">微辣</view>
+    </view>
+  </view>
+
+  <view class="sec-title">饮食禁忌</view>
+  <view class="card">
+    <view class="vline row" wx:for="{{vetoList}}" wx:key="k" data-k="{{item.k}}" bindtap="onVeto">
+      <text class="s1">{{item.label}}</text>
+      <view class="sw {{item.on ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="muted">开启后，自动推荐与采购清单会排除对应菜品</view>
+  </view>
+
+  <view class="sec-title">膳食记录</view>
+  <view class="card" wx:if="{{!records.length}}">
+    <text class="muted">还没有记录。记录每天的饮食，看看离膳食指南还有多远。</text>
+    <view class="btn btn-primary" bindtap="goRecord">记录今天</view>
+  </view>
+  <view class="card rec" wx:for="{{records}}" wx:key="date">
+    <view class="row">
+      <view class="s1">
+        <text class="rec-date">{{item.date}}</text>
+        <text class="muted" style="display:block;">{{item.names}}</text>
+      </view>
+      <view class="right">
+        <text class="rec-score">{{item.score}}</text>
+        <text class="rec-grade">{{item.grade}}</text>
+      </view>
+    </view>
+    <view class="row" style="margin-top:12rpx;">
+      <view class="btn btn-ghost mini" bindtap="delRecord" data-date="{{item.date}}">删除</view>
+      <view class="btn btn-ghost mini" bindtap="goRecord" style="margin-left:16rpx;">再记一天</view>
+    </view>
+  </view>
+</view>
