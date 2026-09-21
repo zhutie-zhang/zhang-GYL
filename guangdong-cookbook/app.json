@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/recipes/recipes",
+    "pages/guide/guide",
+    "pages/mine/mine",
+    "pages/detail/detail",
+    "pages/record/record"
+  ],
+  "window": {
+    "navigationBarTitleText": "广东家常菜",
+    "navigationBarBackgroundColor": "#faf6f0",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#faf6f0",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#9aa59a",
+    "selectedColor": "#5b8c5a",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "今日" },
+      { "pagePath": "pages/recipes/recipes", "text": "菜谱" },
+      { "pagePath": "pages/guide/guide", "text": "指南" },
+      { "pagePath": "pages/mine/mine", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
