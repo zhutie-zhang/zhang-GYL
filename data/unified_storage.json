@@ -1,0 +1,657 @@
+{
+  "乐歌VIP美": {
+    "type": "cbm_day_matrix",
+    "currency": "USD",
+    "unit": "USD/立方米/天",
+    "warehouses": [
+      {
+        "code": "CAP",
+        "label": "洛杉矶"
+      },
+      {
+        "code": "MEM",
+        "label": "孟菲斯"
+      },
+      {
+        "code": "HOU",
+        "label": "休斯顿"
+      },
+      {
+        "code": "SAV",
+        "label": "萨凡纳"
+      },
+      {
+        "code": "CAT",
+        "label": "旧金山"
+      },
+      {
+        "code": "CHI",
+        "label": "芝加哥"
+      },
+      {
+        "code": "NJF",
+        "label": "新泽西"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0<X≤30",
+        "prices": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "30<X≤60",
+        "prices": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "60<X≤120",
+        "prices": [
+          0.6,
+          0.6,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "120<X≤180",
+        "prices": [
+          0.8,
+          0.8,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "label": "180<X≤270",
+        "prices": [
+          1.0,
+          1.0,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "label": "270<X≤360",
+        "prices": [
+          1.2,
+          1.2,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "label": "360<X",
+        "prices": [
+          1.5,
+          1.5,
+          1.2,
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ]
+      }
+    ],
+    "provider": "乐歌VIP美",
+    "source": "2026乐歌公共海外仓报价vip-云帆济.xlsx"
+  },
+  "乐歌VIP加": {
+    "type": "cbm_day_matrix",
+    "currency": "CAD",
+    "unit": "CAD/立方米/天",
+    "warehouses": [
+      {
+        "code": "CATO",
+        "label": "多伦多"
+      },
+      {
+        "code": "CAVR",
+        "label": "温哥华"
+      },
+      {
+        "code": "CAML",
+        "label": "蒙特利尔"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0<X≤45",
+        "prices": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "45<X≤60",
+        "prices": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      {
+        "label": "60<X≤120",
+        "prices": [
+          1.1,
+          1.1,
+          1.1
+        ]
+      },
+      {
+        "label": "120<X≤180",
+        "prices": [
+          2.1,
+          2.1,
+          2.1
+        ]
+      },
+      {
+        "label": "180<X≤270",
+        "prices": [
+          2.6,
+          2.6,
+          2.6
+        ]
+      },
+      {
+        "label": "270<X≤360",
+        "prices": [
+          3.1,
+          3.1,
+          3.1
+        ]
+      },
+      {
+        "label": "360<X",
+        "prices": [
+          4.1,
+          4.1,
+          4.1
+        ]
+      }
+    ],
+    "provider": "乐歌VIP加",
+    "source": "2026加拿大乐歌公共海外仓报价-云帆济(1).xlsx"
+  },
+  "乐歌VIP德": {
+    "type": "cbm_day_matrix",
+    "currency": "EUR",
+    "unit": "EUR/立方米/天",
+    "warehouses": [
+      {
+        "code": "EUWE",
+        "label": ""
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0<X≤30",
+        "prices": [
+          0.0
+        ]
+      },
+      {
+        "label": "30<X≤60",
+        "prices": [
+          0.4
+        ]
+      },
+      {
+        "label": "60<X≤120",
+        "prices": [
+          0.6
+        ]
+      },
+      {
+        "label": "120<X≤180",
+        "prices": [
+          1.0
+        ]
+      },
+      {
+        "label": "180<X≤270",
+        "prices": [
+          1.35
+        ]
+      },
+      {
+        "label": "270<X≤360",
+        "prices": [
+          1.8
+        ]
+      },
+      {
+        "label": "360<X",
+        "prices": [
+          2.0
+        ]
+      }
+    ],
+    "provider": "乐歌VIP德",
+    "source": "2026德国乐歌公共海外仓报价-云帆济(1).xlsx"
+  },
+  "安美VIP": {
+    "type": "cbm_day_matrix",
+    "currency": "USD",
+    "unit": "立方米/天",
+    "warehouses": [
+      {
+        "code": "CA",
+        "label": "CA（洛杉矶）"
+      },
+      {
+        "code": "NJ",
+        "label": "NJ（新泽西）"
+      },
+      {
+        "code": "SAV",
+        "label": "SAV（萨凡纳）"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0<X≤30",
+        "prices": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "30<X≤60",
+        "prices": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "60<X≤90",
+        "prices": [
+          0.4,
+          0.4,
+          0.4
+        ]
+      },
+      {
+        "label": "90<X≤120",
+        "prices": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "label": "120<X≤180",
+        "prices": [
+          0.8,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "label": "X>180",
+        "prices": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    ],
+    "provider": "安美VIP",
+    "source": "安美VIP报价.xlsx"
+  },
+  "YFJ&SMART": {
+    "type": "cbm_day_matrix",
+    "currency": "USD",
+    "unit": "CBM/天",
+    "warehouses": [
+      {
+        "code": "HUO·SAV",
+        "label": "休斯顿/萨凡纳"
+      },
+      {
+        "code": "NJF·CHI",
+        "label": "新泽西/芝加哥"
+      },
+      {
+        "code": "LAX",
+        "label": "洛杉矶"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0-30自然日",
+        "prices": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "31-60自然日",
+        "prices": [
+          0.0,
+          0.0,
+          0.6
+        ]
+      },
+      {
+        "label": "61-90自然日",
+        "prices": [
+          0.6,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "label": "91-120自然日",
+        "prices": [
+          0.7,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "label": "121-180自然日",
+        "prices": [
+          1.0,
+          1.2,
+          1.2
+        ]
+      },
+      {
+        "label": "181-360自然日",
+        "prices": [
+          1.2,
+          1.6,
+          1.6
+        ]
+      },
+      {
+        "label": "361+自然日",
+        "prices": [
+          1.8,
+          2.0,
+          2.0
+        ]
+      }
+    ],
+    "provider": "YFJ&SMART",
+    "source": "YFJ&SMART美国一件代发报价 Eff.260611.xlsx"
+  },
+  "无忧达": {
+    "type": "cbm_day_matrix",
+    "currency": "USD",
+    "unit": "立方/天",
+    "warehouses": [
+      {
+        "code": "CA仓群",
+        "label": "CA仓群"
+      },
+      {
+        "code": "NJ仓群",
+        "label": "NJ仓群"
+      },
+      {
+        "code": "NJJW05",
+        "label": "NJJW05"
+      },
+      {
+        "code": "TX仓群",
+        "label": "TX仓群"
+      },
+      {
+        "code": "GA仓",
+        "label": "GA仓"
+      },
+      {
+        "code": "SAV仓",
+        "label": "SAV仓"
+      },
+      {
+        "code": "FL仓",
+        "label": "FL仓"
+      },
+      {
+        "code": "IL仓群",
+        "label": "IL仓群"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0-30",
+        "prices": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "31-60",
+        "prices": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "61-90",
+        "prices": [
+          0.7,
+          0.7,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "label": "91-120",
+        "prices": [
+          0.8,
+          0.8,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "label": "121-180",
+        "prices": [
+          0.9,
+          0.9,
+          0.9,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7
+        ]
+      },
+      {
+        "label": "181-270",
+        "prices": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "label": "271-360",
+        "prices": [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ]
+      }
+    ],
+    "return_zone_prices": [
+      0.5,
+      0.5,
+      1.0,
+      2.0,
+      4.0,
+      6.0,
+      8.0
+    ],
+    "note": "超长(260≥L>130cm)仓租×1.2；特长(L>260cm)按1.4",
+    "provider": "无忧达",
+    "source": "云帆济&无忧达美国海外仓2026.4.27(1).xlsx"
+  },
+  "M.KiTE枫筝": {
+    "type": "cbm_day_matrix",
+    "currency": "USD",
+    "unit": "CBM/天",
+    "warehouses": [
+      {
+        "code": "CA",
+        "label": "枫筝加拿大"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "0-30自然日",
+        "prices": [
+          0.0
+        ]
+      },
+      {
+        "label": "第31-90自然日",
+        "prices": [
+          0.5
+        ]
+      },
+      {
+        "label": "第91-180自然日",
+        "prices": [
+          1.0
+        ]
+      },
+      {
+        "label": "第181-365自然日",
+        "prices": [
+          1.5
+        ]
+      },
+      {
+        "label": "超过365自然日",
+        "prices": [
+          3.0
+        ]
+      }
+    ],
+    "provider": "M.KiTE枫筝",
+    "source": "M.KiTE(CA)枫筝海外仓一件代发价格表2026年2月1日生效(1)(2).xlsx"
+  },
+  "盘古Teknihall": {
+    "type": "cbm_day_matrix",
+    "currency": "EUR",
+    "unit": "欧元/天×体积(最小0.001m³)",
+    "warehouses": [
+      {
+        "code": "EUWE",
+        "label": "Heusenstamm 德国"
+      }
+    ],
+    "tiers": [
+      {
+        "label": "< 30",
+        "prices": [
+          0.0
+        ]
+      },
+      {
+        "label": "31 - 90",
+        "prices": [
+          0.4
+        ]
+      },
+      {
+        "label": "90 - 120",
+        "prices": [
+          0.5
+        ]
+      },
+      {
+        "label": "120 - 180",
+        "prices": [
+          0.7
+        ]
+      },
+      {
+        "label": "181 - 270",
+        "prices": [
+          1.0
+        ]
+      },
+      {
+        "label": "271 - 360",
+        "prices": [
+          1.5
+        ]
+      },
+      {
+        "label": "> 361",
+        "prices": [
+          2.5
+        ]
+      }
+    ],
+    "provider": "盘古Teknihall",
+    "source": "盘古Teknihall服务报价表_202602-德国仓V3(1).xlsx"
+  }
+}
