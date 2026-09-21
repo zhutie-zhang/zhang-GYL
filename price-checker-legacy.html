@@ -1,0 +1,3474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海外仓价格核对系统</title>
+    <script src="xlsx.full.min.js"></script>
+    <script src="pdf.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .header h1 { font-size: 24px; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        .card-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #1a73e8; display: flex; align-items: center; gap: 8px; }
+        .full-width { grid-column: 1 / -1; }
+        label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; color: #555; }
+        select, input[type="text"], input[type="number"] { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; transition: border-color 0.2s; outline: none; }
+        select:focus, input:focus { border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        .btn-primary { background: #1a73e8; color: white; }
+        .btn-primary:hover { background: #1557b0; }
+        .btn-success { background: #34a853; color: white; }
+        .btn-success:hover { background: #2d8e47; }
+        .btn-danger { background: #ea4335; color: white; }
+        .btn-danger:hover { background: #c5221f; }
+        .btn-warning { background: #fbbc04; color: #333; }
+        .btn-warning:hover { background: #e5ab00; }
+        .btn-outline { background: transparent; border: 1px solid #ddd; color: #555; }
+        .btn-outline:hover { background: #f5f5f5; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+        .btn-group { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8f9fa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
+        td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f8f9fa; }
+        .table-wrapper { max-height: 400px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; }
+        .drop-zone { border: 2px dashed #ccc; border-radius: 12px; padding: 40px; text-align: center; transition: all 0.3s; cursor: pointer; background: #fafafa; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #1a73e8; background: #e8f0fe; }
+        .drop-zone-icon { font-size: 48px; color: #aaa; margin-bottom: 12px; }
+        .drop-zone-text { font-size: 16px; color: #666; margin-bottom: 8px; }
+        .drop-zone-hint { font-size: 12px; color: #999; }
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+        .tag-match { background: #e6f4ea; color: #1e7e34; }
+        .tag-diff { background: #fce8e6; color: #c5221f; }
+        .tag-warn { background: #fef7e0; color: #b06000; }
+        .tag-info { background: #e8f0fe; color: #1a73e8; }
+        .summary-box { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+        .summary-item { text-align: center; padding: 16px; border-radius: 8px; background: #f8f9fa; }
+        .summary-item .num { font-size: 28px; font-weight: 700; }
+        .summary-item .label { font-size: 12px; color: #666; margin-top: 4px; }
+        .summary-item.match .num { color: #34a853; }
+        .summary-item.diff .num { color: #ea4335; }
+        .summary-item.warn .num { color: #fbbc04; }
+        .summary-item.total .num { color: #1a73e8; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; border-radius: 12px; padding: 24px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; }
+        .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
+        .modal-close:hover { color: #333; }
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+        .template-list { max-height: 300px; overflow-y: auto; }
+        .quote-block {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+        .quote-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .quote-block input, .quote-block select {
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 12px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+            color: #999;
+        }
+        .empty-state p {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: #aaa;
+        }
+        .template-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; }
+        .template-item:hover { border-color: #1a73e8; }
+        .template-item-info { flex: 1; }
+        .template-item-name { font-weight: 600; font-size: 14px; }
+        .template-item-meta { font-size: 12px; color: #666; margin-top: 4px; }
+        .result-detail { margin-top: 16px; }
+        .result-item { padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; }
+        .result-item.match { border-left: 4px solid #34a853; }
+        .result-item.diff { border-left: 4px solid #ea4335; }
+        .result-item.warn { border-left: 4px solid #fbbc04; }
+        .result-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .result-item-body { font-size: 13px; color: #555; }
+        .result-item-body .price-compare { display: flex; gap: 16px; margin-top: 4px; }
+        .price-val { font-weight: 600; }
+        .price-val.template { color: #1a73e8; }
+        .price-val.bill { color: #ea4335; }
+        .price-val.match { color: #34a853; }
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .filter-bar select { width: auto; min-width: 150px; }
+        .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 2px solid #eee; padding-bottom: 0; }
+        .tab { padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; color: #666; transition: all 0.2s; }
+        .tab:hover { color: #1a73e8; }
+        .tab.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+        .hidden { display: none !important; }
+        .map-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 8px; padding: 8px 10px; }
+        .map-item label { font-size: 12px; font-weight: 600; color: #666; margin-bottom: 4px; }
+        .map-item select { padding: 6px 8px; font-size: 13px; background: white; }
+        .map-item .req-mark { color: #ea4335; }
+        .map-item.mapped { border-color: #1a73e8; background: #e8f0fe; }
+        .map-item.mapped label { color: #1a73e8; }
+        .map-hint { font-size: 11px; color: #999; margin-top: 2px; }
+        .step-pill { display: inline-block; padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 600; background: #e8f0fe; color: #1a73e8; margin-bottom: 8px; }
+        .step-section { border: 1px solid #eceff3; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; background: #fcfcfd; }
+        .price-grid-wrap { overflow-x: auto; border: 1px solid #eee; border-radius: 8px; }
+        .price-grid-wrap table { min-width: max-content; }
+        .price-grid-wrap td, .price-grid-wrap th { padding: 6px 8px; white-space: nowrap; }
+        .price-grid-wrap input { width: 76px; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; }
+        .freight-result-card { border: 1px solid #cfead0; background: #f7fcf7; border-radius: 10px; padding: 14px 16px; margin-top: 14px; }
+        .freight-result-card .total-line { font-size: 18px; font-weight: 700; color: #1a73e8; margin-top: 8px; }
+        .calc-error { border: 1px solid #f5c6c6; background: #fef6f6; color: #c5221f; border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-top: 10px; }
+        .api-box { width: 100%; min-height: 110px; font-family: Consolas, monospace; font-size: 12px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-top: 6px; }
+        .import-box { width: 100%; min-height: 56px; font-family: Consolas, monospace; font-size: 12px; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .import-preview { font-family: Consolas, monospace; font-size: 12px; border: 1px solid #e0e0e0; border-radius: 8px; max-height: 180px; overflow: auto; margin-top: 6px; }
+        .import-preview table { margin: 0; }
+        .import-preview td, .import-preview th { padding: 4px 8px; white-space: nowrap; border-bottom: 1px solid #f0f0f0; }
+        .import-preview .imp-ok { color: #188038; }
+        .import-preview .imp-bad { color: #c5221f; background: #fce8e6; }
+        .import-actions { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .form-row, .form-row-2 { grid-template-columns: 1fr; } .summary-box { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📦 海外仓价格核对系统</h1>
+    </div>
+    <div class="container">
+        <!-- 价格模板管理 -->
+        <div class="card">
+            <div class="card-title">📋 价格模板管理</div>
+            <div class="tab-bar">
+                <div class="tab active" onclick="switchTab('manage')">模板列表</div>
+                <div class="tab" onclick="switchTab('add')">新增模板</div>
+                <div class="tab" onclick="switchTab('channel')">物流渠道</div>
+                <div class="tab" onclick="switchTab('quote')">混合报价导入</div>
+            </div>
+
+            <div id="tab-manage">
+                <div class="filter-bar">
+                    <button class="btn btn-default" id="officialTplBtn" onclick="importOfficialTemplates()">📦 一键导入五仓海外仓报价模板（库内操作费）</button>
+                    <select id="filterProvider" onchange="renderTemplateList()">
+                        <option value="">全部服务商</option>
+                    </select>
+                    <select id="filterWarehouse" onchange="renderTemplateList()">
+                        <option value="">全部仓点</option>
+                    </select>
+                </div>
+                <div class="template-list" id="templateList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>暂无价格模板，请先添加</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-add" class="hidden">
+                <div class="form-row">
+                    <div>
+                        <label>服务商名称</label>
+                        <input type="text" id="tplProvider" placeholder="如：递四方/燕文/万邦">
+                    </div>
+                    <div>
+                        <label>仓点名称</label>
+                        <input type="text" id="tplWarehouse" placeholder="如：US-LAX/UK-LHR">
+                    </div>
+                    <div>
+                        <label>服务类型</label>
+                        <select id="tplServiceType">
+                            <option value="入库上架">入库上架</option>
+                            <option value="订单处理">订单处理</option>
+                            <option value="仓储费">仓储费</option>
+                            <option value="尾程配送">尾程配送</option>
+                            <option value="退货处理">退货处理</option>
+                            <option value="贴标换标">贴标换标</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div>
+                        <label>计费单位</label>
+                        <select id="tplUnit">
+                            <option value="件">件</option>
+                            <option value="KG">KG</option>
+                            <option value="立方">立方</option>
+                            <option value="单">单</option>
+                            <option value="次">次</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>单价 (USD)</label>
+                        <input type="number" id="tplPrice" step="0.001" placeholder="0.000">
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div>
+                        <label>最低收费 (USD)</label>
+                        <input type="number" id="tplMinCharge" step="0.01" value="0" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label>备注</label>
+                        <input type="text" id="tplNote" placeholder="如：首重1kg，续重0.5kg">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="saveTemplate()">保存模板</button>
+                    <button class="btn btn-outline" onclick="switchTab('manage')">取消</button>
+                </div>
+
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #eee;">
+                    <label>批量导入模板（Excel/CSV）</label>
+                    <div class="drop-zone" id="templateDropZone" style="padding: 20px;" onclick="document.getElementById('templateFileInput').click()">
+                        <div class="drop-zone-text">点击或拖拽文件到此处</div>
+                        <div class="drop-zone-hint">自动识别表头并预览；单价/仓点支持<b>多选摊平</b>（多价格列×多仓点列）</div>
+                        <div class="drop-zone-hint" style="margin-top:4px;color:#1a73e8;">示例：项目目录下 Smart供应链-美国库内费率.csv / 美国仓储费率.csv 可直接导入体验</div>
+                    </div>
+                    <input type="file" id="templateFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="importTemplateFile(event)">
+                </div>
+            </div>
+
+            <div id="tab-channel" class="hidden">
+                <div class="filter-bar">
+                    <label style="margin:0;">物流渠道（尾程运费价格矩阵）</label>
+                </div>
+<div class="drop-zone" id="channelDropZone" style="padding: 20px; margin-bottom: 12px;" onclick="document.getElementById('channelFileInput').click()">
+                        <div class="drop-zone-text">点击或拖拽渠道价表文件到此处</div>
+                        <div class="drop-zone-hint">支持 xlsx/xls/csv；表头格式：<b>计费重(磅)</b> 排第一列，后续列为分区（Zone2、Zone3…）</div>
+                        <div class="drop-zone-hint" style="margin-top:4px;color:#1a73e8;">示例：项目目录下 FedEx_AHS-美国尾程.csv 可直接导入体验</div>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <button class="btn btn-default" style="width:100%;" onclick="importOfficialChannels()">📦 一键导入正式价格表（SMART/乐歌/乐舱/安美/实力派 共15个尾程渠道 + 附加费）</button>
+                    </div>
+                <input type="file" id="channelFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="importChannelFile(event)">
+                <div class="channel-list" id="channelList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>暂无物流渠道，请先导入</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee;">
+                    <label>尾程附加费价表导入（绑定到渠道）</label>
+                    <div class="form-row-2">
+                        <div>
+                            <label>绑定渠道</label>
+                            <select id="surchargeChannelCtx">
+                                <option value="">-- 请先导入渠道 --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>区价格格式</label>
+                            <input type="text" value="Zone2｜Zones3-4｜Zones5-6｜Zones7+" readonly style="background:#f8f9fa;">
+                        </div>
+                    </div>
+                    <div class="drop-zone" id="surchargeDropZone" style="padding: 16px;" onclick="document.getElementById('surchargeFileInput').click()">
+                        <div class="drop-zone-text">点击或拖拽附加费价表文件到此处</div>
+                        <div class="drop-zone-hint">自动识别名称列 + 分区组价格列；名称合并单元格自动向下填充；示例：项目目录下 FedEx_AHS-附加费.csv</div>
+                    </div>
+                    <input type="file" id="surchargeFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="importSurchargeFile(event)">
+                </div>
+            </div>
+
+            <div id="tab-quote" class="hidden">
+                <div class="filter-bar">
+                    <label style="margin:0;">供应商全量报价表自动识别</label>
+                </div>
+                <div class="drop-zone" id="quoteDropZone" style="padding: 20px; margin-bottom: 12px;" onclick="document.getElementById('quoteFileInput').click()">
+                    <div class="drop-zone-text">点击或拖拽一份涵盖「库内费用 + 物流渠道」的报价表</div>
+                    <div class="drop-zone-hint">自动扫描所有工作表并区分三类：<b style="color:#1a73e8;">库内费用</b>（类型/单价）· <b style="color:#188038;">物流渠道</b>（重量×Zone矩阵）· <b style="color:#e8710a;">渠道附加费</b>（名称/分区组）</div>
+                    <div class="drop-zone-hint" style="margin-top:4px;color:#1a73e8;">封面/说明行自动跳过；识别结果可逐个调整后一键导入各模块</div>
+                </div>
+                <input type="file" id="quoteFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="importQuoteFile(event)">
+                <div class="quote-block-list" id="quoteBlockList"></div>
+                <div id="quoteSummary" style="color:#666;font-size:12px;margin-top:8px;"></div>
+                <div class="btn-group" style="margin-top:12px;">
+                    <button id="quoteConfirmBtn" class="btn btn-primary" onclick="confirmQuoteImport()" disabled>✅ 导入到对应模块</button>
+                    <button class="btn btn-outline" onclick="clearQuote()">清空结果</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 账单上传与核对 -->
+        <div class="card">
+            <div class="card-title">📤 账单上传核对</div>
+            <div class="form-row-2">
+                <div>
+                    <label>选择服务商</label>
+                    <select id="checkProvider">
+                        <option value="">-- 请先选择 --</option>
+                    </select>
+                </div>
+                <div>
+                    <label>选择仓点</label>
+                    <select id="checkWarehouse">
+                        <option value="">-- 请先选择 --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div>
+                    <label>物流渠道（尾程核对）</label>
+                    <select id="checkChannel" onchange="toggleChannelCols()">
+                        <option value="">不使用渠道价表</option>
+                    </select>
+                </div>
+                <div>
+                    <label>计费重列（账单）</label>
+                    <select id="billWeightCol" disabled>
+                        <option value="">上传账单后选择</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Zone列（账单）</label>
+                    <select id="billZoneCol" disabled>
+                        <option value="">上传账单后选择</option>
+                    </select>
+                </div>
+            </div>
+            <div style="font-size:12px;color:#999;margin-bottom:12px;">混合账单自动分流：有「计费重+Zone」的行按渠道价表核对，其余行按服务商/仓点模板核对</div>
+            <div class="drop-zone" id="billDropZone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" onclick="document.getElementById('billFileInput').click()">
+                <div class="drop-zone-icon">📁</div>
+                <div class="drop-zone-text">拖拽账单文件到此处，或点击上传</div>
+                <div class="drop-zone-hint">支持 .xlsx / .xls / .csv / .pdf ｜自动识别表头行并标准化字段</div>
+            </div>
+            <input type="file" id="billFileInput" accept=".xlsx,.xls,.csv,.pdf" style="display:none" onchange="handleBillFile(event)">
+
+            <div id="billFileInfo" class="hidden" style="margin-top: 12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span id="billFileName" class="tag tag-info"></span>
+                    <button class="btn btn-sm btn-outline" onclick="clearBill()">清除</button>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="startCheck()">🔍 开始核对</button>
+                <button class="btn btn-outline" onclick="exportResult()">📊 导出结果</button>
+            </div>
+        </div>
+
+        <!-- 核对结果 -->
+        <div class="card full-width hidden" id="resultSection">
+            <div class="card-title">📊 核对结果</div>
+            <div class="summary-box" id="summaryBox"></div>
+            <div class="filter-bar">
+                <select id="resultFilter" onchange="renderResult()">
+                    <option value="all">全部</option>
+                    <option value="match">一致</option>
+                    <option value="diff">有差异</option>
+                    <option value="warn">警告</option>
+                </select>
+                <span style="color:#666;font-size:13px;" id="resultCount"></span>
+            </div>
+            <div class="table-wrapper" id="resultTableWrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>账单行</th>
+                            <th>服务类型</th>
+                            <th>计费单位</th>
+                            <th>账单数量</th>
+                            <th>模板单价</th>
+                            <th>模板应收</th>
+                            <th>账单金额</th>
+                            <th>差异金额</th>
+                            <th>状态</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    <!-- 尾程运费计算（4 步配置向导） -->
+    <div class="card full-width" id="freightCard">
+        <div class="card-title">🚚 尾程运费计算（4 步配置向导，支持表格批量粘贴导入）</div>
+        <div class="form-row" style="align-items:end;">
+            <div>
+                <label>已保存报价模板</label>
+                <select id="f_tplSelect" onchange="freightLoad(this.value)"></select>
+            </div>
+            <div><button class="btn btn-outline" onclick="freightNew()">＋ 新建</button></div>
+            <div><button class="btn btn-outline" onclick="freightFillDemo()">载入安美演示数据</button></div>
+            <div><button class="btn btn-primary" onclick="freightSave()">💾 保存模板</button></div>
+            <div><button class="btn btn-outline" onclick="freightDelCurrent()">删除当前</button></div>
+        </div>
+        <div class="tab-bar">
+            <div class="tab active" onclick="freightTab('s1')">1 基础信息</div>
+            <div class="tab" onclick="freightTab('s2')">2 价格信息</div>
+            <div class="tab" onclick="freightTab('s3')">3 分区信息</div>
+            <div class="tab" onclick="freightTab('s4')">4 附加费</div>
+            <div class="tab" onclick="freightTab('calc')">5 运费计算</div>
+            <div class="tab" onclick="freightTab('api')">6 接口导出</div>
+        </div>
+
+        <div id="freight-s1">
+            <div class="step-section">
+                <div class="step-pill">步骤 1｜基础信息（单条表单）</div>
+                <div class="form-row">
+                    <div><label>模板名称</label><input id="f_name" placeholder="如：安美海外仓新系统"></div>
+                    <div><label>物流渠道</label><input id="f_channel" placeholder="如：SMART-Smart云帆济-FedEx_SELF"></div>
+                    <div><label>国家/地区</label><input id="f_country" value="美国"></div>
+                </div>
+                <div class="form-row">
+                    <div><label>开始日期</label><input id="f_dateStart" type="date"></div>
+                    <div><label>结束日期</label><input id="f_dateEnd" type="date"></div>
+                    <div><label>最长派送时效(天)</label><input id="f_maxDays" type="number" value="6" min="0"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="freight-s2" class="hidden">
+            <div class="step-section">
+                <div class="step-pill">步骤 2｜价格信息（重量阶梯 × 分区价）</div>
+                <div class="form-row-2">
+                    <div><label>币种</label><select id="f_currency"><option>USD</option><option>CNY</option><option>EUR</option></select></div>
+                    <div><label>计费依据</label>
+                        <select id="f_chargeBy">
+                            <option value="actual">实重</option>
+                            <option value="volumetric">体积重</option>
+                            <option value="max">实重/体积重 取大</option>
+                        </select>
+                    </div>
+                    <div><label>重量单位</label><select id="f_unit"><option value="kg">千克 kg</option><option value="lb">磅 lb</option></select></div>
+                    <div><label>体积参数</label><input id="f_volParam" type="number" value="6000" step="100"></div>
+                    <div><label>计费模式</label>
+                        <select id="f_calcMode">
+                            <option value="perOrder">整单计算（按总重）</option>
+                            <option value="perPiece">按件计算（单件×件数）</option>
+                        </select>
+                    </div>
+                    <div><label>分区数量 (1~8)</label><input id="f_zoneCount" type="number" value="8" min="1" max="8" onchange="priceGridRebuild()"></div>
+                </div>
+
+                <div class="step-pill" style="margin-top:10px;">批量粘贴导入（从 Excel 复制，换行=行、Tab=列）</div>
+                <textarea class="import-box" id="f_pricePaste" placeholder="粘贴示例：&#10;0.45&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#10;0.91&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85&#9;7.85"></textarea>
+                <div class="import-actions">
+                    <button class="btn btn-sm btn-outline" onclick="pricePastePreview()">解析预览</button>
+                    <button class="btn btn-sm btn-success" onclick="priceImport('append')">追加导入</button>
+                    <button class="btn btn-sm btn-warning" onclick="priceImport('overwrite')">覆盖导入全部</button>
+                    <span style="font-size:12px;color:#999;">首列=重量kg阶梯，后续列=Zone1~8 价格；自动校验数字，非法行高亮并跳过</span>
+                </div>
+                <div id="f_pricePasteResult"></div>
+
+                <div style="display:flex;gap:8px;align-items:center;margin:10px 0 6px;">
+                    <label style="margin:0;">报价矩阵</label>
+                    <button class="btn btn-sm btn-outline" onclick="priceGridAddRow()">＋ 添加阶梯</button>
+                    <button class="btn btn-sm btn-outline" onclick="priceGridFillFromDemo()">用安美阶梯填充</button>
+                </div>
+                <div class="price-grid-wrap">
+                    <table>
+                        <thead id="f_priceGridHead"></thead>
+                        <tbody id="f_priceGridBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="freight-s3" class="hidden">
+            <div class="step-section">
+                <div class="step-pill">步骤 3｜分区信息（邮编区间 → 分区，多仓库共用一套映射）</div>
+                <label style="margin-bottom:6px;">两列：邮编区间（如 07000~10499）、分区编号（1~8）；收货邮编自动匹配分区</label>
+                <div class="table-wrapper" style="max-height:240px;">
+                    <table>
+                        <thead><tr><th>邮编区间（起始~结束）</th><th>分区编号(1~8)</th><th></th></tr></thead>
+                        <tbody id="f_zipRows"></tbody>
+                    </table>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button class="btn btn-sm btn-outline" onclick="zipRowAdd()">＋ 添加规则</button>
+                    <button class="btn btn-sm btn-outline" onclick="zipFillFromDemo()">用安美分区填充</button>
+                </div>
+
+                <div class="step-pill" style="margin-top:12px;">批量粘贴导入邮编规则</div>
+                <textarea class="import-box" id="f_zipPaste" placeholder="格式：邮编区间 &#9; 分区编号（支持 07000~10499 / 00400---00599 / 07000-10499）&#10;07000~10499&#9;6&#10;11700~12699&#9;7"></textarea>
+                <div class="import-actions">
+                    <button class="btn btn-sm btn-outline" onclick="zipPastePreview()">解析预览</button>
+                    <button class="btn btn-sm btn-success" onclick="zipImport('append')">追加导入</button>
+                    <button class="btn btn-sm btn-warning" onclick="zipImport('overwrite')">覆盖导入全部</button>
+                    <span style="font-size:12px;color:#999;">自动解析「起始~结束」邮编，校验格式</span>
+                </div>
+                <div id="f_zipPasteResult"></div>
+            </div>
+        </div>
+
+        <div id="freight-s4" class="hidden">
+            <div class="step-section">
+                <div class="step-pill">步骤 4｜附加费（百分比 =（基础运费+按票附加费总和）×%；燃油走官网；库内操作费计入总运费）</div>
+                <div class="table-wrapper" style="max-height:240px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>费用名称</th>
+                                <th>类别</th>
+                                <th>计费类型</th>
+                                <th>金额/比例</th>
+                                <th>生效分区(空=全部)</th>
+                                <th>启用</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="f_surRows"></tbody>
+                    </table>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button class="btn btn-sm btn-outline" onclick="surRowAdd()">＋ 添加附加费</button>
+                    <button class="btn btn-sm btn-outline" onclick="surFillFromDemo()">用安美附加费填充</button>
+                </div>
+
+                <div class="step-pill" style="margin-top:12px;">批量粘贴导入附加费</div>
+                <textarea class="import-box" id="f_surPaste" placeholder="列：费用名称&#9;计费类型(按票/百分比)&#9;金额/比例&#9;生效分区(逗号/区间，空=全部)&#9;类别(普通/燃油/库内操作费，可省)&#10;住宅费&#9;按票&#9;2.9&#10;燃油附加费&#9;百分比&#9;27&#10;超重附加费&#9;按票&#9;4.6&#9;1,2&#10;超长附加费&#9;按票&#9;3.85&#9;5~6"></textarea>
+                <div class="import-actions">
+                    <button class="btn btn-sm btn-outline" onclick="surPastePreview()">解析预览</button>
+                    <button class="btn btn-sm btn-success" onclick="surImport('append')">追加导入</button>
+                    <button class="btn btn-sm btn-warning" onclick="surImport('overwrite')">覆盖导入全部</button>
+                    <span style="font-size:12px;color:#999;">自动解析生效分区（1,2 或 5~6）；错误行高亮并跳过</span>
+                </div>
+                <div id="f_surPasteResult"></div>
+            </div>
+        </div>
+
+        <div id="freight-calc" class="hidden">
+            <div class="form-row">
+                <div><label>报价模板</label><select id="c_tplSelect" onchange="freightLoad(this.value)"></select></div>
+                <div><label>收货邮编 (ZIP)</label><input id="c_zip" placeholder="如 07000"></div>
+                <div><label>实重</label><input id="c_weight" type="number" step="0.001" placeholder="如 2.5"></div>
+            </div>
+            <div class="form-row-2">
+                <div><label>件数（按件模式用）</label><input id="c_pieces" type="number" value="1" min="1" step="1"></div>
+                <div><label>长×宽×高 cm（选填，算体积重）</label><input id="c_dims" placeholder="如 40x30x20"></div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="freightCalc()">💲 计算运费</button>
+                <button class="btn btn-outline" onclick="freightCalcDemo()">用演示数据计算</button>
+            </div>
+            <div id="c_result"></div>
+        </div>
+
+        <div id="freight-api" class="hidden">
+            <div class="step-section">
+                <div class="step-pill">对外运费计算接口：POST /api/calc</div>
+                <div style="font-size:13px;color:#555;line-height:1.7;">
+                    入参 JSON：<code>{"config":&lt;模板JSON&gt;, "zip":"07000", "weightKg":2.5, "pieces":1}</code><br>
+                    出参：<code>zone</code> / <code>base</code> / <code>items[]</code> / <code>total</code>。curl 示例：
+                </div>
+                <textarea class="api-box" id="apiExample" readonly></textarea>
+                <div style="margin-top:10px;">
+                    <button class="btn btn-sm btn-outline" onclick="fillApiExample()">填入当前模板示例</button>
+                    <button class="btn btn-sm btn-outline" onclick="testApiCalc()">调本机接口测试</button>
+                    <span id="apiTestResult" style="font-size:12px;color:#666;"></span>
+                </div>
+            </div>
+            <div class="step-section">
+                <div class="step-pill">配置导入导出（JSON）</div>
+                <label>导出当前模板：</label>
+                <textarea class="api-box" id="api_export" readonly></textarea>
+                <div style="margin-top:8px;">
+                    <button class="btn btn-sm btn-outline" onclick="freightExport()">生成 JSON</button>
+                    <button class="btn btn-sm btn-outline" onclick="copyApiExport()">复制</button>
+                </div>
+                <label style="margin-top:14px;display:block;">从 JSON 导入为新模板：</label>
+                <textarea class="api-box" id="api_import" placeholder='粘贴模板 JSON'></textarea>
+                <div style="margin-top:8px;">
+                    <button class="btn btn-sm btn-outline" onclick="freightImport()">导入为模板</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 编辑模板弹窗 -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-title">
+                <span>编辑价格模板</span>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <input type="hidden" id="editIndex">
+            <div class="form-row">
+                <div>
+                    <label>服务商名称</label>
+                    <input type="text" id="editProvider">
+                </div>
+                <div>
+                    <label>仓点名称</label>
+                    <input type="text" id="editWarehouse">
+                </div>
+                <div>
+                    <label>服务类型</label>
+                    <select id="editServiceType">
+                        <option value="入库上架">入库上架</option>
+                        <option value="订单处理">订单处理</option>
+                        <option value="仓储费">仓储费</option>
+                        <option value="尾程配送">尾程配送</option>
+                        <option value="退货处理">退货处理</option>
+                        <option value="贴标换标">贴标换标</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div>
+                    <label>计费单位</label>
+                    <select id="editUnit">
+                        <option value="件">件</option>
+                        <option value="KG">KG</option>
+                        <option value="立方">立方</option>
+                        <option value="单">单</option>
+                        <option value="次">次</option>
+                    </select>
+                </div>
+                <div>
+                    <label>单价 (USD)</label>
+                    <input type="number" id="editPrice" step="0.001">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div>
+                    <label>最低收费 (USD)</label>
+                    <input type="number" id="editMinCharge" step="0.01">
+                </div>
+                <div>
+                    <label>备注</label>
+                    <input type="text" id="editNote">
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="updateTemplate()">更新</button>
+                <button class="btn btn-outline" onclick="closeEditModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导入模板预览弹窗 -->
+    <div class="modal-overlay" id="importModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-title">
+                <span>模板导入预览</span>
+                <button class="modal-close" onclick="closeImportModal()">&times;</button>
+            </div>
+
+            <div class="form-row-2">
+                <div>
+                    <label>选择工作表</label>
+                    <select id="importSheetSelect" onchange="onImportSheetChange()"></select>
+                </div>
+                <div>
+                    <label>文件名</label>
+                    <input type="text" id="importFileName" readonly style="background:#f8f9fa;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="margin-bottom: 8px;">字段映射（可手动调整）</label>
+                <div id="importMapping" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 12px;"></div>
+            </div>
+
+            <div style="margin-bottom: 8px;display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin-bottom:0;">数据预览</label>
+                <span id="importPreviewCount" style="font-size:12px;color:#999;"></span>
+            </div>
+            <div class="table-wrapper" style="max-height:260px;">
+                <table>
+                    <thead id="importPreviewHead"></thead>
+                    <tbody id="importPreviewBody"></tbody>
+                </table>
+            </div>
+
+            <div style="color:#666;font-size:12px;margin-top:8px;">
+                <span id="importValidCount"></span> · <span id="importInvalidCount"></span>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="confirmImport()">✅ 确认导入</button>
+                <button class="btn btn-outline" onclick="closeImportModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 渠道价表导入预览弹窗 -->
+    <div class="modal-overlay" id="channelModal">
+        <div class="modal" style="max-width: 860px;">
+            <div class="modal-title">
+                <span>渠道价表导入预览</span>
+                <button class="modal-close" onclick="closeChannelModal()">&times;</button>
+            </div>
+
+            <div class="form-row-2">
+                <div>
+                    <label>渠道名称</label>
+                    <input type="text" id="channelName" placeholder="如：FedEx_AHS">
+                </div>
+                <div>
+                    <label>适用区域 / 备注</label>
+                    <input type="text" id="channelNote" placeholder="如：美国本土48州">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 8px;display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin-bottom:0;">价表预览</label>
+                <span id="channelPreviewCount" style="font-size:12px;color:#999;"></span>
+            </div>
+            <div class="table-wrapper" style="max-height:280px;">
+                <table>
+                    <thead id="channelPreviewHead"></thead>
+                    <tbody id="channelPreviewBody"></tbody>
+                </table>
+            </div>
+
+            <div style="color:#666;font-size:12px;margin-top:8px;" id="channelStats"></div>
+
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="confirmChannelImport()">✅ 确认导入</button>
+                <button class="btn btn-outline" onclick="closeChannelModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 附加费价表导入预览弹窗 -->
+    <div class="modal-overlay" id="surchargeModal">
+        <div class="modal" style="max-width: 900px;">
+            <div class="modal-title">
+                <span>附加费价表导入预览</span>
+                <button class="modal-close" onclick="closeSurchargeModal()">&times;</button>
+            </div>
+
+            <div class="form-row-2">
+                <div>
+                    <label>绑定渠道</label>
+                    <select id="surchargeChannelModal">
+                        <option value="">（必选）</option>
+                    </select>
+                </div>
+                <div>
+                    <label>文件名</label>
+                    <input type="text" id="surchargeFileName" readonly style="background:#f8f9fa;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 8px;display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin-bottom:0;">附加费预览</label>
+                <span id="surchargePreviewCount" style="font-size:12px;color:#999;"></span>
+            </div>
+            <div class="table-wrapper" style="max-height:300px;">
+                <table>
+                    <thead id="surchargePreviewHead"></thead>
+                    <tbody id="surchargePreviewBody"></tbody>
+                </table>
+            </div>
+
+            <div style="color:#666;font-size:12px;margin-top:8px;" id="surchargeStats"></div>
+
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="confirmSurchargeImport()">✅ 确认导入</button>
+                <button class="btn btn-outline" onclick="closeSurchargeModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 账单解析预览弹窗 -->
+    <div class="modal-overlay" id="billModal">
+        <div class="modal" style="max-width: 960px;">
+            <div class="modal-title">
+                <span>账单解析预览</span>
+                <button class="modal-close" onclick="closeBillModal()">&times;</button>
+            </div>
+
+            <div class="form-row-2">
+                <div>
+                    <label>工作表</label>
+                    <select id="billSheetSelect" onchange="onBillSheetChange()"></select>
+                </div>
+                <div>
+                    <label>表头行</label>
+                    <select id="billHeaderRow" onchange="onBillHeaderRowChange()"></select>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="margin-bottom: 8px;">字段映射（可手动调整）</label>
+                <div id="billMapping" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 10px;"></div>
+            </div>
+
+            <div style="margin-bottom: 8px;display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin-bottom:0;">数据预览</label>
+                <span id="billPreviewCount" style="font-size:12px;color:#999;"></span>
+            </div>
+            <div class="table-wrapper" style="max-height:280px;">
+                <table>
+                    <thead id="billPreviewHead"></thead>
+                    <tbody id="billPreviewBody"></tbody>
+                </table>
+            </div>
+
+            <div style="color:#666;font-size:12px;margin-top:8px;" id="billStats"></div>
+
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="confirmBillParse()">✅ 确认解析</button>
+                <button class="btn btn-outline" onclick="closeBillModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 燃油附加费管理弹窗 -->
+    <div class="modal-overlay" id="fuelModal">
+        <div class="modal" style="max-width: 760px;">
+            <div class="modal-title">
+                <span>燃油附加费（每周更新）</span>
+                <button class="modal-close" onclick="closeFuelModal()">&times;</button>
+            </div>
+
+            <div id="fuelStatusBar" style="margin-bottom:10px;"></div>
+
+            <div class="form-row-2">
+                <div>
+                    <label>官网燃油费率页 URL</label>
+                    <input type="text" id="fuelUrlInput" placeholder="如：https://www.fedex.com/en-us/shipping/fuel-surcharge.html" style="width:100%;">
+                </div>
+                <div style="display:flex;align-items:flex-end;">
+                    <button class="btn btn-primary" id="fuelFetchBtn" onclick="fuelFetch()" style="white-space:nowrap;">🌐 从官网抓取</button>
+                </div>
+            </div>
+
+            <div id="fuelFetchResult" style="margin-top:8px;display:none;"></div>
+
+            <div style="margin-top:10px;border-top:1px solid #eee;padding-top:10px;">
+                <label>或从官网页面复制文本粘贴到此处，自动提取费率</label>
+                <textarea id="fuelPasteBox" rows="3" style="width:100%;margin:6px 0;" placeholder="粘贴包含百分比的内容，如：Effective date  Aug 24, 2026  29.75%"></textarea>
+                <button class="btn btn-outline" id="fuelPasteBtn" onclick="fuelExtractPaste()">解析粘贴文本</button>
+                <span id="fuelPasteResult" style="font-size:12px;margin-left:8px;"></span>
+            </div>
+
+            <div style="margin-top:12px;border-top:1px solid #eee;padding-top:10px;">
+                <label>记录本周费率</label>
+                <div class="form-row-2">
+                    <div>
+                        <label>生效日期（周）</label>
+                        <input type="date" id="fuelDateInput">
+                    </div>
+                    <div>
+                        <label>费率 (%)</label>
+                        <input type="number" id="fuelPercentInput" step="0.01" min="0" placeholder="如 12.50">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-success" onclick="fuelAdd()">✅ 保存本周费率</button>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin-bottom:8px;">历史记录</label>
+                <span id="fuelCount" style="font-size:12px;color:#999;"></span>
+            </div>
+            <div class="table-wrapper" style="max-height:260px;">
+                <table>
+                    <thead><tr><th>生效日</th><th>费率</th><th>来源</th><th></th></tr></thead>
+                    <tbody id="fuelHistoryBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+let templates = JSON.parse(localStorage.getItem('warehouseTemplates') || '[]');
+let billData = [];
+let checkResults = [];
+let editingIndex = -1;
+let importState = { wb: null, sheetNames: [], currentSheet: 0, headers: [], rows: [], mapping: {}, whFixed: '' };
+let channels = JSON.parse(localStorage.getItem('logisticsChannels') || '[]');
+let channelState = { name: '', note: '', zones: [], rows: [] };
+let surchargeState = { fileName: '', rows: [] };
+let billParseState = { fileName: '', isPdf: false, wb: null, sheetNames: [], currentSheet: 0, matrix: [], headers: [], rows: [], mapping: {} };
+let quoteState = { blocks: [] };
+let fuelRates = {};
+let fuelCtxChannel = '';
+
+const STANDARD_FIELDS = [
+    { key: 'serviceType', label: '服务类型/费用项目', required: false, keywords: ['服务类型', '费用类型', '费用项目', '费用名称', '项目', '类型', '服务', 'description', 'item', 'service', 'type', 'chargeitem'] },
+    { key: 'unitPrice', label: '单价', required: false, keywords: ['单价', 'price', 'unitprice', 'unit price', 'rate'] },
+    { key: 'unit', label: '计费单位', required: false, keywords: ['计费单位', '计量单位', '单位', 'uom', 'unitofmeasure'] },
+    { key: 'amount', label: '金额', required: true, keywords: ['金额', '费用', '总金额', '合计', 'amount', 'total', 'charge', 'amt', 'fee'] },
+    { key: 'weight', label: '计费重/重量', required: false, keywords: ['计费重', '计费重量', '重量', 'weight', '磅', 'chargeweight'] },
+    { key: 'zone', label: '分区', required: false, keywords: ['zone', '分区'] },
+    { key: 'tracking', label: '追踪号', required: false, keywords: ['追踪', 'tracking', '运单号', 'tn', 'waybill', '物流单号'] },
+    { key: 'ref', label: '参考号/订单号', required: false, keywords: ['参考号', '订单号', 'ref', 'po', 'order', 'reference', '客户单号'] },
+    { key: 'date', label: '日期', required: false, keywords: ['日期', 'date', '时间', '出库日期', '账单日期'] },
+    { key: 'note', label: '备注', required: false, keywords: ['备注', '说明', 'note', 'remark', 'comment'] }
+];
+
+const IMPORT_FIELDS = [
+    { key: 'provider', label: '服务商', required: true, desc: '必填' },
+    { key: 'warehouse', label: '仓点', required: true, desc: '必填', multi: true },
+    { key: 'serviceType', label: '服务类型', required: false, desc: '默认：其他' },
+    { key: 'unit', label: '计费单位', required: false, desc: '默认：件' },
+    { key: 'price', label: '单价 (USD)', required: true, desc: '必填', multi: true },
+    { key: 'minCharge', label: '最低收费 (USD)', required: false, desc: '默认：0' },
+    { key: 'note', label: '备注', required: false, desc: '选填' }
+];
+
+const COLUMN_KEYWORDS = {
+    provider: ['服务商', '供应商', '商家', '卖家', '货代', '物流公司', '客户', 'provider', 'company', 'merchant', 'seller', 'vender', 'vendor', 'fba'],
+    warehouse: ['仓点', '仓库', '海外仓', '库点', '库', '中仓', 'warehouse', 'wh', 'location', 'site', 'store', 'center', 'centre'],
+    serviceType: ['服务类型', '费用类型', '费用项目', '费用名称', '费用名', '服务项目', '服务', '类型', '项目', 'feetype', 'feeitem', 'servicetype', 'item', 'description'],
+    unit: ['计费单位', '计量单位', '计费方式', '单位', 'unit', 'uom', 'measure', 'billingunit'],
+    price: ['单价', '价格', '单价usd', '费率', '费用单价', '折合单价', 'rate', 'unitprice', 'unit price', 'price', 'fee'],
+    minCharge: ['最低收费', '最低消费', '最低费用', '最低单价', '起收', 'mincharge', 'min charge', 'min', 'minimum'],
+    note: ['备注', '说明', '附注', '备注说明', 'remark', 'note', 'notes', 'comment', 'memo']
+};
+
+function init() {
+    loadFuelRates();
+    renderTemplateList();
+    updateProviderSelects();
+    setupTemplateDropZone();
+    setupChannelDropZone();
+    renderChannelList();
+    updateChannelSelect();
+    setupSurchargeDropZone();
+    updateSurchargeChannelSelect();
+    setupQuoteDropZone();
+    renderFreightSelects();
+    if (freightTemplates.length === 0) freightNew(); else freightLoad(freightTemplates[0].id);
+}
+
+function switchTab(tab) {
+    const tabs = ['manage', 'add', 'channel', 'quote'];
+    document.querySelectorAll('.tab-bar .tab').forEach(t => {
+        const idx = [...t.parentElement.children].indexOf(t);
+        t.classList.toggle('active', tabs[idx] === tab);
+    });
+    document.getElementById('tab-manage').classList.toggle('hidden', tab !== 'manage');
+    document.getElementById('tab-add').classList.toggle('hidden', tab !== 'add');
+    document.getElementById('tab-channel').classList.toggle('hidden', tab !== 'channel');
+    document.getElementById('tab-quote').classList.toggle('hidden', tab !== 'quote');
+}
+
+function saveTemplate() {
+    const provider = document.getElementById('tplProvider').value.trim();
+    const warehouse = document.getElementById('tplWarehouse').value.trim();
+    const serviceType = document.getElementById('tplServiceType').value;
+    const unit = document.getElementById('tplUnit').value;
+    const price = parseFloat(document.getElementById('tplPrice').value);
+    const minCharge = parseFloat(document.getElementById('tplMinCharge').value) || 0;
+    const note = document.getElementById('tplNote').value.trim();
+
+    if (!provider || !warehouse || isNaN(price)) {
+        alert('请填写服务商、仓点和单价');
+        return;
+    }
+
+    templates.push({ provider, warehouse, serviceType, unit, price, minCharge, note, createdAt: new Date().toISOString() });
+    saveTemplates();
+    renderTemplateList();
+    updateProviderSelects();
+    clearTemplateForm();
+    switchTab('manage');
+}
+
+function clearTemplateForm() {
+    ['tplProvider', 'tplWarehouse', 'tplPrice', 'tplMinCharge', 'tplNote'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('tplServiceType').selectedIndex = 0;
+    document.getElementById('tplUnit').selectedIndex = 0;
+}
+
+function saveTemplates() {
+    localStorage.setItem('warehouseTemplates', JSON.stringify(templates));
+}
+
+function getProviders() { return [...new Set(templates.map(t => t.provider))]; }
+function getWarehouses(provider) {
+    return [...new Set(templates.filter(t => !provider || t.provider === provider).map(t => t.warehouse))];
+}
+
+function updateProviderSelects() {
+    const providers = getProviders();
+    const selects = ['filterProvider', 'checkProvider'];
+    selects.forEach(id => {
+        const sel = document.getElementById(id);
+        const val = sel.value;
+        const firstOpt = id === 'filterProvider' ? '<option value="">全部服务商</option>' : '<option value="">-- 请先选择 --</option>';
+        sel.innerHTML = firstOpt + providers.map(p => `<option value="${p}" ${p === val ? 'selected' : ''}>${p}</option>`).join('');
+    });
+    updateWarehouseSelects();
+}
+
+function updateWarehouseSelects() {
+    const provider = document.getElementById('checkProvider').value || document.getElementById('filterProvider').value;
+    const warehouses = getWarehouses(provider);
+    ['filterWarehouse', 'checkWarehouse'].forEach(id => {
+        const sel = document.getElementById(id);
+        const firstOpt = id === 'filterWarehouse' ? '<option value="">全部仓点</option>' : '<option value="">-- 请先选择 --</option>';
+        sel.innerHTML = firstOpt + warehouses.map(w => `<option value="${w}">${w}</option>`).join('');
+    });
+}
+
+document.getElementById('filterProvider')?.addEventListener('change', updateWarehouseSelects);
+document.getElementById('checkProvider')?.addEventListener('change', updateWarehouseSelects);
+
+const OFFICIAL_QUOTE_FILES = ['SMART-海外仓报价模板.json', '乐歌-海外仓报价模板.json', '乐舱-海外仓报价模板.json', '安美-海外仓报价模板.json', '实力派-海外仓报价模板.json'];
+
+function importOfficialTemplates() {
+    const btn = document.getElementById('officialTplBtn');
+    btn.disabled = true;
+    btn.textContent = '正在加载…';
+    Promise.all(OFFICIAL_QUOTE_FILES.map(f => fetch(f, { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error(f + ' HTTP ' + r.status); return r.json(); })
+        .catch(err => { console.warn('加载失败：' + f, err); return null; })))
+        .then(files => {
+            let tAdd = 0, cAdd = 0;
+            files.forEach(obj => {
+                if (!obj || !obj.provider) return;
+                (obj.channels || []).forEach(c => {
+                    const ci = channels.findIndex(x => x.name === c.name);
+                    if (ci >= 0) { channels[ci] = c; } else { channels.push(c); cAdd++; }
+                });
+                (obj.templates || []).forEach(tp => {
+                    const dup = templates.findIndex(x => x.provider === tp.provider && x.warehouse === tp.warehouse && x.serviceType === tp.serviceType && x.unit === tp.unit);
+                    if (dup >= 0) { templates[dup] = tp; } else { templates.push(tp); tAdd++; }
+                });
+            });
+            saveChannels();
+            saveTemplates();
+            renderChannelList();
+            updateChannelSelect();
+            updateSurchargeChannelSelect();
+            renderTemplateList();
+            updateProviderSelects();
+            btn.disabled = false;
+            btn.textContent = '📦 一键导入五仓海外仓报价模板（库内操作费）';
+            alert('导入完成：新增库内模板 ' + tAdd + ' 条（同名已覆盖），渠道 ' + cAdd + ' 个（同名已覆盖）');
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.textContent = '📦 一键导入五仓海外仓报价模板（库内操作费）';
+            alert('导入失败：' + err.message);
+        });
+}
+
+function templatePriceForWeight(weight, price) {
+    const tiers = price ? price.tiers : null;
+    if (tiers && Array.isArray(tiers) && tiers.length && isFinite(weight)) {
+        for (const tr of tiers) {
+            if ((tr.max === null || tr.max === undefined || weight <= tr.max) && (tr.min === null || tr.min === undefined || weight > tr.min)) {
+                return { price: tr.price, tier: `${tr.min === null ? 0 : tr.min}+~${tr.max === null ? '∞' : tr.max}磅 → $${tr.price}` };
+            }
+        }
+    }
+    return { price: price ? price.price : null, tier: null };
+}
+
+function renderTemplateList() {
+    const provider = document.getElementById('filterProvider').value;
+    const warehouse = document.getElementById('filterWarehouse').value;
+    let filtered = templates.filter(t =>
+        (!provider || t.provider === provider) && (!warehouse || t.warehouse === warehouse)
+    );
+
+    const container = document.getElementById('templateList');
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>暂无价格模板</p></div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map((t, _) => {
+        const idx = templates.indexOf(t);
+        return `<div class="template-item">
+            <div class="template-item-info">
+                <div class="template-item-name">${t.provider} / ${t.warehouse}</div>
+                <div class="template-item-meta">${t.serviceType} | ${t.unit} | ${t.tiers && t.tiers.length ? `重量阶梯 ${t.tiers.length} 档（${t.tiers[0].min}~${t.tiers[t.tiers.length - 1].max === null ? '∞' : t.tiers[t.tiers.length - 1].max}磅，首档 $${t.tiers[0].price.toFixed(2)}）` : '$' + t.price.toFixed(3)}${t.minCharge > 0 ? ' (最低$' + t.minCharge.toFixed(2) + ')' : ''} ${t.note ? '| ' + t.note : ''}</div>
+            </div>
+            <div style="display:flex;gap:4px;">
+                <button class="btn btn-sm btn-warning" onclick="openEditModal(${idx})">编辑</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteTemplate(${idx})">删除</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function deleteTemplate(idx) {
+    if (confirm('确认删除此模板？')) {
+        templates.splice(idx, 1);
+        saveTemplates();
+        renderTemplateList();
+        updateProviderSelects();
+    }
+}
+
+function openEditModal(idx) {
+    editingIndex = idx;
+    const t = templates[idx];
+    document.getElementById('editProvider').value = t.provider;
+    document.getElementById('editWarehouse').value = t.warehouse;
+    document.getElementById('editServiceType').value = t.serviceType;
+    document.getElementById('editUnit').value = t.unit;
+    document.getElementById('editPrice').value = t.price;
+    document.getElementById('editMinCharge').value = t.minCharge || 0;
+    document.getElementById('editNote').value = t.note || '';
+    document.getElementById('editModal').classList.add('active');
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').classList.remove('active');
+}
+
+function updateTemplate() {
+    templates[editingIndex] = {
+        provider: document.getElementById('editProvider').value.trim(),
+        warehouse: document.getElementById('editWarehouse').value.trim(),
+        serviceType: document.getElementById('editServiceType').value,
+        unit: document.getElementById('editUnit').value,
+        price: parseFloat(document.getElementById('editPrice').value),
+        minCharge: parseFloat(document.getElementById('editMinCharge').value) || 0,
+        tiers: templates[editingIndex].tiers || undefined,
+        note: document.getElementById('editNote').value.trim(),
+        createdAt: templates[editingIndex].createdAt
+    };
+    saveTemplates();
+    renderTemplateList();
+    updateProviderSelects();
+    closeEditModal();
+}
+
+function importTemplateFile(event) {
+    importTemplateFileObj(event.target.files[0]);
+    event.target.value = '';
+}
+
+function setupTemplateDropZone() {
+    const dz = document.getElementById('templateDropZone');
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = '#1a73e8'; dz.style.background = '#e8f0fe'; });
+    dz.addEventListener('dragleave', e => { dz.style.borderColor = '#ccc'; dz.style.background = '#fafafa'; });
+    dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.style.borderColor = '#ccc';
+        dz.style.background = '#fafafa';
+        if (e.dataTransfer.files.length) importTemplateFileObj(e.dataTransfer.files[0]);
+    });
+}
+
+function importTemplateFileObj(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const wb = XLSX.read(e.target.result, { type: 'array' });
+            importState = { wb, sheetNames: wb.SheetNames, currentSheet: 0, headers: [], rows: [], mapping: {} };
+            document.getElementById('importFileName').value = file.name;
+            openImportModal();
+        } catch (err) {
+            alert('文件解析失败，请确认是有效的 Excel/CSV 文件\n' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function normalizeHeader(h) {
+    return String(h === null || h === undefined ? '' : h)
+        .toLowerCase()
+        .replace(/[（(][^）)]*[）)]/g, '')
+        .replace(/[\s_\-\\/./:：（）()【】\[\]·]/g, '');
+}
+
+function scoreColumn(header, keywords) {
+    if (header === null || header === undefined || header === '') return 0;
+    const n = normalizeHeader(header);
+    if (keywords.some(k => normalizeHeader(k) === n)) return 3;
+    for (const k of keywords) {
+        const nk = normalizeHeader(k);
+        if (nk && (n.includes(nk) || nk.includes(n))) return 2;
+    }
+    return 0;
+}
+
+function autoMapColumns(headers) {
+    const used = new Set();
+    const mapping = {};
+    IMPORT_FIELDS.forEach(field => {
+        if (field.multi) {
+            const found = [];
+            headers.forEach((h, i) => {
+                if (used.has(i)) return;
+                if (scoreColumn(h, COLUMN_KEYWORDS[field.key]) >= 2) { found.push(i); used.add(i); }
+            });
+            mapping[field.key] = found;
+        } else {
+            let best = -1, bestScore = 0;
+            headers.forEach((h, i) => {
+                if (used.has(i)) return;
+                const s = scoreColumn(h, COLUMN_KEYWORDS[field.key]);
+                if (s > bestScore) { bestScore = s; best = i; }
+            });
+            mapping[field.key] = bestScore >= 2 ? best : -1;
+            if (best >= 0) used.add(best);
+        }
+    });
+    return mapping;
+}
+
+function isNumericCol(idx) {
+    const rows = importState.rows;
+    if (rows.length === 0) return false;
+    let nums = 0;
+    rows.forEach(r => {
+        const v = r[idx];
+        if (v !== undefined && v !== null && String(v).trim() !== '' && !isNaN(parseFloat(v))) nums++;
+    });
+    return nums >= rows.length * 0.6;
+}
+
+function loadImportSheet(index) {
+    importState.currentSheet = index;
+    const ws = importState.wb.Sheets[importState.sheetNames[index]];
+    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false });
+    const cleanRows = rows.filter((r, i) => i === 0 || r.some(c => String(c).trim() !== ''));
+    let headers = [];
+    if (cleanRows.length > 0) {
+        headers = cleanRows[0].map((h, i) => String(h).trim());
+        cleanRows[0] = headers;
+    }
+    importState.headers = headers;
+    importState.rows = cleanRows.slice(1);
+    importState.mapping = autoMapColumns(headers);
+    importState.whFixed = '';
+    renderImportModal();
+}
+
+function openImportModal() {
+    document.getElementById('importSheetSelect').innerHTML = importState.sheetNames.map((n, i) =>
+        `<option value="${i}" ${i === importState.currentSheet ? 'selected' : ''}>${n}</option>`
+    ).join('');
+    loadImportSheet(importState.currentSheet);
+    document.getElementById('importModal').classList.add('active');
+}
+
+function closeImportModal() {
+    document.getElementById('importModal').classList.remove('active');
+}
+
+function onImportSheetChange() {
+    loadImportSheet(parseInt(document.getElementById('importSheetSelect').value, 10));
+}
+
+function renderImportModal() {
+    const fieldOptions = (selIndex) => {
+        return ['<option value="-1">（不导入）</option>']
+            .concat(importState.headers.map((h, i) =>
+                `<option value="${i}" ${i === selIndex ? 'selected' : ''}>${h || '列' + (i + 1)}</option>`
+            )).join('');
+    };
+
+    document.getElementById('importMapping').innerHTML = IMPORT_FIELDS.map(f => {
+        if (f.multi) {
+            const sel = importState.mapping[f.key] || [];
+            const mapped = sel.length > 0;
+            const checks = importState.headers.map((h, i) =>
+                `<label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;padding:2px 0;">
+                    <input type="checkbox" data-col="${i}" ${sel.includes(i) ? 'checked' : ''} onchange="syncMultiMapping('${f.key}', this)">
+                    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;">${h || '列' + (i + 1)}</span>
+                    ${isNumericCol(i) ? '<span class="tag tag-info" style="font-size:10px;flex-shrink:0;">数值</span>' : ''}
+                </label>`).join('');
+            const whExtra = f.key === 'warehouse' ? `<div style="margin-top:4px;">
+                <input type="text" id="importWhFixed" value="${importState.whFixed || ''}" placeholder="表内无仓点列时填统一仓点，如：美国全仓" style="padding:6px 8px;font-size:12px;" oninput="onWhFixedInput(this)">
+                <div class="map-hint">填此项则忽略上方勾选，所有行仓点取该值</div>
+            </div>` : '';
+            return `<div class="map-item ${mapped ? 'mapped' : ''}" data-key="${f.key}">
+                <label>${f.label}${f.required ? '<span class="req-mark"> *</span>' : ''}</label>
+                <div style="max-height:120px;overflow-y:auto;background:#fff;border:1px solid #eee;border-radius:6px;padding:6px 8px;">${checks}</div>
+                ${whExtra}
+                <div class="map-hint">多选，导入时按 价格列×仓点列 摊平${mapped ? `（已选 ${sel.length} 列）` : ''}</div>
+            </div>`;
+        }
+        const mappingIdx = importState.mapping[f.key];
+        const mapped = mappingIdx >= 0;
+        return `<div class="map-item ${mapped ? 'mapped' : ''}">
+            <label>${f.label}${f.required ? '<span class="req-mark"> *</span>' : ''}</label>
+            <select data-key="${f.key}" onchange="onMappingChange(this)">${fieldOptions(mappingIdx)}</select>
+            <div class="map-hint">${mapped ? '已自动识别' : f.desc + '（请手动选择）'}</div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('importPreviewHead').innerHTML =
+        '<tr>' + importState.headers.map((h, i) => `<th>${h || '列' + (i + 1)}</th>`).join('') + '</tr>';
+
+    const preview = importState.rows.slice(0, 8);
+    document.getElementById('importPreviewBody').innerHTML = preview.map(row =>
+        '<tr>' + importState.headers.map((_, i) => `<td>${row[i] !== undefined ? row[i] : ''}</td>`).join('') + '</tr>'
+    ).join('');
+    document.getElementById('importPreviewCount').textContent =
+        importState.rows.length === 0 ? '无数据行' : `前 ${Math.min(8, importState.rows.length)} / ${importState.rows.length} 行预览`;
+
+    updateImportStats();
+}
+
+function onMappingChange(el) {
+    const idx = parseInt(el.value, 10);
+    const key = el.getAttribute('data-key');
+    importState.mapping[key] = idx;
+    const item = el.closest('.map-item');
+    item.classList.remove('mapped');
+    if (idx >= 0) item.classList.add('mapped');
+    const hint = item.querySelector('.map-hint');
+    const f = IMPORT_FIELDS.find(x => x.key === key);
+    hint.textContent = idx >= 0 ? '已手动选择' : f.desc + '（请手动选择）';
+    updateImportStats();
+}
+
+function syncMultiMapping(key, el) {
+    const item = el.closest('.map-item');
+    importState.mapping[key] = [...item.querySelectorAll('input[type=checkbox]:checked')].map(cb => parseInt(cb.dataset.col, 10));
+    const mapped = importState.mapping[key].length > 0;
+    item.classList.toggle('mapped', mapped);
+    const hint = item.querySelector('.map-hint');
+    hint.textContent = mapped ? `多选，导入时按 价格列×仓点列 摊平（已选 ${importState.mapping[key].length} 列）` : '多选，导入时按 价格列×仓点列 摊平';
+    updateImportStats();
+}
+
+function onWhFixedInput(el) {
+    importState.whFixed = el.value;
+    updateImportStats();
+}
+
+function expandedField(m, key) {
+    const v = m[key] === undefined ? [] : (Array.isArray(m[key]) ? m[key] : [m[key]]);
+    return v.filter(i => i >= 0);
+}
+
+function updateImportStats() {
+    const m = importState.mapping;
+    const missing = IMPORT_FIELDS.filter(f => f.required && expandedField(m, f.key).length === 0);
+    const priceCols = expandedField(m, 'price');
+    const whCols = expandedField(m, 'warehouse');
+    const whFixed = (importState.whFixed || '').trim();
+
+    let total = 0, invalid = 0;
+    importState.rows.forEach(r => {
+        const prices = priceCols.filter(i => parseFloat(r[i]) > 0);
+        const warehouses = whFixed ? [whFixed] : whCols.filter(i => String(r[i] || '').trim());
+        if (prices.length > 0 && warehouses.length > 0) total += warehouses.length * prices.length;
+        else invalid++;
+    });
+
+    document.getElementById('importValidCount').innerHTML = `摊平后预计导入 <b style="color:#34a853;">${total}</b> 条`;
+    document.getElementById('importInvalidCount').innerHTML = `<span style="color:${invalid > 0 ? '#ea4335' : '#999'};">${invalid} 行无效（缺仓点或价格≤0）</span>` +
+        (missing.length ? ` · <span style="color:#ea4335;">请补充必填字段映射：${missing.map(f => f.label).join('、')}</span>` : '');
+}
+
+function confirmImport() {
+    const m = importState.mapping;
+    const missing = IMPORT_FIELDS.filter(f => f.required && expandedField(m, f.key).length === 0);
+    if (missing.length) {
+        alert('请先为必填字段设置映射：' + missing.map(f => f.label).join('、'));
+        return;
+    }
+
+    const priceCols = expandedField(m, 'price');
+    const whCols = expandedField(m, 'warehouse');
+    const whFixed = (importState.whFixed || '').trim();
+    let success = 0, skippedInvalid = 0, skippedDuplicate = 0;
+    const seen = new Set(templates.map(t => `${t.provider}|${t.warehouse}|${t.serviceType}|${t.unit}|${t.price}`));
+
+    importState.rows.forEach(r => {
+        const provider = String(r[m.provider] || '').trim();
+        if (!provider) { skippedInvalid++; return; }
+
+        const serviceType = m.serviceType >= 0 ? String(r[m.serviceType] || '').trim() : '';
+        const unit = m.unit >= 0 ? String(r[m.unit] || '').trim() : '';
+        const minCharge = m.minCharge >= 0 ? (parseFloat(r[m.minCharge]) || 0) : 0;
+        const note = m.note >= 0 ? String(r[m.note] || '').trim() : '';
+
+        const warehouses = whFixed ? [whFixed] : whCols.map(i => String(r[i] || '').trim()).filter(Boolean);
+        const pricesPerRow = priceCols.map(i => ({ col: i, value: parseFloat(r[i]) }));
+
+        let rowHasData = false;
+        const multiPrice = priceCols.length > 1;
+        pricesPerRow.forEach(p => {
+            if (isNaN(p.value) || p.value <= 0) return;
+            const priceLabel = importState.headers[p.col] || '';
+            warehouses.forEach(warehouse => {
+                rowHasData = true;
+                const n = multiPrice ? (priceLabel ? '[' + priceLabel + '] ' : '') + note : note;
+                const key = `${provider}|${warehouse}|${serviceType || '其他'}|${unit || '件'}|${p.value}`;
+                if (seen.has(key)) { skippedDuplicate++; return; }
+                seen.add(key);
+                templates.push({ provider, warehouse, serviceType: serviceType || '其他', unit: unit || '件', price: p.value, minCharge, note: n, createdAt: new Date().toISOString() });
+                success++;
+            });
+        });
+
+        if (!rowHasData) skippedInvalid++;
+    });
+
+    saveTemplates();
+    renderTemplateList();
+    updateProviderSelects();
+    closeImportModal();
+    alert(`导入完成\n✅ 成功导入：${success} 条\n⚠️ 跳过无效：${skippedInvalid} 行\n🔁 跳过重复：${skippedDuplicate} 条`);
+}
+
+function setupChannelDropZone() {
+    const dz = document.getElementById('channelDropZone');
+    if (!dz) return;
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = '#1a73e8'; dz.style.background = '#e8f0fe'; });
+    dz.addEventListener('dragleave', e => { dz.style.borderColor = '#ccc'; dz.style.background = '#fafafa'; });
+    dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.style.borderColor = '#ccc';
+        dz.style.background = '#fafafa';
+        if (e.dataTransfer.files.length) importChannelFileObj(e.dataTransfer.files[0]);
+    });
+}
+
+function importChannelFile(event) {
+    importChannelFileObj(event.target.files[0]);
+    event.target.value = '';
+}
+
+function importChannelFileObj(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const wb = XLSX.read(e.target.result, { type: 'array' });
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const matrix = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true });
+
+            let startRow = -1;
+            for (let i = 0; i < Math.min(matrix.length, 60); i++) {
+                const row = matrix[i] || [];
+                const firstCell = String(row[0] || '').trim();
+                if (firstCell.includes('磅') || firstCell.includes('重') || /^weight.*lb$/i.test(firstCell) || firstCell.toLowerCase().includes('weight')) {
+                    startRow = i;
+                    break;
+                }
+            }
+            if (startRow < 0) {
+                const head = matrix[0] || [];
+                if (String(head[0] || '').includes('磅') || String(head[0] || '').toLowerCase().includes('weight') || String(head[0] || '').includes('重量')) startRow = 0;
+            }
+            if (startRow < 0) { alert('未识别到价表结构：请确认第一列为"计费重(磅)"，后续列为分区'); return; }
+
+            const headers = (matrix[startRow] || []).map(h => String(h || '').trim());
+            const zones = [];
+            for (let i = 1; i < headers.length; i++) {
+                if (headers[i]) zones.push(headers[i]);
+            }
+            if (zones.length === 0) { alert('未识别到分区列（Zone2/Zone3...）'); return; }
+
+            const rows = [];
+            for (let i = startRow + 1; i < matrix.length; i++) {
+                const row = matrix[i];
+                if (!row) continue;
+                const w = String(row[0] || '').trim();
+                if (w === '') continue;
+                const weight = parseFloat(w);
+                if (isNaN(weight)) continue;
+                const prices = zones.map((_, j) => {
+                    const v = parseFloat(row[j + 1]);
+                    return isNaN(v) ? null : v;
+                });
+                rows.push({ weight, prices });
+            }
+            if (rows.length === 0) { alert('未解析到任何计费重行'); return; }
+
+            channelState = { zones, rows };
+            document.getElementById('channelName').value = file.name.replace(/\.(xlsx|xls|csv)$/i, '');
+            document.getElementById('channelNote').value = '';
+            renderChannelPreview();
+            document.getElementById('channelModal').classList.add('active');
+        } catch (err) {
+            alert('渠道文件解析失败：' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function renderChannelPreview() {
+    document.getElementById('channelPreviewHead').innerHTML =
+        '<tr><th style="min-width:80px;">计费重(磅)</th>' + channelState.zones.map(z => `<th>${z}</th>`).join('') + '</tr>';
+
+    const tbody = document.getElementById('channelPreviewBody');
+    tbody.innerHTML = channelState.rows.slice(0, 6).map(r =>
+        '<tr><td>' + r.weight + '</td>' + r.prices.map(p => `<td>${p !== null ? p : '-'}</td>`).join('') + '</tr>'
+    ).join('') + (channelState.rows.length > 6 ? `<tr><td colspan="${channelState.zones.length + 1}" style="color:#999;text-align:center;">… 共 ${channelState.rows.length} 行未全部显示</td></tr>` : '');
+
+    document.getElementById('channelPreviewCount').textContent =
+        `${channelState.zones.length} 个分区 × ${channelState.rows.length} 个计费重档位`;
+
+    let freeRows = 0;
+    channelState.rows.forEach(r => r.prices.forEach(p => { if (p === null) freeRows++; }));
+    document.getElementById('channelStats').innerHTML =
+        `首行重量 <b>${channelState.rows[0].weight}</b>，末行 <b>${channelState.rows[channelState.rows.length - 1].weight}</b>；
+        分区：<b>${channelState.zones.join(' / ')}</b>；空缺价格 <b style="color:${freeRows > 0 ? '#fbbc04' : '#34a853'};">${freeRows}</b> 个`;
+}
+
+function closeChannelModal() {
+    document.getElementById('channelModal').classList.remove('active');
+}
+
+function confirmChannelImport() {
+    const name = document.getElementById('channelName').value.trim();
+    const note = document.getElementById('channelNote').value.trim();
+    if (!name) { alert('请填写渠道名称'); return; }
+    if (channels.some(c => c.name === name)) {
+        if (!confirm(`渠道「${name}」已存在，确认覆盖？`)) return;
+        channels = channels.filter(c => c.name !== name);
+    }
+    channels.push({ name, note, zones: channelState.zones, rows: channelState.rows, createdAt: new Date().toISOString() });
+    saveChannels();
+    renderChannelList();
+    updateChannelSelect();
+    closeChannelModal();
+    alert(`渠道「${name}」导入成功：${channelState.zones.length} 分区 × ${channelState.rows.length} 档位`);
+}
+
+function saveChannels() {
+    localStorage.setItem('logisticsChannels', JSON.stringify(channels));
+}
+
+function importOfficialChannels() {
+    function doImport(list) {
+        const names = list.map(c => c.name);
+        const dupCount = names.filter(n => channels.some(c => c.name === n)).length;
+        const msg = '将导入 <b>' + list.length + '</b> 个正式尾程渠道（来自 SMART/乐歌/乐舱/安美/实力派 报价表）：\n\n' + names.join('、') + '\n\n其中 ' + dupCount + ' 个与现有渠道同名，将被覆盖。';
+        if (!confirm(msg)) return;
+        let add = 0, repl = 0;
+        list.forEach(c => {
+            const ci = channels.findIndex(x => x.name === c.name);
+            if (ci >= 0) { channels[ci] = JSON.parse(JSON.stringify(c)); repl++; }
+            else { channels.push(JSON.parse(JSON.stringify(c))); add++; }
+        });
+        saveChannels();
+        renderChannelList();
+        updateChannelSelect();
+        updateSurchargeChannelSelect();
+        alert('正式价表导入完成：新增 ' + add + ' 个渠道，覆盖 ' + repl + ' 个');
+    }
+    fetch('official-channels.json', { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(list => { if (!Array.isArray(list) || list.length === 0) throw new Error('数据为空'); doImport(list); })
+        .catch(err => { alert('加载正式价表失败：' + err.message + '\n请确认项目目录存在 official-channels.json'); });
+}
+
+function renderChannelList() {
+    const el = document.getElementById('channelList');
+    if (channels.length === 0) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>暂无物流渠道</p></div>';
+        return;
+    }
+    el.innerHTML = channels.map((c, idx) => {
+        const fuel = latestFuelRecord(c.name);
+        const fuelTxt = fuel
+            ? ` · 燃油 <b style="color:#e8710a;">${fuel.percent}%</b><span style="color:#999;">（${fuel.date} 起）</span>`
+            : '';
+        return `
+        <div class="template-item">
+            <div class="template-item-info">
+                <div class="template-item-name">${c.name}</div>
+                <div class="template-item-meta">
+                    ${c.zones.length} 分区 × ${c.rows.length} 档位 · 重量 ${c.rows[0].weight}-${c.rows[c.rows.length - 1].weight} 磅
+                    ${c.surcharges && c.surcharges.length ? ` · 附加费 <b style="color:#1a73e8;">${c.surcharges.length}</b> 条` : ''}
+                    ${fuelTxt}
+                    ${c.note ? ' | ' + c.note : ''}
+                </div>
+            </div>
+            <div style="display:flex;gap:4px;">
+                <button class="btn btn-sm btn-primary" onclick="openSurchargeFor(${idx})">附加费</button>
+                <button class="btn btn-sm" style="border-color:#e8710a;color:#e8710a;" onclick="openFuelModal(${idx})">燃油</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteChannel(${idx})">删除</button>
+            </div>
+        </div>`;
+    }).join('');
+    updateSurchargeChannelSelect();
+}
+
+function openSurchargeFor(idx) {
+    const ch = channels[idx];
+    const ctx = document.getElementById('surchargeChannelCtx');
+    if (ctx.options.length > 0) {
+        for (let i = 0; i < ctx.options.length; i++) {
+            if (ctx.options[i].value === ch.name) { ctx.selectedIndex = i; break; }
+        }
+    }
+    document.getElementById('surchargeFileInput').click();
+}
+
+function deleteChannel(idx) {
+    if (confirm(`确认删除渠道「${channels[idx].name}」？`)) {
+        channels.splice(idx, 1);
+        saveChannels();
+        renderChannelList();
+        updateChannelSelect();
+    }
+}
+
+function updateChannelSelect() {
+    const sel = document.getElementById('checkChannel');
+    const val = sel.value;
+    sel.innerHTML = '<option value="">不使用渠道价表</option>' +
+        channels.map(c => `<option value="${c.name}" ${c.name === val ? 'selected' : ''}>${c.name}</option>`).join('');
+    toggleChannelCols();
+}
+
+function toggleChannelCols() {
+    const using = document.getElementById('checkChannel').value !== '';
+    document.getElementById('billWeightCol').disabled = !using;
+    document.getElementById('billZoneCol').disabled = !using;
+}
+
+function setBillColumnOptions() {
+    const headers = billData.length > 0 ? Object.keys(billData[0]) : [];
+    const weightSel = document.getElementById('billWeightCol');
+    const zoneSel = document.getElementById('billZoneCol');
+    const labelOf = (h) => {
+        const f = STANDARD_FIELDS.find(x => x.key === h);
+        return f ? `${f.label}（${h}）` : h;
+    };
+
+    weightSel.innerHTML = '<option value="-1">（未选择）</option>' +
+        headers.map((h, i) => `<option value="${i}">${labelOf(h)}</option>`).join('');
+    zoneSel.innerHTML = '<option value="-1">（未选择）</option>' +
+        headers.map((h, i) => `<option value="${i}">${labelOf(h)}</option>`).join('');
+
+    const pick = (keywords, fallback) => {
+        let best = -1;
+        headers.forEach((h, idx) => {
+            const s = scoreColumn(h, keywords);
+            if (s > (best >= 0 ? scoreColumn(headers[best], keywords) : 0)) best = idx;
+        });
+        return best >= 0 ? best : fallback;
+    };
+
+    const wIdx = pick(['计费重', '重量', 'weight', '磅', 'lb', 'chargeweight'], -1);
+    const zIdx = pick(['zone', '区'], -1);
+    if (wIdx >= 0) weightSel.value = String(wIdx);
+    if (zIdx >= 0) zoneSel.value = String(zIdx);
+}
+
+function lookupChannelPrice(channelName, weight, zoneText) {
+    const ch = channels.find(c => c.name === channelName);
+    if (!ch) return null;
+    const zoneNum = parseInt(String(zoneText).replace(/[^0-9]/g, ''), 10);
+    if (isNaN(zoneNum)) return null;
+    let zi = ch.zones.findIndex(z => parseInt(String(z).replace(/[^0-9]/g, ''), 10) === zoneNum);
+    if (zi < 0) zi = ch.zones.findIndex(z => String(z).toLowerCase().includes(String(zoneText).toLowerCase()));
+    if (zi < 0) return null;
+
+    const w = Math.ceil(weight);
+    let ri = ch.rows.findIndex(r => r.weight === w);
+    if (ri < 0) ri = ch.rows.findIndex(r => r.weight > w);
+    if (ri < 0) ri = ch.rows.length - 1;
+    return { price: ch.rows[ri].prices[zi], zone: ch.zones[zi], weight: ch.rows[ri].weight, overRange: w > ch.rows[ch.rows.length - 1].weight };
+}
+
+function setupSurchargeDropZone() {
+    const dz = document.getElementById('surchargeDropZone');
+    if (!dz) return;
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = '#1a73e8'; dz.style.background = '#e8f0fe'; });
+    dz.addEventListener('dragleave', e => { dz.style.borderColor = '#ccc'; dz.style.background = '#fafafa'; });
+    dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.style.borderColor = '#ccc';
+        dz.style.background = '#fafafa';
+        if (e.dataTransfer.files.length) importSurchargeFileObj(e.dataTransfer.files[0]);
+    });
+}
+
+function importSurchargeFile(event) {
+    importSurchargeFileObj(event.target.files[0]);
+    event.target.value = '';
+}
+
+function zoneGroupIndex(zoneNum) {
+    if (zoneNum <= 2) return 0;
+    if (zoneNum <= 4) return 1;
+    if (zoneNum <= 6) return 2;
+    return 3;
+}
+
+function importSurchargeFileObj(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const wb = XLSX.read(e.target.result, { type: 'array' });
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const matrix = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true });
+
+            let headRow = -1;
+            for (let i = 0; i < matrix.length; i++) {
+                if ((matrix[i] || []).some(c => /zone\s*2/i.test(String(c || '')))) { headRow = i; break; }
+            }
+            if (headRow < 0) { alert('未找到 Zone2 表头行'); return; }
+            const headers = (matrix[headRow] || []).map(h => String(h || '').trim());
+
+            const zoneCols = [];
+            headers.forEach((h, i) => { if (/zones?\s*\d/i.test(h)) zoneCols.push(i); });
+            if (zoneCols.length === 0) { alert('未识别到分区组价格列（Zone2/Zones 3-4...）'); return; }
+
+            let nameCol = -1, condCol = -1, noteCol = -1;
+            headers.forEach((h, i) => {
+                if (!zoneCols.includes(i)) {
+                    if (nameCol < 0 && /(名称|surcharge|附加费|name)/i.test(h)) nameCol = i;
+                    else if (nameCol >= 0 && condCol < 0 && /(条件|condition|备注说明|规则)/i.test(h)) condCol = i;
+                }
+            });
+            if (nameCol < 0) nameCol = zoneCols[0] > 0 ? 0 : 1;
+            headers.forEach((h, i) => { if (!zoneCols.includes(i) && i !== nameCol && i !== condCol && /(备注|说明|note|remark)/i.test(h)) noteCol = i; });
+
+            const rows = [];
+            let lastName = '', lastCond = '', lastNote = '';
+            for (let i = headRow + 1; i < matrix.length; i++) {
+                const row = matrix[i] || [];
+                let name = String(row[nameCol] || '').trim();
+                let cond = condCol >= 0 ? String(row[condCol] || '').trim() : '';
+                let note = noteCol >= 0 ? String(row[noteCol] || '').trim() : '';
+                if (name) lastName = name; else name = lastName;
+                if (cond) lastCond = cond; else cond = lastCond;
+                if (note) lastNote = note; else note = lastNote;
+                if (!name) continue;
+
+                const prices = zoneCols.map(c => {
+                    const v = row[c];
+                    if (v === undefined || v === null || String(v).trim() === '') return null;
+                    const p = parseFloat(String(v).replace(/[^\d.]/g, ''));
+                    return isNaN(p) ? null : p;
+                });
+                if (prices.every(p => p === null)) continue;
+                rows.push({ name, cond, prices, note });
+            }
+            if (rows.length === 0) { alert('未解析到有效附加费行'); return; }
+
+            surchargeState = { fileName: file.name, rows, zoneLabels: zoneCols.map(i => headers[i]) };
+            document.getElementById('surchargeFileName').value = file.name;
+            const ctxVal = document.getElementById('surchargeChannelCtx').value;
+            if (ctxVal) document.getElementById('surchargeChannelModal').value = ctxVal;
+            renderSurchargePreview();
+            document.getElementById('surchargeModal').classList.add('active');
+        } catch (err) {
+            alert('附加费文件解析失败：' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function renderSurchargePreview() {
+    document.getElementById('surchargePreviewHead').innerHTML =
+        '<tr><th>附加费项</th><th>产生条件</th>' + surchargeState.zoneLabels.map(h => `<th>${h}</th>`).join('') + '<th>备注</th></tr>';
+
+    document.getElementById('surchargePreviewBody').innerHTML = surchargeState.rows.slice(0, 8).map(r =>
+        '<tr><td>' + r.name + '</td><td style="font-size:12px;color:#555;">' + r.cond + '</td>' +
+        r.prices.map(p => `<td>${p !== null ? p : '-'}</td>`).join('') +
+        `<td style="font-size:12px;color:#888;max-width:180px;">${r.note}</td></tr>`
+    ).join('') + (surchargeState.rows.length > 8 ? `<tr><td colspan="${surchargeState.zoneLabels.length + 3}" style="color:#999;text-align:center;">… 共 ${surchargeState.rows.length} 项</td></tr>` : '');
+
+    document.getElementById('surchargePreviewCount').textContent =
+        `已解析 ${surchargeState.rows.length} 个附加费条目（${surchargeState.zoneLabels.length} 分区组）`;
+
+    const withPrice = surchargeState.rows.filter(r => r.prices.some(p => p !== null)).length;
+    const flat = surchargeState.rows.filter(r => r.prices.some(p => p !== null) && r.prices.filter(p => p !== null).length === 1).length;
+    document.getElementById('surchargeStats').innerHTML =
+        `带价格条目 <b style="color:#34a853;">${withPrice}</b> 个；其中仅单一价（不分区组）<b>${flat}</b> 个；燃油等按费率计费项将提示人工核对`;
+}
+
+function closeSurchargeModal() {
+    document.getElementById('surchargeModal').classList.remove('active');
+}
+
+function confirmSurchargeImport() {
+    const sel = document.getElementById('surchargeChannelModal');
+    const channelName = sel.value;
+    if (!channelName) { alert('请选择绑定的渠道'); return; }
+    const ch = channels.find(c => c.name === channelName);
+    if (ch.surcharges && ch.surcharges.length) {
+        if (!confirm(`渠道「${channelName}」已有 ${ch.surcharges.length} 条附加费，确认覆盖？`)) return;
+    }
+    ch.surcharges = surchargeState.rows;
+    saveChannels();
+    renderChannelList();
+    closeSurchargeModal();
+    alert(`「${channelName}」附加费导入成功：${surchargeState.rows.length} 条`);
+}
+
+function updateSurchargeChannelSelect() {
+    const opts = channels.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    const ctx = document.getElementById('surchargeChannelCtx');
+    const modal = document.getElementById('surchargeChannelModal');
+    ctx.innerHTML = '<option value="">-- 请先导入渠道 --</option>' + opts;
+    modal.innerHTML = '<option value="">（必选）</option>' + opts;
+}
+
+/* ===== 燃油附加费（每周更新记录 + 官网抓取） ===== */
+function saveFuelRates() {
+    localStorage.setItem('fuelRates', JSON.stringify(fuelRates));
+}
+
+function loadFuelRates() {
+    try { fuelRates = JSON.parse(localStorage.getItem('fuelRates')) || {}; } catch (e) { fuelRates = {}; }
+}
+
+function latestFuelRecord(channelName) {
+    const recs = (fuelRates[channelName] || {}).records || [];
+    if (recs.length === 0) return null;
+    return recs.slice().sort((a, b) => (b.date > a.date ? 1 : -1))[0];
+}
+
+function latestFuelPercent(channelName) {
+    const r = latestFuelRecord(channelName);
+    return r ? r.percent : null;
+}
+
+function openFuelModal(idx) {
+    const ch = channels[idx];
+    if (!ch) return;
+    fuelCtxChannel = ch.name;
+    const data = fuelRates[fuelCtxChannel] ||= { url: '', records: [] };
+    document.getElementById('fuelUrlInput').value = data.url || '';
+    const today = new Date();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+    document.getElementById('fuelDateInput').value = monday.toISOString().slice(0, 10);
+    document.getElementById('fuelPercentInput').value = '';
+    document.getElementById('fuelPercentInput').placeholder = latestFuelRecord(fuelCtxChannel) ? `上周 ${latestFuelRecord(fuelCtxChannel).percent}` : '如 12.50';
+    document.getElementById('fuelFetchResult').style.display = 'none';
+    document.getElementById('fuelPasteBox').value = '';
+    document.getElementById('fuelPasteResult').textContent = '';
+    document.getElementById('fuelModal').classList.add('active');
+    renderFuelHistory();
+}
+
+function closeFuelModal() {
+    document.getElementById('fuelModal').classList.remove('active');
+}
+
+function renderFuelHistory() {
+    const data = fuelRates[fuelCtxChannel] ||= { url: '', records: [] };
+    const recs = data.records.slice().sort((a, b) => (b.date > a.date ? 1 : -1));
+    document.getElementById('fuelHistoryBody').innerHTML = recs.length === 0
+        ? '<tr><td colspan="4" style="color:#999;text-align:center;">暂无记录，抓取官网或手动录入本周费率</td></tr>'
+        : recs.map((r, i) => {
+            const srcLabel = r.src === 'web' ? '官网抓取' : '手动录入';
+            const srcColor = r.src === 'web' ? '#188038' : '#666';
+            return `<tr>
+                <td>${r.date}</td>
+                <td><b style="color:#e8710a;">${r.percent}%</b></td>
+                <td style="color:${srcColor};">${srcLabel}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="fuelDelete(${i})">删除</button></td>
+            </tr>`;
+        }).join('');
+    document.getElementById('fuelCount').textContent = `共 ${recs.length} 周`;
+
+    const latest = recs[0];
+    const bar = document.getElementById('fuelStatusBar');
+    if (!latest) {
+        bar.innerHTML = '<div style="background:#fef3cd;border:1px solid #f0e3af;border-radius:6px;padding:8px 10px;font-size:12px;">⚠️ 尚未记录燃油费率，请先在下方录入本周费率，或抓取官网。</div>';
+        return;
+    }
+    const days = (new Date().setHours(0, 0, 0, 0) - new Date(latest.date).setHours(0, 0, 0, 0)) / 86400000;
+    let msg;
+    if (days <= 7) msg = `<span style="color:#188038;">✅ 最新 ${latest.percent}% 于 ${latest.date} 生效（${days} 天前），本周可用</span>`;
+    else if (days <= 14) msg = `<span style="color:#e8710a;">⚠️ 最新 ${latest.percent}% 已是 ${days} 天前，建议更新本周费率</span>`;
+    else msg = `<span style="color:#ea4335;">🔔 上次更新已于 ${latest.date}（${days} 天前），请立即更新本周官网费率</span>`;
+    bar.innerHTML = `<div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:8px 10px;font-size:12px;">${msg}<br><span style="color:#999;">本周最近 8 期：${recs.slice(0, 8).map(r => r.percent + '%').join(' → ')}</span></div>`;
+}
+
+function fuelDelete(sortedIdx) {
+    const data = fuelRates[fuelCtxChannel] ||= { url: '', records: [] };
+    const recs = data.records.slice().sort((a, b) => (b.date > a.date ? 1 : -1));
+    const orig = recs[sortedIdx];
+    data.records = data.records.filter(r => !(r.date === orig.date && r.percent === orig.percent));
+    saveFuelRates();
+    renderFuelHistory();
+    renderChannelList();
+}
+
+function fuelAdd() {
+    const percent = parseFloat(document.getElementById('fuelPercentInput').value);
+    const date = document.getElementById('fuelDateInput').value;
+    if (isNaN(percent) || percent <= 0) { alert('请填写有效的费率百分比'); return; }
+    if (!date) { alert('请选择生效日期'); return; }
+    const data = fuelRates[fuelCtxChannel] ||= { url: '', records: [] };
+    const dupe = data.records.find(r => r.date === date);
+    if (dupe) {
+        if (!confirm(`${fuelCtxChannel} 已存在 ${date} 的记录（${dupe.percent}%），覆盖为 ${percent}%？`)) return;
+        dupe.percent = percent;
+        dupe.src = dupe.src === 'web' ? 'web' : 'manual';
+    } else {
+        data.records.push({ date, percent, src: 'manual' });
+    }
+    saveFuelRates();
+    renderFuelHistory();
+    renderChannelList();
+    document.getElementById('fuelPercentInput').value = '';
+    document.getElementById('fuelPercentInput').placeholder = `上周 ${percent}`;
+}
+
+function fuelFetch() {
+    const ch = channels.find(c => c.name === fuelCtxChannel);
+    const url = document.getElementById('fuelUrlInput').value.trim();
+    if (!url) { alert('请先填写官网燃油费率页 URL'); return; }
+    (fuelRates[fuelCtxChannel] ||= { url: '', records: [] }).url = url;
+    saveFuelRates();
+    const btn = document.getElementById('fuelFetchBtn');
+    btn.disabled = true;
+    btn.textContent = '⌛ 抓取中…';
+    document.getElementById('fuelFetchResult').style.display = 'none';
+    fetch('/api/fuel?url=' + encodeURIComponent(url))
+        .then(r => r.json())
+        .then(d => {
+            btn.disabled = false;
+            btn.textContent = '🌐 从官网抓取';
+            const box = document.getElementById('fuelFetchResult');
+            box.style.display = 'block';
+            if (!d.ok) {
+                box.innerHTML = `<div style="background:#fce8e6;border:1px solid #f5c6c6;border-radius:6px;padding:8px;font-size:12px;">${d.error || '抓取失败'}</div>
+                    <div style="font-size:12px;color:#999;margin-top:6px;">提示：请到官网燃油页 → 选中费率内容复制 → 粘贴到下方文本框，用「解析粘贴文本」录入。</div>`;
+                return;
+            }
+            const title = d.title ? `<div style="font-size:12px;color:#555;margin-bottom:4px;">${d.title}</div>` : '';
+            const today = new Date().toISOString().slice(0, 10);
+            let curHtml = '';
+            if (d.current) {
+                const cu = d.current;
+                const chip = (label, value, onClick) => value === null || value === undefined ? '' :
+                    `<span class="quote-badge" style="border:1px solid #188038;color:#188038;cursor:pointer;background:#f0f9f0;font-weight:bold;" onclick="${onClick}">${label} ${value}${typeof value === 'number' && cu.expressFreight !== value ? '%' : ''}</span>`;
+                curHtml = `<div style="background:#eef6ee;border:1px solid #cfead0;border-radius:6px;padding:8px 10px;margin-bottom:8px;">
+                    <div style="font-size:12px;color:#188038;font-weight:bold;margin-bottom:4px;">📅 本周生效（${cu.period}）— 点击录入</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                        ${cu.ground !== null ? `<span class="quote-badge" style="border:1px solid #188038;color:#188038;cursor:pointer;background:#f0f9f0;font-weight:bold;" onclick="pickFuelPercent(${cu.ground})">Ground ${cu.ground}%</span>` : ''}
+                        ${cu.package !== null ? `<span class="quote-badge" style="border:1px solid #188038;color:#188038;cursor:pointer;background:#f0f9f0;font-weight:bold;" onclick="pickFuelPercent(${cu.package})">Package ${cu.package}%</span>` : ''}
+                        ${cu.expressFreight !== null ? `<span class="quote-badge" style="border:1px solid #999;color:#777;background:#fafafa;" title="按磅计，请按账单重量换算后手动填写来自百分比">Express Freight $${cu.expressFreight}/磅</span>` : ''}
+                        ${cu.export !== null ? `<span class="quote-badge" style="border:1px solid #188038;color:#188038;cursor:pointer;background:#f0f9f0;font-weight:bold;" onclick="pickFuelPercent(${cu.export})">Export ${cu.export}%</span>` : ''}
+                    </div>
+                </div>`;
+            }
+            box.innerHTML = `${title}${curHtml}<div style="font-size:12px;color:#999;margin-bottom:6px;">页面含 ${d.percentages.length} 个不同百分比：</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">${d.percentages.map(p => `<span class="quote-badge" style="border:1px solid #e8710a;color:#e8710a;cursor:pointer;background:#fffdf5;" onclick="pickFuelPercent(${p})">${p}%</span>`).join('')}</div>
+                <div style="font-size:12px;color:#999;margin-top:6px;">点击任一费率即设为生效日期 ${today} 的记录；请核对与官网"本周生效"一致。</div>`;
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.textContent = '🌐 从官网抓取';
+            const box = document.getElementById('fuelFetchResult');
+            box.style.display = 'block';
+            box.innerHTML = `<div style="background:#fce8e6;border:1px solid #f5c6c6;border-radius:6px;padding:8px;font-size:12px;">请求失败：${err.message}</div>`;
+        });
+}
+
+function pickFuelPercent(p) {
+    document.getElementById('fuelPercentInput').value = p;
+    const today = new Date();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+    document.getElementById('fuelDateInput').value = monday.toISOString().slice(0, 10);
+    document.getElementById('fuelFetchResult').innerHTML += `<div style="font-size:12px;color:#188038;margin-top:4px;">已选择 <b>${p}%</b> → 点击下方「保存本周费率」完成录入</div>`;
+}
+
+function fuelExtractPaste() {
+    const text = (document.getElementById('fuelPasteBox').value || '');
+    const pcts = [];
+    const re = /(\d{1,3}(?:\.\d{1,2})?)\s*%/g;
+    let m;
+    while ((m = re.exec(text)) !== null) pcts.push(parseFloat(m[1]));
+    const uniq = Array.from(new Set(pcts.filter(p => p > 0)));
+    const out = document.getElementById('fuelPasteResult');
+    if (uniq.length === 0) { out.textContent = '未识别到百分比，请确认文本包含如 29.75% 的内容'; return; }
+    out.innerHTML = `识别到：` + uniq.map(p => `<span class="quote-badge" style="border:1px solid #1a73e8;color:#1a73e8;cursor:pointer;background:#f7faff;" onclick="pickFuelPercent(${p})">${p}%</span>`).join(' ') + `<span style="color:#999;">（点击选取）</span>`;
+}
+
+function lookupSurcharge(channelName, text, zoneText) {
+    const ch = channels.find(c => c.name === channelName);
+    if (!ch || !ch.surcharges || ch.surcharges.length === 0) return null;
+    const nBill = normalizeHeader(text);
+    if (!nBill) return null;
+    const zoneNum = parseInt(String(zoneText).replace(/[^0-9]/g, ''), 10);
+    const group = isNaN(zoneNum) ? 0 : zoneGroupIndex(zoneNum);
+
+    let best = null, bestScore = 0;
+    ch.surcharges.forEach(s => {
+        const nName = normalizeHeader(s.name);
+        if (!nName) return;
+
+        let nameScore = 0, condScore = 0;
+        if (nBill === nName) nameScore = 2;
+        else if (nBill.includes(nName) || nName.includes(nBill)) nameScore = 1;
+
+        const nCond = normalizeHeader(s.cond);
+        if (nCond) {
+            if (nBill === nCond) condScore = 4;
+            else if (nCond.startsWith(nBill)) condScore = 3.5;
+            else if (nCond.includes(nBill) && nBill.length >= 8) condScore = 2.5;
+        }
+        const score = condScore > 0 ? Math.max(condScore, nameScore * 0.9) : nameScore;
+        if (score <= bestScore) return;
+
+        const isFuel = /(fuel|燃油)/i.test(s.name);
+        const price = isFuel ? null : (s.prices[group] !== null ? s.prices[group] : (s.prices.find(p => p !== null) ?? null));
+        best = { name: s.name, price, group, groupLabel: isNaN(zoneNum) ? '不分区' : `Zone${zoneNum}`, fuel: isFuel, isSurcharge: true };
+        bestScore = score;
+    });
+    return bestScore > 0 ? best : null;
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    if (e.dataTransfer.files.length) {
+        document.getElementById('billFileInput').files = e.dataTransfer.files;
+        handleBillFileObj(e.dataTransfer.files[0]);
+    }
+}
+
+function handleBillFile(e) {
+    handleBillFileObj(e.target.files[0]);
+}
+
+function handleBillFileObj(file) {
+    if (!file) return;
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+    }
+    document.getElementById('billFileName').textContent = `📄 ${file.name}`;
+    document.getElementById('billFileInfo').classList.remove('hidden');
+
+    const isPdf = /\.pdf$/i.test(file.name);
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        if (isPdf) {
+            pdfToMatrix(new Uint8Array(e.target.result)).then(matrix => {
+                billParseState = { fileName: file.name, isPdf: true, wb: null, sheetNames: [], currentSheet: 0, matrix, headers: [], rows: [], mapping: {} };
+                openBillModal();
+            }).catch(err => {
+                alert('PDF 解析失败：' + err.message);
+            });
+            return;
+        }
+        try {
+            const wb = XLSX.read(e.target.result, { type: 'array' });
+            billParseState = { fileName: file.name, isPdf: false, wb, sheetNames: wb.SheetNames, currentSheet: 0, matrix: [], headers: [], rows: [], mapping: {} };
+            openBillModal();
+        } catch (err) {
+            alert('账单文件解析失败，请确认是有效的 Excel/CSV/PDF 文件\n' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function detectHeaderRow(matrix) {
+    let best = -1, bestScore = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        const row = matrix[i];
+        if (!row || row.filter(c => String(c || '').trim()).length < 2) continue;
+        let score = 0;
+        row.forEach(c => {
+            const t = String(c || '').trim();
+            if (!t) return;
+            for (const f of STANDARD_FIELDS) {
+                if (scoreColumn(t, f.keywords) >= 2) { score++; break; }
+            }
+        });
+        const nonEmpty = row.filter(c => String(c || '').trim()).length;
+        const alpha = row.filter(c => /[a-zA-Z\u4e00-\u9fa5]/.test(String(c || ''))).length;
+        if (nonEmpty > 0 && alpha >= nonEmpty * 0.3) score += 0.5;
+        if (score > bestScore) { bestScore = score; best = i; }
+    }
+    return (best >= 0 && bestScore >= 2.5) ? best : -1;
+}
+
+function autoMapBillColumns(headers) {
+    const used = new Set();
+    const mapping = {};
+    STANDARD_FIELDS.forEach(f => {
+        let best = -1, bestScore = 0;
+        headers.forEach((h, i) => {
+            if (used.has(i)) return;
+            const s = scoreColumn(h, f.keywords);
+            if (s > bestScore) { bestScore = s; best = i; }
+        });
+        mapping[f.key] = (best >= 0 && bestScore >= 2) ? best : -1;
+        if (mapping[f.key] >= 0) used.add(best);
+    });
+    return mapping;
+}
+
+function buildStandardRows() {
+    const m = billParseState.mapping;
+    return billParseState.rows.map(r => {
+        const o = {};
+        STANDARD_FIELDS.forEach(f => {
+            const ci = m[f.key];
+            o[f.key] = (ci >= 0 && r[ci] !== undefined && r[ci] !== null) ? String(r[ci]).trim() : '';
+        });
+        return o;
+    });
+}
+
+function loadBillSheet(index) {
+    const ws = billParseState.wb.Sheets[billParseState.sheetNames[index]];
+    billParseState.matrix = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false });
+    parseBillMatrix();
+}
+
+function parseBillMatrix() {
+    const matrix = billParseState.matrix;
+    const hr = detectHeaderRow(matrix);
+    billParseState.headers = hr >= 0 ? (matrix[hr] || []).map(h => String(h || '').trim()) : [];
+    billParseState.rows = hr >= 0 ? matrix.slice(hr + 1).filter(r => r.some(c => String(c || '').trim() !== '')) : matrix;
+    billParseState.mapping = autoMapBillColumns(billParseState.headers);
+    billParseState.headerRowIndex = hr;
+    renderBillModal();
+}
+
+async function pdfToMatrix(buffer) {
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    const all = [];
+    for (let p = 1; p <= pdf.numPages; p++) {
+        const page = await pdf.getPage(p);
+        const tc = await page.getTextContent();
+        const items = tc.items.map(it => ({ x: it.transform[4], y: it.transform[5], str: it.str }));
+        items.sort((a, b) => b.y - a.y || a.x - b.x);
+        const lines = [];
+        let cur = [], curY = null;
+        items.forEach(it => {
+            if (curY !== null && Math.abs(it.y - curY) > 3 && cur.length) { lines.push(cur); cur = []; }
+            if (curY === null) curY = it.y;
+            cur.push(it);
+        });
+        if (cur.length) lines.push(cur);
+        lines.forEach(line => {
+            line.sort((a, b) => a.x - b.x);
+            const cells = [];
+            let grp = [], prevX = null;
+            line.forEach(it => {
+                if (prevX !== null && it.x - prevX > 8) { cells.push(grp.map(g => g.str).join(' ')); grp = []; }
+                grp.push(it);
+                prevX = it.x;
+            });
+            if (grp.length) cells.push(grp.map(g => g.str).join(' '));
+            if (cells.length) all.push(cells);
+        });
+    }
+    return all;
+}
+
+function openBillModal() {
+    if (billParseState.isPdf) {
+        docBillSheetSelectDisable();
+        parseBillMatrix();
+        document.getElementById('billModal').classList.add('active');
+        return;
+    }
+    document.getElementById('billSheetSelect').innerHTML = billParseState.sheetNames.map((n, i) =>
+        `<option value="${i}" ${i === billParseState.currentSheet ? 'selected' : ''}>${n}</option>`
+    ).join('');
+    loadBillSheet(billParseState.currentSheet);
+    document.getElementById('billModal').classList.add('active');
+}
+
+function docBillSheetSelectDisable() {
+    document.getElementById('billSheetSelect').innerHTML = '<option value="-1">（PDF 文本提取）</option>';
+    document.getElementById('billHeaderRow').innerHTML = '<option value="-1">自动识别</option>';
+}
+
+function onBillSheetChange() {
+    loadBillSheet(parseInt(document.getElementById('billSheetSelect').value, 10));
+}
+
+function onBillHeaderRowChange() {
+    const idx = parseInt(document.getElementById('billHeaderRow').value, 10);
+    if (idx < 0) { parseBillMatrix(); return; }
+    billParseState.headers = (billParseState.matrix[idx] || []).map(h => String(h || '').trim());
+    billParseState.rows = billParseState.matrix.slice(idx + 1).filter(r => r.some(c => String(c || '').trim() !== ''));
+    billParseState.mapping = autoMapBillColumns(billParseState.headers);
+    renderBillModal();
+}
+
+function renderBillModal() {
+    if (!billParseState.isPdf) {
+        const hr = billParseState.headerRowIndex;
+        document.getElementById('billHeaderRow').innerHTML = '<option value="-1">自动识别' + (hr >= 0 ? `（第${hr + 1}行）` : '（未识别）') + '</option>' +
+            billParseState.matrix.map((_, i) => `<option value="${i}" ${i === hr ? 'selected' : ''}>第${i + 1}行${i === hr ? ' ✓' : ''}</option>`).join('');
+    }
+
+    const fieldOptions = (selIndex) => '<option value="-1">（不导入）</option>' +
+        billParseState.headers.map((h, i) => `<option value="${i}" ${i === selIndex ? 'selected' : ''}>${h || '列' + (i + 1)}</option>`).join('');
+
+    document.getElementById('billMapping').innerHTML = STANDARD_FIELDS.map(f => {
+        const idx = billParseState.mapping[f.key];
+        const mapped = idx >= 0;
+        return `<div class="map-item ${mapped ? 'mapped' : ''}">
+            <label>${f.label}${f.required ? '<span class="req-mark"> *</span>' : ''}</label>
+            <select data-key="${f.key}" onchange="onBillMappingChange(this)">${fieldOptions(idx)}</select>
+            <div class="map-hint">${mapped ? '已自动识别' : '（请手动选择）'}</div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('billPreviewHead').innerHTML =
+        '<tr>' + billParseState.headers.map((h, i) => `<th>${h || '列' + (i + 1)}</th>`).join('') + '</tr>';
+
+    document.getElementById('billPreviewBody').innerHTML = billParseState.rows.slice(0, 10).map(r =>
+        '<tr>' + billParseState.headers.map((_, i) => `<td>${r[i] !== undefined ? r[i] : ''}</td>`).join('') + '</tr>'
+    ).join('');
+    document.getElementById('billPreviewCount').textContent =
+        billParseState.rows.length === 0 ? '无数据行' : `前 ${Math.min(10, billParseState.rows.length)} / ${billParseState.rows.length} 行`;
+
+    const m = billParseState.mapping;
+    const missing = STANDARD_FIELDS.filter(f => f.required && m[f.key] === -1);
+    const withAmount = billParseState.rows.filter(r => m.amount >= 0 && !isNaN(parseFloat(r[m.amount]))).length;
+    document.getElementById('billStats').innerHTML =
+        `识别到 <b>${billParseState.headers.length}</b> 列，金额列有值数据 <b style="color:#34a853;">${withAmount}</b> 行` +
+        (missing.length ? ` · <span style="color:#ea4335;">需选择金额列</span>` : '');
+}
+
+function onBillMappingChange(el) {
+    const key = el.getAttribute('data-key');
+    billParseState.mapping[key] = parseInt(el.value, 10);
+    const item = el.closest('.map-item');
+    item.classList.toggle('mapped', billParseState.mapping[key] >= 0);
+    renderBillStatsOnly();
+}
+
+function renderBillStatsOnly() {
+    const m = billParseState.mapping;
+    const missing = STANDARD_FIELDS.filter(f => f.required && m[f.key] === -1);
+    const withAmount = billParseState.rows.filter(r => m.amount >= 0 && !isNaN(parseFloat(r[m.amount]))).length;
+    document.getElementById('billStats').innerHTML =
+        `识别到 <b>${billParseState.headers.length}</b> 列，金额列有值数据 <b style="color:#34a853;">${withAmount}</b> 行` +
+        (missing.length ? ` · <span style="color:#ea4335;">需选择金额列</span>` : '');
+}
+
+function closeBillModal() {
+    document.getElementById('billModal').classList.remove('active');
+}
+
+function confirmBillParse() {
+    const m = billParseState.mapping;
+    if (m.amount === -1) { alert('请先为「金额」字段选择对应列'); return; }
+
+    billData = buildStandardRows();
+    const amtRows = billData.filter(r => !isNaN(parseFloat(r.amount)) && parseFloat(r.amount) !== 0).length;
+    setBillColumnOptions();
+    closeBillModal();
+    document.getElementById('billFileName').textContent = `📄 ${billParseState.fileName}`;
+    alert(`账单解析完成\n✅ 明细 ${billData.length} 行（含金额 ${amtRows} 行）\n字段已标准化，可直接核对`);
+}
+
+function clearBill() {
+    billData = [];
+    document.getElementById('billFileInput').value = '';
+    document.getElementById('billFileInfo').classList.add('hidden');
+}
+
+/* ===== 混合报价导入 ===== */
+function setupQuoteDropZone() {
+    const dz = document.getElementById('quoteDropZone');
+    if (!dz) return;
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = '#1a73e8'; dz.style.background = '#e8f0fe'; });
+    dz.addEventListener('dragleave', e => { dz.style.borderColor = '#ccc'; dz.style.background = '#fafafa'; });
+    dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.style.borderColor = '#ccc';
+        dz.style.background = '#fafafa';
+        if (e.dataTransfer.files.length) importQuoteFileObj(e.dataTransfer.files[0]);
+    });
+}
+
+function importQuoteFile(e) {
+    importQuoteFileObj(e.target.files[0]);
+    e.target.value = '';
+}
+
+function importQuoteFileObj(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const wb = XLSX.read(e.target.result, { type: 'array' });
+            quoteState = { blocks: [] };
+            wb.SheetNames.forEach((sn, si) => {
+                const ws = wb.Sheets[sn];
+                const matrix = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false });
+                extractQuoteBlocks(matrix, sn, si);
+            });
+            renderQuoteBlocks();
+        } catch (err) {
+            alert('报价表解析失败：' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function quoteZoneColIdx(headers) {
+    const res = [];
+    headers.forEach((h, i) => { if (i > 0 && /^zone\s*\d/i.test(h)) res.push(i); });
+    return res;
+}
+
+function classifyQuoteHeaders(headers) {
+    const zh = headers.map(h => String(h || '').trim());
+    const firstH = zh[0] || '';
+    const isWeightFirst = /^(weight|计费重|计费重量|重量|磅)/i.test(firstH);
+    const zc = quoteZoneColIdx(zh);
+    if (isWeightFirst && zc.length >= 2) return 'channel';
+    const grpZones = zh.filter(h => /^zones?\s*[\d\-+\s]+$/i.test(h));
+    const hasName = zh.some(h => /(名称|surcharge|附加费|name)/i.test(h));
+    const hasCond = zh.some(h => /(条件|condition)/i.test(h));
+    if (grpZones.length >= 2 && (hasName || hasCond)) return 'surcharge';
+    const whHits = zh.map(h => scoreColumn(h, ['单价', '价格', '金额', '服务类型', '费用类型', '费用项目', '数量', '计费单位', '数量单位', '重量', '最低收费', '最低消费', '首重', '续重'])).filter(s => s >= 2).length;
+    if (whHits >= 2) return 'warehouse';
+    return 'none';
+}
+
+function detectQuoteHeader(m) {
+    let best = -1, bestScore = 0;
+    for (let i = 0; i < m.length; i++) {
+        const row = m[i];
+        if (!row || row.filter(c => String(c || '').trim()).length < 2) continue;
+        const headers = row.map(h => String(h || '').trim());
+        const kind = classifyQuoteHeaders(headers);
+        let s = 0;
+        if (kind === 'channel') {
+            const firstH = headers[0] || '';
+            s = quoteZoneColIdx(headers).length + (/weight|计费重|磅/i.test(firstH) ? 1 : 0);
+        } else if (kind === 'surcharge') {
+            s = 3;
+        } else if (kind === 'warehouse') {
+            s = headers.map(h => scoreColumn(h, ['单价', '价格', '金额', '服务类型', '费用类型', '数量', '计费单位', '单位', '重量', '最低收费', '首重', '续重'])).filter(x => x >= 2).length;
+        }
+        if (s > bestScore) { bestScore = s; best = i; }
+    }
+    return (best >= 0 && bestScore >= 2) ? best : -1;
+}
+
+function isQuoteHeaderRow(row) {
+    if (!row || row.filter(c => String(c || '').trim()).length < 2) return false;
+    const zh = row.map(h => String(h || '').trim());
+    if (/^zone\s*\d/i.test(zh[0] || '')) return false;
+    if (isNaN(parseFloat(zh[0])) && /^\d/i.test(zh[0]) && quoteZoneColIdx(zh).length === 0) return false;
+    return classifyQuoteHeaders(zh) !== 'none';
+}
+
+function extractQuoteBlocks(matrix, sheetName, sheetIdx) {
+    let rest = matrix;
+    let base = 0;
+    let guard = 0;
+    while (rest.length > 1 && guard++ < 50) {
+        const hr = detectQuoteHeader(rest);
+        if (hr < 0) return;
+        const headers = (rest[hr] || []).map(h => String(h || '').trim());
+        const kind = classifyQuoteHeaders(headers);
+        if (kind === 'none') return;
+        let end = hr + 1;
+        while (end < rest.length) {
+            if (isQuoteHeaderRow(rest[end])) break;
+            end++;
+        }
+        const rows = rest.slice(hr + 1, end).filter(r => r.some(c => String(c || '').trim() !== ''));
+        if (rows.length > 0) {
+            quoteState.blocks.push({ sheet: sheetName, sheetIdx, row: base + hr + 1, type: kind, headers, rows, name: sheetName, provider: '', warehouse: '', target: '' });
+        }
+        base += end;
+        rest = rest.slice(end);
+    }
+}
+
+const QUOTE_TYPE_LABEL = { warehouse: ['库内费用', '#1a73e8'], channel: ['物流渠道', '#188038'], surcharge: ['渠道附加费', '#e8710a'] };
+const QUOTE_TYPE_STYLE = { warehouse: 'color:#1a73e8;border:1px solid #1a73e8;', channel: 'color:#188038;border:1px solid #188038;', surcharge: 'color:#e8710a;border:1px solid #e8710a;' };
+
+function quoteTypeOptions(sel) {
+    return `<option value="warehouse" ${sel === 'warehouse' ? 'selected' : ''}>库内费用 → 价格模板</option>` +
+        `<option value="channel" ${sel === 'channel' ? 'selected' : ''}>物流渠道 → 运费矩阵</option>` +
+        `<option value="surcharge" ${sel === 'surcharge' ? 'selected' : ''}>渠道附加费 → 绑定渠道</option>` +
+        `<option value="ignore" ${sel === 'ignore' ? 'selected' : ''}>忽略此块</option>`;
+}
+
+function renderQuoteBlocks() {
+    const el = document.getElementById('quoteBlockList');
+    if (quoteState.blocks.length === 0) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>拖入报价表后，这里会显示自动识别出的费用模块</p></div>';
+        document.getElementById('quoteConfirmBtn').disabled = true;
+        document.getElementById('quoteSummary').innerHTML = '';
+        return;
+    }
+    el.innerHTML = quoteState.blocks.map((b, i) => {
+        const tl = QUOTE_TYPE_LABEL[b.type][0];
+        const tc = QUOTE_TYPE_LABEL[b.type][1];
+        const colTxt = b.headers.slice(0, 8).join(' | ') + (b.headers.length > 8 ? ' …' : '');
+        let edit = '';
+        if (b.type === 'warehouse') {
+            edit = `<div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <input type="text" value="${b.provider}" oninput="uQ(${i},'provider',this.value)" placeholder="服务商（必填）" style="width:130px;">
+                <input type="text" value="${b.warehouse}" oninput="uQ(${i},'warehouse',this.value)" placeholder="仓点（必填）" style="width:130px;">
+                <span style="align-self:center;font-size:12px;color:#999;">自动匹配：类型/单位/单价列</span>
+            </div>`;
+        } else if (b.type === 'channel') {
+            edit = `<div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <input type="text" value="${b.name}" oninput="uQ(${i},'name',this.value)" placeholder="渠道名称" style="width:220px;">
+                <span style="align-self:center;font-size:12px;color:#999;">识别 ${quoteZoneColIdx(b.headers).length} 个分区列 × ${b.rows.length} 档位</span>
+            </div>`;
+        } else {
+            const opts = `<option value="">（请选择绑定渠道）</option>` +
+                channels.map(c => `<option value="${c.name}" ${b.target === c.name ? 'selected' : ''}>${c.name}</option>`).join('') +
+                quoteState.blocks.filter(x => x.type === 'channel').map(x => `<option value="${x.name}" ${b.target === x.name ? 'selected' : ''}>${x.name}（本次导入）</option>`).join('');
+            edit = `<div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <select onchange="uQ(${i},'target',this.value)" style="min-width:200px;">${opts}</select>
+                <span style="align-self:center;font-size:12px;color:#999;">识别 ${b.rows.length} 条附加费</span>
+            </div>`;
+        }
+        return `<div class="quote-block">
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;">
+                <span class="quote-badge" style="background:${tc}12;${QUOTE_TYPE_STYLE[b.type]}">${tl}</span>
+                <span style="font-size:12px;color:#555;">${b.sheet} 第${b.row}行</span>
+                <span style="font-size:12px;color:#999;">${b.rows.length} 行数据</span>
+                <select onchange="uQ(${i},'type',this.value)" style="margin-left:auto;font-size:12px;">${quoteTypeOptions(b.type)}</select>
+            </div>
+            <div style="font-size:12px;color:#888;margin-bottom:8px;word-break:break-all;">${colTxt}</div>
+            ${edit}
+        </div>`;
+    }).join('');
+    const c = quoteState.blocks.filter(b => b.type === 'channel').length;
+    const w = quoteState.blocks.filter(b => b.type === 'warehouse').length;
+    const s = quoteState.blocks.filter(b => b.type === 'surcharge').length;
+    document.getElementById('quoteConfirmBtn').disabled = false;
+    document.getElementById('quoteSummary').innerHTML =
+        `共识别 <b>${quoteState.blocks.length}</b> 个费用模块：库内 <b style="color:#1a73e8;">${w}</b> ｜渠道 <b style="color:#188038;">${c}</b> ｜附加费 <b style="color:#e8710a;">${s}</b>。可修改类型与名称后一键导入。`;
+}
+
+function uQ(idx, key, val) {
+    quoteState.blocks[idx][key] = val;
+}
+
+function clearQuote() {
+    quoteState = { blocks: [] };
+    document.getElementById('quoteFileInput').value = '';
+    renderQuoteBlocks();
+}
+
+function quoteImportWarehouse(block) {
+    const provider = (block.provider || '').trim();
+    const warehouse = (block.warehouse || '').trim();
+    if (!provider || !warehouse) { alert(`「${block.sheet}」库内费用块：服务商和仓点不能为空，已跳过`); return { imported: 0, skipped: 0, dup: 0 }; }
+    const m = autoMapColumns(block.headers);
+    const priceCols = (Array.isArray(m.price) ? m.price : [m.price]).filter(i => i >= 0);
+    const whFixed = warehouse;
+    let success = 0, skippedInvalid = 0, skippedDuplicate = 0;
+    const seen = new Set(templates.map(t => `${t.provider}|${t.warehouse}|${t.serviceType}|${t.unit}|${t.price}`));
+    block.rows.forEach(r => {
+        const serviceType = m.serviceType >= 0 ? String(r[m.serviceType] || '').trim() : '';
+        const unit = m.unit >= 0 ? String(r[m.unit] || '').trim() : '';
+        const minCharge = m.minCharge >= 0 ? (parseFloat(r[m.minCharge]) || 0) : 0;
+        const note = m.note >= 0 ? String(r[m.note] || '').trim() : '';
+        let rowHasData = false;
+        priceCols.forEach(pc => {
+            const v = parseFloat(r[pc]);
+            if (isNaN(v) || v <= 0) return;
+            rowHasData = true;
+            const key = `${provider}|${whFixed}|${serviceType || '其他'}|${unit || '件'}|${v}`;
+            if (seen.has(key)) { skippedDuplicate++; return; }
+            seen.add(key);
+            templates.push({ provider, warehouse: whFixed, serviceType: serviceType || '其他', unit: unit || '件', price: v, minCharge, note, createdAt: new Date().toISOString() });
+            success++;
+        });
+        if (!rowHasData) skippedInvalid++;
+    });
+    return { imported: success, skipped: skippedInvalid, dup: skippedDuplicate };
+}
+
+function quoteImportChannel(block) {
+    const name = (block.name || '').trim();
+    if (!name) { alert('渠道块缺少名称，已跳过'); return null; }
+    const zones = quoteZoneColIdx(block.headers).map(i => block.headers[i]);
+    const rows = [];
+    block.rows.forEach(r => {
+        const w = String(r[0] || '').trim();
+        if (w === '') return;
+        const weight = parseFloat(w);
+        if (isNaN(weight)) return;
+        const prices = zones.map((_, j) => {
+            const v = parseFloat(r[quoteZoneColIdx(block.headers)[j]]);
+            return isNaN(v) ? null : v;
+        });
+        rows.push({ weight, prices });
+    });
+    if (rows.length === 0) return null;
+    if (channels.some(c => c.name === name)) channels = channels.filter(c => c.name !== name);
+    channels.push({ name, note: '', zones, rows, createdAt: new Date().toISOString() });
+    return { name, rows, zones };
+}
+
+function quoteImportSurcharge(block, chName) {
+    const headers = block.headers;
+    let nameCol = -1, condCol = -1, noteCol = -1;
+    const zoneCols = [];
+    headers.forEach((h, i) => {
+        const nh = String(h || '').trim();
+        if (/^zone2$/i.test(nh)) zoneCols[0] = i;
+        else if (/^zones?\s*3/i.test(nh)) zoneCols[1] = i;
+        else if (/^zones?\s*5/i.test(nh)) zoneCols[2] = i;
+        else if (/^zones?\s*7/i.test(nh)) zoneCols[3] = i;
+        if (/^zone\s*\d/i.test(nh) && nameCol < 0 && /(名称|surcharge|附加费|name)/i.test(nh)) nameCol = i;
+    });
+    zoneCols.forEach((zc, zi) => {
+        if (zc === undefined) {
+            const fallback = headers.findIndex((h, i) => !zoneCols.includes(i) && i !== 0 && /zone/i.test(String(h)));
+            if (fallback >= 0) zoneCols[zi] = fallback;
+        }
+    });
+    const zcValid = zoneCols.filter(i => i !== undefined);
+    if (zcValid.length === 0) return null;
+    if (nameCol < 0) {
+        headers.forEach((h, i) => { if (i !== 0 && !zcValid.includes(i) && /(名称|类型|项目|name)/i.test(String(h))) nameCol = i; });
+    }
+    if (nameCol < 0) nameCol = 0;
+    headers.forEach((h, i) => {
+        if (/(条件|condition)/i.test(String(h))) condCol = i;
+        if (/(备注|note)/i.test(String(h))) noteCol = i;
+    });
+    const rows = [];
+    let last = '';
+    block.rows.forEach((r, ri) => {
+        let n = String(r[nameCol] || '').trim();
+        if (!n && ri > 0) n = last;
+        if (!n) return;
+        last = n;
+        const prices = zcValid.map(i => {
+            const v = parseFloat(r[i]);
+            return isNaN(v) ? null : v;
+        });
+        rows.push({ name: n, cond: condCol >= 0 ? String(r[condCol] || '').trim() : '', prices, note: noteCol >= 0 ? String(r[noteCol] || '').trim() : '' });
+    });
+    if (rows.length === 0) return null;
+    const ch = channels.find(c => c.name === chName);
+    if (!ch) { alert(`附加费「${block.sheet}」：绑定渠道「${chName}」不存在，已暂存 ${rows.length} 条未导入`); return null; }
+    if (ch.surcharges && ch.surcharges.length) {
+        if (!confirm(`渠道「${chName}」已有 ${ch.surcharges.length} 条附加费，覆盖？`)) return null;
+    }
+    ch.surcharges = rows;
+    return rows.length;
+}
+
+function confirmQuoteImport() {
+    const report = [];
+    let tImported = 0, tSkipped = 0, tDup = 0, chnImported = 0, sImported = 0;
+    quoteState.blocks.forEach((b, i) => {
+        if (b.type === 'ignore') return;
+        if (b.type === 'warehouse') {
+            const r = quoteImportWarehouse(b);
+            tImported += r.imported; tSkipped += r.skipped; tDup += r.dup;
+            report.push(`库内「${b.sheet}」：+${r.imported}`);
+        } else if (b.type === 'channel') {
+            const r = quoteImportChannel(b);
+            if (r) { chnImported++; report.push(`渠道「${r.name}」：${r.zones.length}分区×${r.rows.length}档`); }
+        } else if (b.type === 'surcharge') {
+            const target = (b.target || '').trim();
+            if (!target) { report.push(`附加费「${b.sheet}」：未选择绑定渠道，跳过`); return; }
+            const n = quoteImportSurcharge(b, target);
+            if (n) { sImported += n; report.push(`附加费→「${target}」：${n}条`); }
+        }
+    });
+    saveTemplates();
+    saveChannels();
+    renderTemplateList();
+    renderChannelList();
+    updateProviderSelects();
+    updateChannelSelect();
+    updateSurchargeChannelSelect();
+    alert(`混合报价导入完成\n${report.join('\n')}\n（库内 +${tImported}，跳过 ${tSkipped}，重复 ${tDup}；渠道 ${chnImported} 个；附加费 ${sImported} 条）`);
+}
+
+function matchServiceType(billType, tplType) {
+    if (!billType || !tplType) return false;
+    const b = billType.toLowerCase().trim();
+    const t = tplType.toLowerCase().trim();
+    if (b === t) return true;
+    if (t !== '其他' && (b.includes(t) || t.includes(b))) return true;
+
+    const mappings = {
+        '入库上架': ['inbound', 'receive', 'putaway', '上架', '入库', '收货'],
+        '订单处理': ['order', 'pick', 'pack', '处理', '拣货', '打包', '出库'],
+        '仓储费': ['storage', '仓储', '存放', '库存'],
+        '尾程配送': ['shipping', 'delivery', 'carrier', '配送', '物流', '尾程', '运输'],
+        '退货处理': ['return', '退货', '退件'],
+        '贴标换标': ['label', 'relabel', '贴标', '换标']
+    };
+
+    const keywords = mappings[tplType] || [];
+    if (keywords.some(kw => b.includes(kw))) return true;
+
+    const n = normalizeHeader(tplType);
+    return n && (normalizeHeader(billType).includes(n) || n.includes(normalizeHeader(billType)));
+}
+
+function matchUnit(billUnit, tplUnit) {
+    if (!billUnit || !tplUnit) return true;
+    const b = billUnit.toLowerCase().trim();
+    const t = tplUnit.toLowerCase().trim();
+    if (b === t) return true;
+    const unitMap = { 'kg': ['kg', '千克', '公斤'], '件': ['件', '个', 'pcs', 'piece', 'ea'], '立方': ['m3', 'cbm', '立方', '方'], '单': ['单', '票', 'order', 'shipment'], '次': ['次', '回', 'time'] };
+    const tKeywords = unitMap[t] || [t];
+    return tKeywords.some(kw => b.includes(kw));
+}
+
+function startCheck() {
+    const provider = document.getElementById('checkProvider').value;
+    const warehouse = document.getElementById('checkWarehouse').value;
+    const channelName = document.getElementById('checkChannel').value;
+    const usingChannel = !!channelName;
+
+    if (!usingChannel && (!provider || !warehouse)) {
+        alert('请选择服务商和仓点，或选择物流渠道');
+        return;
+    }
+    if (billData.length === 0) {
+        alert('请先上传账单文件');
+        return;
+    }
+
+    let weightCol = -1, zoneCol = -1;
+    if (usingChannel) {
+        weightCol = parseInt(document.getElementById('billWeightCol').value, 10);
+        zoneCol = parseInt(document.getElementById('billZoneCol').value, 10);
+        if (weightCol < 0 || zoneCol < 0) {
+            alert('请先选择账单的计费重列和 Zone 列');
+            return;
+        }
+    }
+
+    const tpl = templates.filter(t => t.provider === provider && t.warehouse === warehouse);
+    if (tpl.length === 0 && !usingChannel) {
+        alert('未找到该服务商/仓点的价格模板，请先添加');
+        return;
+    }
+
+    const billHeaderKeys = billData.length > 0 ? Object.keys(billData[0]) : [];
+    const weightKey = weightCol >= 0 ? billHeaderKeys[weightCol] : null;
+    const zoneKey = zoneCol >= 0 ? billHeaderKeys[zoneCol] : null;
+    const canTemplateCheck = !!provider && !!warehouse && tpl.length > 0;
+
+    checkResults = [];
+    let matchCount = 0, diffCount = 0, warnCount = 0;
+
+    const fuelGroupSum = {};
+    if (usingChannel) {
+        billData.forEach(row => {
+            const service = String(row.serviceType !== undefined ? row.serviceType : row['服务类型'] || row['Description'] || '').toLowerCase();
+            if (/(fuel|燃油)/.test(service)) return;
+            let amt = parseFloat(row.amount !== undefined ? row.amount : row['金额'] || row['amount'] || 0);
+            if (isNaN(amt)) amt = 0;
+            const trk = String(row.tracking !== undefined && row.tracking !== '' ? row.tracking : row.ref || row['参考'] || '').trim();
+            if (!trk) return;
+            fuelGroupSum[trk] = (fuelGroupSum[trk] || 0) + amt;
+        });
+    }
+
+    billData.forEach((row, idx) => {
+        const fv = (stdKey, legacyKeys) => {
+            if (row[stdKey] !== undefined && row[stdKey] !== '') return row[stdKey];
+            for (const k of legacyKeys) if (row[k] !== undefined && row[k] !== '') return row[k];
+            return '';
+        };
+        const billService = fv('serviceType', ['服务类型', 'service_type', 'ServiceType', '费用类型', '类型', 'Description']);
+        const billUnit = fv('unit', ['计费单位', 'unit', 'Unit', '数量单位']);
+        const billQty = parseFloat(fv('qty', ['数量', 'quantity', 'Qty', '数量/重量'])) || 0;
+        const billAmount = parseFloat(fv('amount', ['金额', 'amount', 'Amount', '费用', '总金额', 'Total'])) || 0;
+        const billUnitPrice = parseFloat(fv('unitPrice', ['单价', 'unit_price', 'UnitPrice', '单价(USD)'])) || 0;
+        const rowNo = idx + 2;
+
+        const weight = weightKey ? parseFloat(row[weightKey]) : NaN;
+        const zone = zoneKey ? String(row[zoneKey] || '') : '';
+
+        const pushWarn = (note, extra) => {
+            checkResults.push(Object.assign({
+                row: rowNo, billService, billUnit, billQty, billAmount, billUnitPrice,
+                tplPrice: null, expectedAmount: null, diff: null, status: 'warn', note
+            }, extra || {}));
+            warnCount++;
+        };
+
+        const pushCompared = (tplPrice, expectedAmount, basisNote) => {
+            const diff = Math.round((billAmount - expectedAmount) * 100) / 100;
+            const tolerance = Math.max(0.01, Math.abs(expectedAmount) * 0.01);
+            let status, note;
+            if (Math.abs(diff) < tolerance) {
+                status = 'match'; matchCount++;
+                note = '价格一致';
+            } else {
+                status = 'diff'; diffCount++;
+                note = diff > 0 ? `多收 $${diff.toFixed(2)}` : `少收 $${Math.abs(diff).toFixed(2)}`;
+            }
+            if (basisNote) note += '｜' + basisNote;
+            checkResults.push({ row: rowNo, billService, billUnit, billQty, billAmount, billUnitPrice, tplPrice, expectedAmount, diff, status, note });
+        };
+
+        const isFreightRow = usingChannel && weight > 0 && zone;
+
+        if (isFreightRow) {
+            const sf = lookupSurcharge(channelName, billService, zone);
+            if (sf && sf.fuel) {
+                const pct = latestFuelPercent(channelName);
+                const hit = lookupChannelPrice(channelName, weight, zone);
+                const trk = String(fv('tracking', ['tracking', 'Tracking', '参考', 'ref', 'Ref']) || '').trim();
+                const groupSum = fuelGroupSum[trk] || 0;
+                const basePrice = hit && hit.price !== null ? hit.price : 0;
+                if (pct === null) {
+                    pushWarn(`「${sf.name}」未记录官网费率：请到渠道 → 「燃油」录入本周费率，核对更精确`);
+                } else if (groupSum > 0) {
+                    const expected = Math.round(groupSum * pct / 100 * 100) / 100;
+                    const extra = Math.max(0, groupSum - basePrice);
+                    pushCompared(null, expected, `燃油费 ${pct}%（${latestFuelRecord(channelName).date}生效）×（基础 $${basePrice.toFixed(2)}${extra > 0 ? ' + 附加 $' + extra.toFixed(2) : ''}）= (基础+该行以上附加费)×${pct}%`);
+                } else if (hit && hit.price !== null) {
+                    const expected = Math.round(hit.price * pct / 100 * 100) / 100;
+                    pushCompared(null, expected, `燃油费 ${pct}% × 基础运费 $${hit.price.toFixed(2)}（${hit.zone}·${hit.weight}磅，该单无附加费行）`);
+                } else {
+                    pushWarn(`「${sf.name}」${pct}% 需基础运费价（找不到 ${zone} 分区报价）`);
+                }
+                return;
+            }
+            if (sf && sf.price !== null) {
+                const basis = `附加费：${sf.name}@$${sf.price.toFixed(2)}（${sf.groupLabel}）`;
+                pushCompared(sf.price, sf.price, basis);
+                return;
+            }
+            const hit = lookupChannelPrice(channelName, weight, zone);
+            if (!hit) { pushWarn(`渠道「${channelName}」未找到 ${zone} 分区`); return; }
+            if (hit.price === null) { pushWarn(`${hit.zone} 档无报价（计费重 ${hit.weight}磅）`); return; }
+            const basis = `${hit.zone}·计费重${hit.weight}磅` + (hit.overRange ? '｜超出价格上限，按末档' : '');
+            pushCompared(hit.price, hit.price, basis);
+            return;
+        }
+
+        if (canTemplateCheck) {
+            let matchedTpl = null;
+            for (const t of tpl) {
+                if (matchServiceType(billService, t.serviceType) && matchUnit(billUnit, t.unit)) {
+                    matchedTpl = t;
+                    break;
+                }
+            }
+            if (!matchedTpl) {
+                pushWarn(usingChannel ? '缺少重量/分区，未走渠道；且未匹配到库内模板' : '未匹配到模板');
+                return;
+            }
+            const hasTiers = matchedTpl.tiers && matchedTpl.tiers.length > 0;
+            let tplPrice = matchedTpl.price, tierNote = '';
+            if (hasTiers) {
+                const tierW = isFinite(weight) ? weight : billQty;
+                const hitTier = templatePriceForWeight(tierW, matchedTpl);
+                if (hitTier.tier) {
+                    tplPrice = hitTier.price;
+                    tierNote = `｜${hitTier.tier}（按${isFinite(weight) ? '账单计费重' : '数量/重量'} ${tierW}磅）`;
+                } else {
+                    tplPrice = hitTier.price;
+                    tierNote = `｜无匹配档（重量 ${tierW}磅），按最接近价`;
+                }
+            }
+            const pieces = isFinite(weight) ? Math.max(billQty, 1) : 1;
+            const expectedAmount = Math.max(pieces * tplPrice, matchedTpl.minCharge);
+            pushCompared(tplPrice, expectedAmount, `模板：${matchedTpl.serviceType}（${hasTiers ? '阶梯' : ''}@$${tplPrice.toFixed(3)} × ${pieces}${hasTiers ? '件' : '件'})${tierNote}${matchedTpl.note ? '（' + matchedTpl.note + '）' : ''}`);
+            return;
+        }
+
+        pushWarn(usingChannel ? '缺少计费重或分区，无法按渠道核对；且未选择服务商/仓点' : '未匹配到模板');
+    });
+
+    document.getElementById('resultSection').classList.remove('hidden');
+    document.getElementById('summaryBox').innerHTML = `
+        <div class="summary-item total"><div class="num">${checkResults.length}</div><div class="label">总条目</div></div>
+        <div class="summary-item match"><div class="num">${matchCount}</div><div class="label">一致</div></div>
+        <div class="summary-item diff"><div class="num">${diffCount}</div><div class="label">有差异</div></div>
+        <div class="summary-item warn"><div class="num">${warnCount}</div><div class="label">未匹配</div></div>
+    `;
+    renderResult();
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderResult() {
+    const filter = document.getElementById('resultFilter').value;
+    const filtered = filter === 'all' ? checkResults : checkResults.filter(r => r.status === filter);
+    document.getElementById('resultCount').textContent = `显示 ${filtered.length} / ${checkResults.length} 条`;
+
+    const body = document.getElementById('resultBody');
+    body.innerHTML = filtered.map((r, i) => {
+        const statusTag = r.status === 'match' ? '<span class="tag tag-match">一致</span>'
+            : r.status === 'diff' ? '<span class="tag tag-diff">差异</span>'
+            : '<span class="tag tag-warn">未匹配</span>';
+
+        return `<tr class="${r.status}">
+            <td>${i + 1}</td>
+            <td>第${r.row}行</td>
+            <td>${r.billService || '-'}</td>
+            <td>${r.billUnit || '-'}</td>
+            <td>${r.billQty}</td>
+            <td>${r.tplPrice !== null ? '$' + r.tplPrice.toFixed(3) : '-'}</td>
+            <td>${r.expectedAmount !== null ? '$' + r.expectedAmount.toFixed(2) : '-'}</td>
+            <td>$${r.billAmount.toFixed(2)}</td>
+            <td style="font-weight:600;color:${r.diff > 0 ? '#ea4335' : r.diff < 0 ? '#fbbc04' : '#34a853'}">${r.diff !== null ? (r.diff >= 0 ? '+' : '') + '$' + r.diff.toFixed(2) : '-'}</td>
+            <td>${statusTag}</td>
+            <td style="font-size:12px;">${r.note}</td>
+        </tr>`;
+    }).join('');
+}
+
+function exportResult() {
+    if (checkResults.length === 0) {
+        alert('请先执行核对');
+        return;
+    }
+
+    const exportData = checkResults.map(r => ({
+        '账单行': r.row,
+        '服务类型': r.billService,
+        '计费单位': r.billUnit,
+        '数量': r.billQty,
+        '模板单价': r.tplPrice,
+        '模板应收': r.expectedAmount,
+        '账单金额': r.billAmount,
+        '差异金额': r.diff,
+        '状态': r.status === 'match' ? '一致' : r.status === 'diff' ? '差异' : '未匹配',
+        '说明': r.note
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '核对结果');
+    XLSX.writeFile(wb, `价格核对结果_${new Date().toISOString().slice(0, 10)}.xlsx`);
+}
+
+/* ===== 尾程运费计算（步骤表单模板 + 计算） ===== */
+let freightTemplates = loadFreightTemplates();
+let freightEditor = null;
+
+function loadFreightTemplates() {
+    try { return JSON.parse(localStorage.getItem('freightTemplates')) || []; } catch (e) { return []; }
+}
+function saveFreightTemplates() { localStorage.setItem('freightTemplates', JSON.stringify(freightTemplates)); }
+
+function getF(id) { return document.getElementById(id); }
+function fvN(id) { const v = getF(id).value; return (v === undefined || v === '' || v === null) ? null : v; }
+
+function freightTab(tab) {
+    const tabs = ['s1', 's2', 's3', 's4', 'calc', 'api'];
+    document.querySelectorAll('#freightCard .tab-bar .tab').forEach((t, i) => t.classList.toggle('active', tabs[i] === tab));
+    tabs.forEach(k => {
+        const el = getF('freight-' + k);
+        if (el) el.classList.toggle('hidden', k !== tab);
+    });
+}
+
+function zoneCountNum() { return Math.max(1, Math.min(8, parseInt(fvN('f_zoneCount') + '', 10) || 8)); }
+
+function readPriceGrid() {
+    const rows = [];
+    document.querySelectorAll('#f_priceGridBody tr').forEach(tr => {
+        const maxV = parseFloat(tr.querySelector('.pw-input').value);
+        const prices = Array.from(tr.querySelectorAll('.pp-input')).map(inp => { const v = parseFloat(inp.value); return isNaN(v) ? null : v; });
+        rows.push({ max: isNaN(maxV) ? null : maxV, prices });
+    });
+    return rows;
+}
+function writePriceGrid(rows) {
+    const n = zoneCountNum();
+    getF('f_priceGridHead').innerHTML = '<tr><th>重量上限</th>' + Array.from({ length: n }, (_, i) => '<th>Zone' + (i + 1) + '</th>').join('') + '<th></th></tr>';
+    const body = getF('f_priceGridBody');
+    body.innerHTML = rows.map((r, i) => {
+        const cells = Array.from({ length: n }, (_, j) => '<td><input class="pp-input" type="number" step="0.001" value="' + (r.prices[j] === null || r.prices[j] === undefined ? '' : r.prices[j]) + '"></td>').join('');
+        return '<tr><td><input class="pw-input" type="number" step="0.001" value="' + (r.max === null ? '' : r.max) + '"></td>' + cells + '<td><button class="btn btn-sm btn-outline" onclick="priceGridDelRow(' + i + ')">删除</button></td></tr>';
+    }).join('');
+}
+function priceGridRebuild() { writePriceGrid(readPriceGrid()); }
+function priceGridAddRow() {
+    const rows = readPriceGrid();
+    rows.push({ max: null, prices: Array(zoneCountNum()).fill(null) });
+    writePriceGrid(rows);
+}
+function priceGridDelRow(i) {
+    const rows = readPriceGrid();
+    rows.splice(i, 1);
+    if (rows.length === 0) rows.push({ max: null, prices: Array(zoneCountNum()).fill(null) });
+    writePriceGrid(rows);
+}
+
+function zipRowAdd() {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td><input class="zs-range" placeholder="如 07000~10499"></td><td><input class="zs-zone" type="number" min="1" max="8" style="width:64px;"></td><td><button class="btn btn-sm btn-outline" onclick="this.closest(\'tr\').remove()">移除</button></td>';
+    getF('f_zipRows').appendChild(tr);
+}
+function parseZipRange(text) {
+    const t = String(text || '').trim();
+    const m = t.match(/(\d{3,5})\s*[~\u2014\u2013-]{1,3}\s*(\d{3,5})/);
+    if (!m) return null;
+    const f = parseInt(m[1], 10), to = parseInt(m[2], 10);
+    if (isNaN(f) || isNaN(to) || f > to) return null;
+    return { from: String(f).padStart(5, '0'), to: String(to).padStart(5, '0') };
+}
+function renderZipRows(rules) {
+    const tbody = getF('f_zipRows');
+    tbody.innerHTML = '';
+    rules.forEach(r => {
+        const tr = document.createElement('tr');
+        const from = r.from !== undefined ? r.from : (r.fromZip || '');
+        const to = r.to !== undefined ? r.to : (r.toZip || '');
+        tr.innerHTML = '<td><input class="zs-range" placeholder="如 07000~10499" value="' + from + '~' + to + '"></td><td><input class="zs-zone" type="number" min="1" max="8" style="width:64px;" value="' + r.zone + '"></td><td><button class="btn btn-sm btn-outline" onclick="this.closest(\'tr\').remove()">移除</button></td>';
+        tbody.appendChild(tr);
+    });
+}
+
+function surRowAdd() {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td><input class="ss-name" placeholder="如 燃油附加费"></td>' +
+        '<td><select class="ss-type"><option value="normal">普通</option><option value="fuel">燃油</option><option value="whop">库内操作费</option></select></td>' +
+        '<td><select class="ss-mode"><option value="fixed">按票</option><option value="percent">百分比</option></select></td>' +
+        '<td><input class="ss-value" type="number" step="0.001" style="width:90px;"></td>' +
+        '<td><input class="ss-zones" placeholder="空=全部，1,2 或 3~5"></td>' +
+        '<td><input type="checkbox" class="ss-enabled" checked></td>' +
+        '<td><button class="btn btn-sm btn-outline" onclick="this.closest(\'tr\').remove()">移除</button></td>';
+    getF('f_surRows').appendChild(tr);
+}
+function parseZonesText(text) {
+    const t = String(text || '').trim();
+    if (!t) return [];
+    const out = [];
+    t.split(/[,，\s]+/).forEach(part => {
+        const r = part.match(/^(\d+)\s*(?:~|—|–|-)\s*(\d+)$/);
+        if (r) {
+            const a = parseInt(r[1], 10), b = parseInt(r[2], 10);
+            for (let z = Math.min(a, b); z <= Math.max(a, b); z++) if (!out.includes(z)) out.push(z);
+        } else {
+            const z = parseInt(part, 10);
+            if (!isNaN(z) && !out.includes(z)) out.push(z);
+        }
+    });
+    return out.filter(z => z >= 1 && z <= 8);
+}
+function renderSurRows(list) {
+    const tbody = getF('f_surRows');
+    tbody.innerHTML = '';
+    list.forEach(s => {
+        const tr = document.createElement('tr');
+        const typeOpts = [['normal', '普通'], ['fuel', '燃油'], ['whop', '库内操作费']].map(([v, l]) => '<option value="' + v + '"' + ((s.type || 'normal') === v ? ' selected' : '') + '>' + l + '</option>').join('');
+        const modeOpts = [['fixed', '按票'], ['percent', '百分比']].map(([v, l]) => '<option value="' + v + '"' + ((s.mode || 'fixed') === v ? ' selected' : '') + '>' + l + '</option>').join('');
+        tr.innerHTML = '<td><input class="ss-name" value="' + (s.name || '') + '"></td>' +
+            '<td><select class="ss-type">' + typeOpts + '</select></td>' +
+            '<td><select class="ss-mode">' + modeOpts + '</select></td>' +
+            '<td><input class="ss-value" type="number" step="0.001" style="width:90px;" value="' + (s.value === null || s.value === undefined ? '' : s.value) + '"></td>' +
+            '<td><input class="ss-zones" placeholder="空=全部，1,2 或 3~5" value="' + (s.zones || []).join(',') + '"></td>' +
+            '<td><input type="checkbox" class="ss-enabled"' + (s.enabled === false ? '' : ' checked') + '></td>' +
+            '<td><button class="btn btn-sm btn-outline" onclick="this.closest(\'tr\').remove()">移除</button></td>';
+        tbody.appendChild(tr);
+    });
+}
+
+function readFreightForm() {
+    const rows = readPriceGrid().filter(r => r.max !== null);
+    const zipRules = Array.from(document.querySelectorAll('#f_zipRows tr')).map(tr => {
+        const range = parseZipRange(tr.querySelector('.zs-range').value);
+        const zone = parseInt(tr.querySelector('.zs-zone').value, 10);
+        if (!range || isNaN(zone)) return null;
+        return { from: range.from, to: range.to, zone };
+    }).filter(Boolean);
+    const surcharges = Array.from(document.querySelectorAll('#f_surRows tr')).map(tr => {
+        const name = tr.querySelector('.ss-name').value.trim();
+        const type = tr.querySelector('.ss-type').value;
+        const mode = tr.querySelector('.ss-mode').value;
+        const value = parseFloat(tr.querySelector('.ss-value').value);
+        const zones = parseZonesText(tr.querySelector('.ss-zones').value);
+        const enabled = tr.querySelector('.ss-enabled').checked;
+        if (!name || isNaN(value)) return null;
+        return { name, type, mode, value, zones, enabled };
+    }).filter(Boolean);
+    return {
+        id: freightEditor || undefined,
+        name: (fvN('f_name') || '').trim(),
+        channel: (fvN('f_channel') || '').trim(),
+        country: (fvN('f_country') || '').trim(),
+        dateStart: fvN('f_dateStart') || '',
+        dateEnd: fvN('f_dateEnd') || '',
+        maxDays: parseInt(fvN('f_maxDays') + '', 10) || 0,
+        currency: fvN('f_currency') || 'USD',
+        unit: fvN('f_unit') || 'kg',
+        chargeBy: fvN('f_chargeBy') || 'actual',
+        volParam: parseInt(fvN('f_volParam') + '', 10) || 6000,
+        calcMode: fvN('f_calcMode') || 'perOrder',
+        zoneCount: zoneCountNum(),
+        rows, zipRules, surcharges,
+        updatedAt: new Date().toISOString()
+    };
+}
+
+function renderFreightSelects() {
+    const opts = freightTemplates.map(t => '<option value="' + t.id + '">' + (t.name || '未命名') + '</option>').join('');
+    ['f_tplSelect', 'c_tplSelect'].forEach(id => {
+        const el = getF(id);
+        el.innerHTML = '<option value="">请选择模板</option>' + opts;
+        if (freightEditor) el.value = freightEditor;
+    });
+}
+
+function freightLoad(id) {
+    const t = freightTemplates.find(x => x.id === id);
+    if (!t) return;
+    freightEditor = id;
+    getF('f_name').value = t.name || '';
+    getF('f_channel').value = t.channel || '';
+    getF('f_country').value = t.country || '';
+    getF('f_dateStart').value = t.dateStart || '';
+    getF('f_dateEnd').value = t.dateEnd || '';
+    getF('f_maxDays').value = t.maxDays || '';
+    getF('f_currency').value = t.currency || 'USD';
+    getF('f_unit').value = t.unit || 'kg';
+    getF('f_chargeBy').value = t.chargeBy || 'actual';
+    getF('f_volParam').value = t.volParam || 6000;
+    getF('f_calcMode').value = t.calcMode || 'perOrder';
+    getF('f_zoneCount').value = t.zoneCount || 8;
+    writePriceGrid((t.rows || []).map(r => Object.assign({ prices: Array(t.zoneCount || 8).fill(null) }, r)));
+    renderZipRows(t.zipRules || []);
+    renderSurRows(t.surcharges || []);
+    renderFreightSelects();
+}
+
+function freightNew() {
+    freightEditor = null;
+    ['f_name', 'f_channel', 'f_dateStart', 'f_dateEnd', 'f_maxDays', 'f_zoneCount'].forEach(id => getF(id).value = '');
+    getF('f_country').value = '美国';
+    getF('f_volParam').value = 6000;
+    getF('f_zoneCount').value = 8;
+    getF('f_currency').value = 'USD';
+    getF('f_unit').value = 'kg';
+    getF('f_chargeBy').value = 'actual';
+    getF('f_calcMode').value = 'perOrder';
+    writePriceGrid([{ max: null, prices: Array(8).fill(null) }]);
+    getF('f_zipRows').innerHTML = '';
+    zipRowAdd();
+    getF('f_surRows').innerHTML = '';
+    surRowAdd();
+    renderFreightSelects();
+}
+
+function freightSave() {
+    const t = readFreightForm();
+    if (!t.name) { alert('请填写「步骤1 模板名称」'); return; }
+    if (!t.channel) { alert('请填写「步骤1 物流渠道」'); return; }
+    if (t.rows.length === 0) { alert('请填写「步骤2 重量阶梯」'); return; }
+    if (!t.rows.some(r => r.prices.some(p => p !== null))) { alert('价格矩阵至少填一个价格'); return; }
+    if (t.zipRules.length === 0) { alert('请填写「步骤3 邮编分区规则」'); return; }
+    if (freightEditor) {
+        const i = freightTemplates.findIndex(x => x.id === freightEditor);
+        if (i >= 0) freightTemplates[i] = t; else freightTemplates.push(t);
+    } else {
+        t.id = 'ft_' + Date.now();
+        freightTemplates.push(t);
+    }
+    saveFreightTemplates();
+    freightEditor = t.id;
+    renderFreightSelects();
+    getF('f_tplSelect').value = t.id;
+    alert('已保存：' + t.name);
+}
+
+function freightDelCurrent() {
+    if (!freightEditor) { alert('请先选择要删除的模板'); return; }
+    const t = freightTemplates.find(x => x.id === freightEditor);
+    if (!confirm('删除模板「' + (t ? t.name : '') + '」？')) return;
+    freightTemplates = freightTemplates.filter(x => x.id !== freightEditor);
+    freightEditor = null;
+    saveFreightTemplates();
+    freightNew();
+}
+
+/* ===== 演示数据（安美海外仓新系统） ===== */
+const FREIGHT_DEMO_WEIGHTS = [0.4535, 0.9071, 1.3607, 1.8143, 2.2679, 2.7215, 3.1751, 3.6287, 4.0823, 4.5359, 4.9894, 5.443, 5.8966, 6.3502];
+const FREIGHT_DEMO_ZONES = [
+    ['00400', '00599', 7], ['01000', '04699', 7], ['04700', '04799', 8],
+    ['04800', '06999', 7], ['07000', '10499', 6], ['10500', '10899', 7],
+    ['10900', '11399', 6], ['11400', '11599', 7], ['11600', '11699', 6],
+    ['11700', '12699', 7], ['12700', '12799', 6], ['12800', '12999', 7],
+    ['13000', '13299', 6], ['13300', '13699', 7]
+];
+const FREIGHT_DEMO_SUR = [
+    { name: '住宅费', type: 'normal', mode: 'fixed', value: 2.9, zones: [], enabled: true },
+    { name: '超重附加费', type: 'normal', mode: 'fixed', value: 4.6, zones: [1, 2], enabled: true },
+    { name: '超重附加费', type: 'normal', mode: 'fixed', value: 5.03, zones: [3, 4], enabled: true },
+    { name: '超重附加费', type: 'normal', mode: 'fixed', value: 5.63, zones: [5, 6], enabled: true },
+    { name: '超重附加费', type: 'normal', mode: 'fixed', value: 5.88, zones: [7, 8], enabled: true },
+    { name: '超长附加费', type: 'normal', mode: 'fixed', value: 2.95, zones: [1, 2], enabled: true },
+    { name: '超长附加费', type: 'normal', mode: 'fixed', value: 3.28, zones: [3, 4], enabled: true },
+    { name: '超长附加费', type: 'normal', mode: 'fixed', value: 3.85, zones: [5, 6], enabled: true },
+    { name: '超长附加费', type: 'normal', mode: 'fixed', value: 4.08, zones: [7, 8], enabled: true },
+    { name: '燃油附加费', type: 'fuel', mode: 'percent', value: 27, zones: [], enabled: true }
+];
+
+function priceGridFillFromDemo() {
+    const n = zoneCountNum();
+    const rows = FREIGHT_DEMO_WEIGHTS.map((w, i) => {
+        const prices = Array(n).fill(7.85);
+        if (i === FREIGHT_DEMO_WEIGHTS.length - 1) prices[6] = 8.21;
+        return { max: w, prices };
+    });
+    writePriceGrid(rows);
+}
+function zipFillFromDemo() { renderZipRows(FREIGHT_DEMO_ZONES.map(z => ({ from: z[0], to: z[1], zone: z[2] }))); }
+function surFillFromDemo() { renderSurRows(FREIGHT_DEMO_SUR.map(s => Object.assign({}, s))); }
+
+function freightFillDemo() {
+    freightNew();
+    getF('f_name').value = '安美海外仓新系统';
+    getF('f_channel').value = 'SMART-Smart云帆济-FedEx_SELF';
+    getF('f_country').value = '美国';
+    getF('f_unit').value = 'kg';
+    getF('f_chargeBy').value = 'actual';
+    getF('f_volParam').value = 6000;
+    getF('f_calcMode').value = 'perOrder';
+    getF('f_zoneCount').value = 8;
+    priceGridFillFromDemo();
+    zipFillFromDemo();
+    surFillFromDemo();
+    freightTab('s1');
+    alert('已在表单中填好安美演示数据，请核对后点「保存模板」');
+}
+
+/* ===== 运费计算核心 ===== */
+function round2(x) { return Math.round(x * 100) / 100; }
+
+function zipToZone(tpl, zip) {
+    const z = String(zip || '').replace(/[^0-9-]/g, '').slice(0, 5);
+    if (!z) return null;
+    const zi = parseInt(z.replace(/[^0-9]/g, ''), 10);
+    if (isNaN(zi)) return null;
+    for (const r of (tpl.zipRules || [])) {
+        const f = parseInt(r.from, 10), t2 = parseInt(r.to, 10);
+        if (isNaN(f) || isNaN(t2)) continue;
+        if (zi >= f && zi <= t2) return r.zone;
+    }
+    return null;
+}
+
+function lookUpBase(tpl, weight, zone) {
+    const rows = (tpl.rows || []).slice().sort((a, b) => (a.max || 0) - (b.max || 0));
+    let price = null;
+    for (const r of rows) {
+        if (weight <= (r.max || Infinity)) {
+            const p = r.prices && r.prices[zone - 1];
+            price = (p === null || p === undefined || p === '') ? null : parseFloat(p);
+            break;
+        }
+    }
+    if (price === null && rows.length) {
+        const last = rows[rows.length - 1];
+        const p = last.prices && last.prices[zone - 1];
+        price = (p === null || p === undefined || p === '') ? null : parseFloat(p);
+    }
+    return price;
+}
+
+function calcFreight(tpl, params) {
+    params = params || {};
+    let actualKg = parseFloat(params.weightKg);
+    if (isNaN(actualKg) || actualKg <= 0) return { ok: false, error: '实重无效' };
+    let volKg = 0;
+    if (params.dims) {
+        const d = String(params.dims).split(/[xX×*]/).map(s => parseFloat(s));
+        if (d.length === 3 && d.every(v => !isNaN(v) && v > 0)) {
+            volKg = (d[0] * d[1] * d[2]) / (tpl.volParam || 6000);
+        }
+    }
+    const chargeBy = tpl.chargeBy || 'actual';
+    let weightKg;
+    if (chargeBy === 'volumetric') weightKg = volKg > 0 ? volKg : actualKg;
+    else if (chargeBy === 'max') weightKg = Math.max(actualKg, volKg);
+    else weightKg = actualKg;
+
+    const zone = zipToZone(tpl, params.zip);
+    if (zone === null) return { ok: false, error: '邮编未命中任何分区规则' };
+    const pieces = Math.max(1, parseInt(params.pieces, 10) || 1);
+    const perPiece = tpl.calcMode === 'perPiece';
+    const unitW = perPiece ? weightKg / pieces : weightKg;
+    const unitBase = lookUpBase(tpl, unitW, zone);
+    if (unitBase === null) return { ok: false, error: 'Zone' + zone + ' 在重量 ' + unitW + ' 档无报价' };
+    const base = perPiece ? round2(unitBase * pieces) : unitBase;
+
+    const items = [];
+    const fuelRule = (tpl.surcharges || []).find(s => s.type === 'fuel' && s.enabled !== false && (!s.zones.length || s.zones.indexOf(zone) >= 0));
+    const webFuel = fuelRule ? latestFuelPercent(tpl.channel) : null;
+
+    let fixedTotal = 0, whopTotal = 0, pctTotal = 0;
+    (tpl.surcharges || []).forEach(s => {
+        if (s.enabled === false) return;
+        if (s.zones && s.zones.length && s.zones.indexOf(zone) < 0) return;
+        if (s.mode === 'fixed') {
+            const amt = s.type === 'whop' ? round2(s.value) : round2(s.value);
+            if (s.type === 'whop') {
+                whopTotal += amt;
+                items.push({ name: s.name || '库内操作费', kind: 'whop', mode: 'fixed', value: s.value, zones: s.zones || [], amount: amt, note: '不参与百分比基数' });
+            } else {
+                fixedTotal += amt;
+                items.push({ name: s.name || '附加费', kind: 'normal', mode: 'fixed', value: s.value, zones: s.zones || [], amount: amt, note: '' });
+            }
+        }
+    });
+    const pctBase = round2(base + fixedTotal);
+    (tpl.surcharges || []).forEach(s => {
+        if (s.enabled === false) return;
+        if (s.zones && s.zones.length && s.zones.indexOf(zone) < 0) return;
+        if (s.mode !== 'percent') return;
+        let pct = s.value || 0;
+        let note = '基准=(基础+' + fixedTotal.toFixed(2) + ')';
+        if (s.type === 'fuel') {
+            note += webFuel !== null ? '，采用官网最新 ' + webFuel + '%' : '，未录官网费率用模板 ' + pct + '%';
+            if (webFuel !== null) pct = webFuel;
+        }
+        const amt = round2(pctBase * pct / 100);
+        pctTotal += amt;
+        items.push({ name: s.name || '百分比附加费', kind: s.type || 'normal', mode: 'percent', value: pct, zones: s.zones || [], amount: amt, note });
+    });
+
+    const total = round2(base + fixedTotal + pctTotal + whopTotal);
+    return { ok: true, zone, actualKg, volKg, chargeBy, weightKg, pieces, perPiece, unitWeight: round2(unitW), base, fixedTotal, pctBase, pctTotal, whopTotal, items, total };
+}
+
+function renderFreightCalcResult(r) {
+    const box = getF('c_result');
+    if (!r.ok) { box.innerHTML = '<div class="calc-error">❌ ' + r.error + '</div>'; return; }
+    const rows = '<tr><td><b>基础运费</b></td><td>重量阶梯' + r.unitWeight + (r.perPiece ? '×' + r.pieces + '件' : '') + '</td><td>Zone' + r.zone + '</td><td style="text-align:right;">$' + r.base.toFixed(2) + '</td></tr>' +
+        r.items.map(it => '<tr><td>' + (it.name) + (it.kind === 'whop' ? '（库内操作费）' : '') + '</td><td>' + (it.mode === 'percent' ? it.value + '%｜' + it.note : '按票 $' + it.value.toFixed(2) + (it.note ? '｜' + it.note : '')) + '</td><td>' + (it.zones.length ? it.zones.join(',') : '全部') + '</td><td style="text-align:right;">$' + it.amount.toFixed(2) + '</td></tr>').join('');
+    const basisNote = '百分比基数 = 基础 ' + r.base.toFixed(2) + ' + 按票附加费 ' + r.fixedTotal.toFixed(2) + ' = ' + r.pctBase.toFixed(2);
+    box.innerHTML = '<div class="freight-result-card">' +
+        '<div style="margin-bottom:8px;">分区：<span class="tag tag-info">Zone' + r.zone + '</span> ｜ ' + (r.perPiece ? '按件×' + r.pieces : '整单') + ' ｜计费重 ' + r.weightKg + ' kg（实重 ' + r.actualKg + (r.volKg > 0 ? ' / 体积重 ' + r.volKg : '') + (r.chargeBy === 'max' ? '，取大' : '') + '）</div>' +
+        '<table style="margin-bottom:6px;"><thead><tr><th>费用项</th><th>计算方式</th><th>生效分区</th><th style="text-align:right;">金额</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        (r.pctTotal > 0 ? '<div style="font-size:12px;color:#555;">' + basisNote + '</div>' : '') +
+        '<div class="total-line">总运费：$' + r.total.toFixed(2) + (r.whopTotal > 0 ? '（含库内操作费 $' + r.whopTotal.toFixed(2) + '）' : '') + '</div></div>';
+}
+
+function currentTpl() {
+    const id = getF('f_tplSelect').value;
+    return freightTemplates.find(t => t.id === id) || null;
+}
+
+function freightCalc() {
+    const tpl = currentTpl();
+    const box = getF('c_result');
+    if (!tpl) { box.innerHTML = '<div class="calc-error">❌ 请先在「1 基础信息」页选择/保存模板</div>'; return; }
+    const r = calcFreight(tpl, { zip: getF('c_zip').value, weightKg: getF('c_weight').value, pieces: getF('c_pieces').value, dims: getF('c_dims').value });
+    renderFreightCalcResult(r);
+}
+
+function freightCalcDemo() {
+    if (!currentTpl()) { const t = freightTemplates.find(x => x.name === '安美海外仓新系统'); if (t) freightLoad(t.id); else { freightFillDemo(); return; } }
+    getF('c_zip').value = '07000';
+    getF('c_weight').value = '2.5';
+    getF('c_pieces').value = '1';
+    getF('c_dims').value = '';
+    freightCalc();
+}
+
+/* ===== 通用批量粘贴导入（换行=行，Tab=列） ===== */
+function parseTabRows(text) {
+    return String(text || '').split(/\r?\n/).map(l => l.split(/\t+/)).filter(row => row.some(c => c.trim() !== ''));
+}
+function impPreview(el, parsed, bads) {
+    const rows = parsed.map((row, i) => {
+        const cls = bads.includes(i) ? 'imp-bad' : 'imp-ok';
+        return '<tr class="' + cls + '"><td>' + (i + 1) + '</td><td>' + row.map(c => escapeHtml(c || '')).join('</td><td>') + '</td><td>' + (bads.includes(i) ? '✗' : '✓') + '</td></tr>';
+    }).join('');
+    el.innerHTML = parsed.length === 0 ? ''
+        : '<div style="font-size:12px;padding:4px 8px;color:#666;">解析 ' + parsed.length + ' 行，错误 ' + bads.length + ' 行（红色高亮将被跳过）</div><table><thead><tr><th>行</th>' + Array(parsed[0].length).fill('<th></th>').join('') + '<th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+}
+function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* 价格矩阵导入 */
+function pricePastePreview() { getPriceImportRows(); }
+function getPriceImportRows() {
+    const parsed = parseTabRows(getF('f_pricePaste').value);
+    const n = zoneCountNum();
+    const bads = [];
+    const ok = [];
+    parsed.forEach((row, i) => {
+        if (row.length < 2 || isNaN(parseFloat(row[0]))) { bads.push(i); return; }
+        const vals = row.slice(1, n + 1);
+        if (vals.some(c => (c || '').trim() !== '' && isNaN(parseFloat(c)))) { bads.push(i); return; }
+        const prices = [];
+        for (let j = 1; j <= n; j++) {
+            const v = parseFloat(row[j]);
+            prices.push(isNaN(v) ? null : v);
+        }
+        if (prices.every(p => p === null)) { bads.push(i); return; }
+        ok.push({ max: parseFloat(row[0]), prices });
+    });
+    impPreview(getF('f_pricePasteResult'), parsed, bads);
+    return bads.length ? { rows: ok, bads, total: parsed.length } : { rows: ok, bads: [], total: parsed.length };
+}
+function priceImport(mode) {
+    const { rows, bads, total } = getPriceImportRows();
+    if (rows.length === 0) { alert('没有可导入的有效行'); return; }
+    if (bads.length && !confirm('跳过 ' + bads.length + ' 条非法行（共 ' + total + ' 行）继续导入？')) return;
+    let base = mode === 'overwrite' ? [] : readPriceGrid();
+    base = base.concat(rows);
+    writePriceGrid(base);
+    alert('价格导入完成：新增 ' + rows.length + ' 行' + (bads.length ? '，跳过非法行 ' + bads.length : ''));
+}
+
+/* 邮编分区导入 */
+function zipPastePreview() {
+    const parsed = parseTabRows(getF('f_zipPaste').value);
+    const bads = [];
+    parsed.forEach((row, i) => {
+        if (!parseZipRange(row[0])) { bads.push(i); }
+        else if (isNaN(parseInt(row[1], 10)) || parseInt(row[1], 10) < 1 || parseInt(row[1], 10) > 8) { bads.push(i); }
+    });
+    impPreview(getF('f_zipPasteResult'), parsed, bads);
+    window._fZipImportBad = bads;
+}
+function getZipImportRows() {
+    const parsed = parseTabRows(getF('f_zipPaste').value);
+    const bads = [];
+    const ok = [];
+    parsed.forEach((row, i) => {
+        const range = parseZipRange(row[0]);
+        const zone = parseInt(row[1], 10);
+        if (!range || isNaN(zone) || zone < 1 || zone > 8) { bads.push(i); return; }
+        ok.push({ from: range.from, to: range.to, zone });
+    });
+    impPreview(getF('f_zipPasteResult'), parsed, bads);
+    return { rows: ok, bads, total: parsed.length };
+}
+function zipImport(mode) {
+    const { rows, bads, total } = getZipImportRows();
+    if (rows.length === 0) { alert('没有可导入的有效行'); return; }
+    if (bads.length && !confirm('跳过 ' + bads.length + ' 条非法行（共 ' + total + ' 行）继续导入？')) return;
+    renderZipRows(mode === 'overwrite' ? rows : readZipRows().concat(rows));
+    alert('分区规则导入完成：新增 ' + rows.length + ' 条' + (bads.length ? '，跳过非法行 ' + bads.length : ''));
+}
+function readZipRows() {
+    return Array.from(document.querySelectorAll('#f_zipRows tr')).map(tr => {
+        const range = parseZipRange(tr.querySelector('.zs-range').value);
+        const zone = parseInt(tr.querySelector('.zs-zone').value, 10);
+        return (range && !isNaN(zone)) ? { from: range.from, to: range.to, zone } : null;
+    }).filter(Boolean);
+}
+
+/* 附加费导入 */
+function surPastePreview() {
+    const parsed = parseTabRows(getF('f_surPaste').value);
+    const bads = [];
+    parsed.forEach((row, i) => {
+        if (!row[0] || !row[0].trim()) { bads.push(i); return; }
+        const mode = row[1] ? String(row[1]).trim() : '按票';
+        if (mode !== '按票' && mode !== '百分比' && mode !== 'fixed' && mode !== 'percent') { bads.push(i); return; }
+        if (isNaN(parseFloat(row[2]))) { bads.push(i); return; }
+    });
+    impPreview(getF('f_surPasteResult'), parsed, bads);
+}
+function getSurImportRows() {
+    const parsed = parseTabRows(getF('f_surPaste').value);
+    const bads = [];
+    const ok = [];
+    parsed.forEach((row, i) => {
+        const name = (row[0] || '').trim();
+        if (!name) { bads.push(i); return; }
+        const modeRaw = (row[1] || '').trim() || '按票';
+        const mode = /百分比|percent/i.test(modeRaw) ? 'percent' : /按票|fixed/i.test(modeRaw) ? 'fixed' : null;
+        const value = parseFloat(row[2]);
+        if (!mode || isNaN(value)) { bads.push(i); return; }
+        const zones = parseZonesText(row[3]);
+        let type = 'normal';
+        if (/燃油|fuel/i.test(name)) type = 'fuel';
+        else if (/库内操作|操作费|whop/i.test(name)) type = 'whop';
+        else if (row[4] && /燃油|fuel/i.test(row[4])) type = 'fuel';
+        else if (row[4] && (/库内|操作费|whop/i.test(row[4]))) type = 'whop';
+        ok.push({ name, type, mode, value, zones, enabled: true });
+    });
+    impPreview(getF('f_surPasteResult'), parsed, bads);
+    return { rows: ok, bads, total: parsed.length };
+}
+function surImport(mode) {
+    const { rows, bads, total } = getSurImportRows();
+    if (rows.length === 0) { alert('没有可导入的有效行'); return; }
+    if (bads.length && !confirm('跳过 ' + bads.length + ' 条非法行（共 ' + total + ' 行）继续导入？')) return;
+    renderSurRows(mode === 'overwrite' ? rows : readSurRows().concat(rows));
+    alert('附加费导入完成：新增 ' + rows.length + ' 条' + (bads.length ? '，跳过非法行 ' + bads.length : ''));
+}
+function readSurRows() {
+    return Array.from(document.querySelectorAll('#f_surRows tr')).map(tr => {
+        const name = tr.querySelector('.ss-name').value.trim();
+        const type = tr.querySelector('.ss-type').value;
+        const mode = tr.querySelector('.ss-mode').value;
+        const value = parseFloat(tr.querySelector('.ss-value').value);
+        if (!name || isNaN(value)) return null;
+        return { name, type, mode, value, zones: parseZonesText(tr.querySelector('.ss-zones').value), enabled: tr.querySelector('.ss-enabled').checked };
+    }).filter(Boolean);
+}
+
+/* ===== 接口与导入导出 ===== */
+function freightExport() {
+    const tpl = currentTpl();
+    if (!tpl) { alert('请先选择模板'); return; }
+    getF('api_export').value = JSON.stringify(tpl, null, 2);
+}
+function copyApiExport() {
+    const t = getF('api_export').value;
+    if (!t) { alert('请先「生成 JSON」'); return; }
+    navigator.clipboard.writeText(t).then(() => alert('已复制到剪贴板'));
+}
+function fillApiExample() {
+    const tpl = currentTpl();
+    if (!tpl) { alert('请先选择模板'); return; }
+    const cfg = JSON.stringify(tpl).replace(/"/g, '\\"');
+    getF('apiExample').value = 'curl -X POST http://127.0.0.1:8210/api/calc -H "Content-Type: application/json" -d @payload.json\n\npayload.json:\n' + JSON.stringify({ config: tpl, zip: '07000', weightKg: 2.5, pieces: 1 }, null, 2);
+}
+function testApiCalc() {
+    const tpl = currentTpl();
+    const out = getF('apiTestResult');
+    if (!tpl) { out.textContent = '请先选择模板'; return; }
+    out.textContent = '计算中…';
+    fetch('/api/calc', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ config: tpl, zip: '07000', weightKg: 2.5, pieces: 1 })
+    }).then(r => r.json()).then(d => {
+        out.innerHTML = d.ok ? '✅ total=$' + d.total + '（Zone' + d.zone + '）' : '❌ ' + (d.error || '失败');
+    }).catch(e => { out.textContent = '❌ ' + e.message; });
+}
+function freightImport() {
+    const raw = getF('api_import').value.trim();
+    if (!raw) { alert('请先粘贴模板 JSON'); return; }
+    let obj;
+    try { obj = JSON.parse(raw); } catch (e) { alert('JSON 解析失败：' + e.message); return; }
+    if (!obj.name || !Array.isArray(obj.rows)) { alert('JSON 缺少必要字段：name / rows'); return; }
+    obj.id = 'ft_' + Date.now();
+    freightTemplates.push(obj);
+    saveFreightTemplates();
+    renderFreightSelects();
+    freightLoad(obj.id);
+    alert('已导入模板：' + obj.name);
+}
+
+init();
+</script>
+</body>
+</html>
