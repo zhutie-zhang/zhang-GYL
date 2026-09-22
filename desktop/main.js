@@ -8,10 +8,11 @@ const APP_ROOT = path.join(__dirname, '..');
 const PORT = 8000;
 const URL = `http://127.0.0.1:${PORT}/`;
 const PYTHON = process.env.KAOBAN_PYTHON || 'C:\\Users\\1\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe';
-/* 开发模式：后端源码在项目根；打包模式：extraResources 解压在 resources/app */
+/* 开发模式：后端源码在项目根；打包模式：后端在 resources/stage */
 const RUN_DIR = app.isPackaged
-  ? path.join(process.resourcesPath, 'app')
+  ? path.join(process.resourcesPath, 'stage')
   : (process.env.KAOBAN_RUN_DIR || APP_ROOT);
+console.log('DBG main loaded. isPackaged=' + app.isPackaged + ' runDir=' + RUN_DIR + ' pythonExists=' + require('fs').existsSync(PYTHON));
 
 let win = null;
 let backend = null;
