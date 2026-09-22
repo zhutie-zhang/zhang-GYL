@@ -171,12 +171,14 @@ import github_sync
 PRICE_DATA = price_data
 
 def _github_pull_startup():
-    """Startup: pull files from GitHub repo."""
-    try:
-        result = github_sync.pull_all()
-        print(f"[GitHub同步] {result}", flush=True)
-    except Exception as e:
-        print(f"[GitHub同步] 拉取失败: {e}", flush=True)
+    """Startup: pull files from GitHub repo in background (non-blocking)."""
+    def _run():
+        try:
+            result = github_sync.pull_all()
+            print(f"[GitHub同步] {result}", flush=True)
+        except Exception as e:
+            print(f"[GitHub同步] 拉取失败: {e}", flush=True)
+    threading.Thread(target=_run, daemon=True).start()
 
 
 def _tag_lines_product_type(lines):
